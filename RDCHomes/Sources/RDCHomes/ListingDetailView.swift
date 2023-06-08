@@ -3,9 +3,9 @@ import RDCCore
 import RDCBusiness
 
 public struct ListingDetailView: View {
-    private let listing: Listing
+    private let listing: any ListingModel
     
-    public init(_ listing: Listing) {
+    public init(_ listing: any ListingModel) {
         self.listing = listing
     }
     

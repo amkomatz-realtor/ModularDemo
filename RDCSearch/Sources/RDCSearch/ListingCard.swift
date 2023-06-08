@@ -2,9 +2,9 @@ import SwiftUI
 import RDCBusiness
 
 struct ListingCard: View {
-    private let listing: Listing
+    private let listing: SearchListingModel
     
-    init(_ listing: Listing) {
+    init(_ listing: SearchListingModel) {
         self.listing = listing
     }
     

@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  RDCFeedPlayground
-//
-//  Created by Austin-Michael Komatz - Local on 6/8/23.
-//
-
 import SwiftUI
 
 struct ContentView: View {

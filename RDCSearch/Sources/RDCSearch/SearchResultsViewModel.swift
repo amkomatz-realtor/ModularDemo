@@ -5,7 +5,7 @@ import RDCBusiness
 class SearchResultsViewModel: ObservableObject {
     private let searchRepository: SearchRepository
     
-    @Published private(set) var listingState: ViewState<[Listing]> = .initializing
+    @Published private(set) var listingState: ViewState<[SearchListingModel]> = .initializing
     
     init(resolver: CoreResolving) {
         searchRepository = SearchRepository(resolver: resolver)

@@ -8,7 +8,7 @@ class SearchRepository {
         networkManager = resolver.resolveNetworkManaging()
     }
     
-    func getListings() async throws -> [Listing] {
-        try await networkManager.get([Listing].self, from: "https://api.realtor.com/listings")
+    func getListings() async throws -> [SearchListingModel] {
+        try await networkManager.get([SearchListingModel].self, from: "https://api.realtor.com/listings")
     }
 }
