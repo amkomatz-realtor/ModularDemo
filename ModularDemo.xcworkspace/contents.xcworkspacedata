@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "container:ModularDemo.xcodeproj">
+   </FileRef>
+   <Group
+      location = "container:"
+      name = "RDCFeed">
+      <FileRef
+         location = "group:RDCFeed">
+      </FileRef>
+      <FileRef
+         location = "group:RDCFeedPlayground/RDCFeedPlayground.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "RDCHomes">
+      <FileRef
+         location = "group:RDCHomes">
+      </FileRef>
+      <FileRef
+         location = "group:RDCHomesPlayground/RDCHomesPlayground.xcodeproj">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "RDCSearch">
+      <FileRef
+         location = "group:RDCSearch">
+      </FileRef>
+      <FileRef
+         location = "group:RDCSearchPlayground/RDCSearchPlayground.xcodeproj">
+      </FileRef>
+   </Group>
+   <FileRef
+      location = "group:RDCBusiness">
+   </FileRef>
+   <FileRef
+      location = "group:RDCCore">
+   </FileRef>
+</Workspace>

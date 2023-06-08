@@ -1,0 +1,27 @@
+import SwiftUI
+import RDCCore
+import RDCBusiness
+
+class SearchResultsViewModel: ObservableObject {
+    private let searchRepository: SearchRepository
+    
+    @Published private(set) var listingState: ViewState<[Listing]> = .initializing
+    
+    init(resolver: CoreResolving) {
+        searchRepository = SearchRepository(resolver: resolver)
+    }
+    
+    @MainActor
+    public func loadListings() {
+        listingState = .loading
+        
+        Task {
+            do {
+                let listings = try await searchRepository.getListings()
+                listingState = .success(listings)
+            } catch {
+                listingState = .failure(error)
+            }
+        }
+    }
+}
