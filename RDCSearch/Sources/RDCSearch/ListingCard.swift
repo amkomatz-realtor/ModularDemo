@@ -35,3 +35,25 @@ struct ListingCard: View {
         .frame(maxWidth: .infinity)
     }
 }
+
+extension ListingCard {
+    struct Placeholder: View {
+        var body: some View {
+            VStack(alignment: .leading) {
+                Color.gray
+                    .frame(height: 196)
+                    .cornerRadius(12)
+                
+                Text("Placeholder")
+                    .font(.title2)
+                    .foregroundColor(.black)
+                
+                Text("Placeholder")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+            }
+            .frame(maxWidth: .infinity)
+            .redacted(reason: .placeholder)
+        }
+    }
+}

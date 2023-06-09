@@ -15,11 +15,13 @@ public struct SearchResultsView: View {
         ZStack {
             switch viewModel.listingState {
             case .initializing, .loading:
-                VStack {
-                    Spacer()
-                    ProgressView()
-                        .progressViewStyle(.circular)
-                    Spacer()
+                ScrollView {
+                    VStack(spacing: 32) {
+                        ListingCard.Placeholder()
+                        ListingCard.Placeholder()
+                        ListingCard.Placeholder()
+                    }
+                    .padding()
                 }
                 
             case .failure:

@@ -33,6 +33,18 @@ private let listingsJson = """
         "address": "9576 Rocky Shore Dr, McCordsville, IN 46055",
         "price": 400000,
         "thumbnail": "https://ap.rdcpix.com/dfab3557407d053078f3038c4943ea7fl-m2019589893od-w1024_h768_x2.webp"
+    },
+    {
+        "id": "935324b4-0e0f-49c4-9361-469cfeea67e4",
+        "address": "10056 Parkway Dr, Fishers, IN 46037",
+        "price": 600000,
+        "thumbnail": "https://ap.rdcpix.com/ce7c8cd42871df7bf3e53999380d7fd2l-m1974014233od-w480_h360_x2.webp"
+    },
+    {
+        "id": "c08c3e50-818f-4899-8b66-f8ee2381173e",
+        "address": "1 Garden Mist Place, Fishers, IN 46037",
+        "price": 527990,
+        "thumbnail": "https://nh.rdcpix.com/4f40f967f5bafe68c5bee30acb6a5f13e-f3925967158od-w480_h360_x2.webp"
     }
 ]
 """.data(using: .utf8)!
