@@ -3,14 +3,25 @@ import RDCCore
 import RDCBusiness
 
 class ListingDetailViewModel: ObservableObject {
-    let cacheModel: any ListingModel
     private let homesRepository: HomesRepository
     
+    private let id: UUID
+    
+    @Published private(set) var cacheState: ViewState<any ListingModel> = .initializing
     @Published private(set) var detailState: ViewState<DetailListingModel> = .initializing
     
-    init(cacheModel: any ListingModel, resolver: CoreResolving) {
-        self.cacheModel = cacheModel
+    init(id: UUID, resolver: HomesResolving) {
         homesRepository = HomesRepository(resolver: resolver)
+        
+        self.id = id
+        
+        do {
+            let cacheModel = try resolver.globalStore.resolve().require(id: id)
+            cacheState = .success(cacheModel)
+        } catch {
+            cacheState = .failure(error)
+            detailState = .failure(error)
+        }
     }
     
     @MainActor
@@ -19,7 +30,7 @@ class ListingDetailViewModel: ObservableObject {
         
         Task {
             do {
-                let detail = try await homesRepository.getListingDetail(id: cacheModel.id)
+                let detail = try await homesRepository.getListingDetail(id: id)
                 detailState = .success(detail)
             } catch {
                 detailState = .failure(error)

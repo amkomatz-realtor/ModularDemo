@@ -35,9 +35,14 @@ public struct SearchResultsView: View {
                 ScrollView {
                     VStack(spacing: 32) {
                         ForEach(listings) { listing in
-                            NavigationLink(destination: { router.getDestination(for: listing) }) {
-                                ListingCard(listing)
-                            }
+                            NavigationLink(
+                                destination: {
+                                    router.getDestination(forListingId: listing.id)
+                                },
+                                label: {
+                                    ListingCard(listing)
+                                }
+                            )
                         }
                     }
                     .padding()

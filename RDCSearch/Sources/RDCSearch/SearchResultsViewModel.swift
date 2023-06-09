@@ -7,7 +7,7 @@ class SearchResultsViewModel: ObservableObject {
     
     @Published private(set) var listingState: ViewState<[SearchListingModel]> = .initializing
     
-    init(resolver: CoreResolving) {
+    init(resolver: SearchResolving) {
         searchRepository = SearchRepository(resolver: resolver)
     }
     

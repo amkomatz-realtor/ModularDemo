@@ -10,7 +10,7 @@ class Router: SearchRouting {
         self.resolver = resolver
     }
     
-    func getDestination(for listing: any ListingModel) -> AnyView {
-        AnyView(ListingDetailView(listing, resolver: resolver))
+    func getDestination(forListingId id: UUID) -> AnyView {
+        AnyView(ListingDetailView(id: id, resolver: resolver))
     }
 }

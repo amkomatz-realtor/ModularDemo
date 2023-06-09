@@ -2,5 +2,5 @@ import SwiftUI
 import RDCBusiness
 
 public protocol SearchRouting {
-    func getDestination(for listing: any ListingModel) -> AnyView
+    func getDestination(forListingId id: UUID) -> AnyView
 }

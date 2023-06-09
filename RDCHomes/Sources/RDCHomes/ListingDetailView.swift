@@ -5,8 +5,8 @@ import RDCBusiness
 public struct ListingDetailView: View {
     @StateObject private var viewModel: ListingDetailViewModel
     
-    public init(_ listing: any ListingModel, resolver: CoreResolving) {
-        _viewModel = StateObject(wrappedValue: ListingDetailViewModel(cacheModel: listing, resolver: resolver))
+    public init(id: UUID, resolver: HomesResolving) {
+        _viewModel = StateObject(wrappedValue: ListingDetailViewModel(id: id, resolver: resolver))
     }
     
     public var body: some View {
@@ -14,41 +14,43 @@ public struct ListingDetailView: View {
             VStack(alignment: .leading) {
                 switch viewModel.detailState {
                 case .initializing, .loading:
-                    AsyncImage(
-                        url: viewModel.cacheModel.thumbnail,
-                        content: { image in
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                        },
-                        placeholder: {
-                            Color.gray
+                    if case .success(let cache) = viewModel.cacheState {
+                        AsyncImage(
+                            url: cache.thumbnail,
+                            content: { image in
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                            },
+                            placeholder: {
+                                Color.gray
+                            }
+                        )
+                        .frame(height: 256)
+                        
+                        VStack(alignment: .leading) {
+                            HStack { Spacer() }
+                            
+                            Text(cache.price.toCurrency())
+                                .font(.title2)
+                                .foregroundColor(.black)
+                            
+                            Text(cache.address)
+                                .font(.caption)
+                                .foregroundColor(.gray)
+                            
+                            Spacer()
+                                .frame(height: 16)
+                            
+                            Text("3 bed • 3 bath • 3000 sqft")
+                                .font(.footnote)
+                                .redacted(reason: .placeholder)
+                            
+                            Spacer()
                         }
-                    )
-                    .frame(height: 256)
-                    
-                    VStack(alignment: .leading) {
-                        HStack { Spacer() }
-                        
-                        Text(viewModel.cacheModel.price.toCurrency())
-                            .font(.title2)
-                            .foregroundColor(.black)
-                        
-                        Text(viewModel.cacheModel.address)
-                            .font(.caption)
-                            .foregroundColor(.gray)
-                        
-                        Spacer()
-                            .frame(height: 16)
-                        
-                        Text("3 bed • 3 bath • 3000 sqft")
-                            .font(.footnote)
-                            .redacted(reason: .placeholder)
-                        
-                        Spacer()
+                        .frame(maxWidth: .infinity)
+                        .padding()
                     }
-                    .frame(maxWidth: .infinity)
-                    .padding()
                     
                 case .success(let detail):
                     AsyncImage(

@@ -1,13 +1,15 @@
 import RDCCore
+import RDCBusiness
 import RDCSearch
+import RDCHomes
 
-public class AppResolver: CoreResolving, SearchResolving {
+public class AppResolver: CoreResolving, BusinessResolving, SearchResolving, HomesResolving {
     public let networkManager: any Resolver<NetworkManaging> = SingletonResolver {
         NetworkManager()
     }
     
-    public let globalStore: any Resolver<Store> = SingletonResolver {
-        InMemoryStore()
+    public var globalStore: any Resolver<GlobalStore> = SingletonResolver {
+        GlobalStore()
     }
     
     public lazy var searchRouter: any Resolver<SearchRouting> = SingletonResolver { [unowned self] in
