@@ -79,7 +79,7 @@ private let feedJson = """
             "price": 600000,
             "thumbnail": "https://ap.rdcpix.com/ce7c8cd42871df7bf3e53999380d7fd2l-m1974014233od-w480_h360_x2.webp",
             "daysOnRealtor": 45,
-            "openHouseDate": "2023-06-20"
+            "openHouseDate": 1686283080
         },
         {
             "id": "c08c3e50-818f-4899-8b66-f8ee2381173e",
@@ -87,7 +87,7 @@ private let feedJson = """
             "price": 527990,
             "thumbnail": "https://nh.rdcpix.com/4f40f967f5bafe68c5bee30acb6a5f13e-f3925967158od-w480_h360_x2.webp",
             "daysOnRealtor": 50,
-            "openHouseDate": "2023-06-15"
+            "openHouseDate": 1686283080
         }
     ]
 }

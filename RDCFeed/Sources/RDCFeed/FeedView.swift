@@ -15,13 +15,40 @@ public struct FeedView: View {
         ZStack {
             switch viewModel.feedState {
             case .initializing, .loading:
-                ScrollView {
+                ScrollView(showsIndicators: false) {
                     VStack(spacing: 32) {
-                        FeedListingCard.Placeholder()
-                        FeedListingCard.Placeholder()
-                        FeedListingCard.Placeholder()
+                        VStack(alignment: .leading, spacing: 0) {
+                            Text("New On Realtor")
+                                .font(.title2)
+                                .bold()
+                                .padding(.leading)
+                                .redacted(reason: .placeholder)
+                            
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack(spacing: 16) {
+                                    FeedListingCard.Placeholder()
+                                    FeedListingCard.Placeholder()
+                                }
+                                .padding()
+                            }
+                        }
+                        
+                        VStack(alignment: .leading, spacing: 0) {
+                            Text("Open Houses")
+                                .font(.title2)
+                                .bold()
+                                .padding(.leading)
+                                .redacted(reason: .placeholder)
+                            
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack(spacing: 16) {
+                                    FeedListingCard.Placeholder()
+                                    FeedListingCard.Placeholder()
+                                }
+                                .padding()
+                            }
+                        }
                     }
-                    .padding()
                 }
                 
             case .failure:
@@ -48,7 +75,7 @@ public struct FeedView: View {
                                                 router.getDestination(forListingId: listing.id)
                                             },
                                             label: {
-                                                FeedListingCard(listing)
+                                                FeedListingCard(listing, displayOption: .daysOnRealtor)
                                             }
                                         )
                                     }
@@ -71,7 +98,7 @@ public struct FeedView: View {
                                                 router.getDestination(forListingId: listing.id)
                                             },
                                             label: {
-                                                FeedListingCard(listing)
+                                                FeedListingCard(listing, displayOption: .openHouseDate)
                                             }
                                         )
                                     }

@@ -8,5 +8,5 @@ public struct FeedListingModel: ListingModel, Decodable {
     public let thumbnail: URL
     
     public let daysOnRealtor: Int
-    public let openHouse: Date?
+    public let openHouseDate: Date?
 }
