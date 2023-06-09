@@ -3,7 +3,7 @@ import RDCCore
 import RDCBusiness
 
 class ListingDetailViewModel: ObservableObject {
-    private let cacheModel: any ListingModel
+    let cacheModel: any ListingModel
     private let homesRepository: HomesRepository
     
     @Published private(set) var detailState: ViewState<DetailListingModel> = .initializing

@@ -9,7 +9,14 @@ public class InMemoryStore: Store {
         store[object.id] = object
     }
     
-    public func query<T>(_ type: T.Type, id: UUID) -> T? where T : Identifiable, T.ID == UUID {
+    public func get<T>(_ type: T.Type, id: UUID) -> T? where T : Identifiable, T.ID == UUID {
         store[id] as? T
+    }
+    
+    public func require<T>(_ type: T.Type, id: UUID) throws -> T where T : Identifiable, T.ID == UUID {
+        if let result = store[id] as? T {
+            return result
+        }
+        throw GenericError(message: "Object not found for ID \(id)")
     }
 }

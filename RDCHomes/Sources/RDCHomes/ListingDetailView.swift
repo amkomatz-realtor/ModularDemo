@@ -3,47 +3,102 @@ import RDCCore
 import RDCBusiness
 
 public struct ListingDetailView: View {
-    private let listing: any ListingModel
-    
     @StateObject private var viewModel: ListingDetailViewModel
     
     public init(_ listing: any ListingModel, resolver: CoreResolving) {
-        self.listing = listing
         _viewModel = StateObject(wrappedValue: ListingDetailViewModel(cacheModel: listing, resolver: resolver))
     }
     
     public var body: some View {
-        VStack(alignment: .leading) {
-            AsyncImage(
-                url: listing.thumbnail,
-                content: { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                },
-                placeholder: {
-                    Color.gray
-                }
-            )
-            .frame(height: 256)
-            
+        ScrollView {
             VStack(alignment: .leading) {
-                HStack { Spacer() }
-                
-                Text(listing.price.toCurrency())
-                    .font(.title2)
-                    .foregroundColor(.black)
-                
-                Text(listing.address)
-                    .font(.caption)
-                    .foregroundColor(.gray)
-                
-                Spacer()
+                switch viewModel.detailState {
+                case .initializing, .loading:
+                    AsyncImage(
+                        url: viewModel.cacheModel.thumbnail,
+                        content: { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                        },
+                        placeholder: {
+                            Color.gray
+                        }
+                    )
+                    .frame(height: 256)
+                    
+                    VStack(alignment: .leading) {
+                        HStack { Spacer() }
+                        
+                        Text(viewModel.cacheModel.price.toCurrency())
+                            .font(.title2)
+                            .foregroundColor(.black)
+                        
+                        Text(viewModel.cacheModel.address)
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                        
+                        Spacer()
+                            .frame(height: 16)
+                        
+                        Text("3 bed • 3 bath • 3000 sqft")
+                            .font(.footnote)
+                            .redacted(reason: .placeholder)
+                        
+                        Spacer()
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    
+                case .success(let detail):
+                    AsyncImage(
+                        url: detail.thumbnail,
+                        content: { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                        },
+                        placeholder: {
+                            Color.gray
+                        }
+                    )
+                    .frame(height: 256)
+                    
+                    VStack(alignment: .leading) {
+                        HStack { Spacer() }
+                        
+                        Text(detail.price.toCurrency())
+                            .font(.title2)
+                            .foregroundColor(.black)
+                        
+                        Text(detail.address)
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                        
+                        Spacer()
+                            .frame(height: 16)
+                        
+                        (
+                            Text("\(detail.beds)").fontWeight(.heavy)
+                                + Text(" bed • ")
+                                + Text("\(detail.baths)").fontWeight(.heavy)
+                                + Text(" bath • ")
+                                + Text("\(detail.sqft)").fontWeight(.heavy)
+                                + Text(" sqft")
+                        )
+                        .font(.footnote)
+                        
+                        Spacer()
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    
+                case .failure:
+                    Text("Unable to load listing detail")
+                }
             }
             .frame(maxWidth: .infinity)
-            .padding()
         }
-        .frame(maxWidth: .infinity)
         .edgesIgnoringSafeArea(.top)
         .onAppear {
             if case .initializing = viewModel.detailState {
