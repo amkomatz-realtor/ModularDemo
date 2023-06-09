@@ -3,6 +3,8 @@ import Foundation
 public class InMemoryStore: Store {
     private var store: [UUID: Any] = [:]
     
+    public init() {}
+    
     public func push<T>(_ object: T) where T : Identifiable, T.ID == UUID {
         store[object.id] = object
     }
