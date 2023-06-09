@@ -8,8 +8,20 @@ struct ModularDemoApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NavigationView {
-                SearchResultsView(resolver: resolver)
+            TabView {
+                NavigationView {
+                    SearchResultsView(resolver: resolver)
+                }
+                .tabItem {
+                    Image(systemName: "house.fill")
+                }
+                
+                NavigationView {
+                    SearchResultsView(resolver: resolver)
+                }
+                .tabItem {
+                    Image(systemName: "magnifyingglass")
+                }
             }
         }
     }
