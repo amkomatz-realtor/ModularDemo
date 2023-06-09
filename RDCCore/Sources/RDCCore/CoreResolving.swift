@@ -1,4 +1,4 @@
 
 public protocol CoreResolving {
-    func resolveNetworkManaging() -> NetworkManaging
+    var networkManager: any Resolver<NetworkManaging> { get }
 }

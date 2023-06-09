@@ -14,7 +14,7 @@
 		5752839329F82A1000BEC08C /* ModularDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5752839229F82A1000BEC08C /* ModularDemoUITests.swift */; };
 		5752839529F82A1000BEC08C /* ModularDemoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5752839429F82A1000BEC08C /* ModularDemoUITestsLaunchTests.swift */; };
 		576B5CF429F8379900971079 /* RDCSearch in Frameworks */ = {isa = PBXBuildFile; productRef = 576B5CF329F8379900971079 /* RDCSearch */; };
-		57A222FD29F8455600BBC616 /* Resolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A222FC29F8455600BBC616 /* Resolver.swift */; };
+		57A222FD29F8455600BBC616 /* AppResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A222FC29F8455600BBC616 /* AppResolver.swift */; };
 		57A222FF29F8456100BBC616 /* RDCCore in Frameworks */ = {isa = PBXBuildFile; productRef = 57A222FE29F8456100BBC616 /* RDCCore */; };
 		57A2230129F8457D00BBC616 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A2230029F8457D00BBC616 /* NetworkManager.swift */; };
 		57A2230529F84B2300BBC616 /* RDCBusiness in Frameworks */ = {isa = PBXBuildFile; productRef = 57A2230429F84B2300BBC616 /* RDCBusiness */; };
@@ -49,7 +49,7 @@
 		5752838E29F82A1000BEC08C /* ModularDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ModularDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5752839229F82A1000BEC08C /* ModularDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModularDemoUITests.swift; sourceTree = "<group>"; };
 		5752839429F82A1000BEC08C /* ModularDemoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModularDemoUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		57A222FC29F8455600BBC616 /* Resolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resolver.swift; sourceTree = "<group>"; };
+		57A222FC29F8455600BBC616 /* AppResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppResolver.swift; sourceTree = "<group>"; };
 		57A2230029F8457D00BBC616 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		57A2230829F84E1400BBC616 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -109,7 +109,7 @@
 			children = (
 				57A2230829F84E1400BBC616 /* Router.swift */,
 				57A2230029F8457D00BBC616 /* NetworkManager.swift */,
-				57A222FC29F8455600BBC616 /* Resolver.swift */,
+				57A222FC29F8455600BBC616 /* AppResolver.swift */,
 				5752837729F82A0F00BEC08C /* ModularDemoApp.swift */,
 				5752837B29F82A1000BEC08C /* Assets.xcassets */,
 				5752837D29F82A1000BEC08C /* Preview Content */,
@@ -285,7 +285,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57A222FD29F8455600BBC616 /* Resolver.swift in Sources */,
+				57A222FD29F8455600BBC616 /* AppResolver.swift in Sources */,
 				57A2230129F8457D00BBC616 /* NetworkManager.swift in Sources */,
 				5752837829F82A0F00BEC08C /* ModularDemoApp.swift in Sources */,
 				57A2230929F84E1400BBC616 /* Router.swift in Sources */,

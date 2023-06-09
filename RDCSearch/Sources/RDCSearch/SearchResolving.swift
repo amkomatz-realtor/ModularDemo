@@ -1,4 +1,5 @@
+import RDCCore
 
 public protocol SearchResolving {
-    func resolveSearchRouting() -> SearchRouting
+    var searchRouter: any Resolver<SearchRouting> { get }
 }

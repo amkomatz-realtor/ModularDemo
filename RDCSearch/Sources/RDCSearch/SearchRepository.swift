@@ -5,7 +5,7 @@ class SearchRepository {
     private let networkManager: NetworkManaging
     
     init(resolver: CoreResolving) {
-        networkManager = resolver.resolveNetworkManaging()
+        networkManager = resolver.networkManager.resolve()
     }
     
     func getListings() async throws -> [SearchListingModel] {

@@ -7,7 +7,7 @@ public struct SearchResultsView: View {
     @StateObject private var viewModel: SearchResultsViewModel
     
     public init(resolver: CoreResolving & SearchResolving) {
-        router = resolver.resolveSearchRouting()
+        router = resolver.searchRouter.resolve()
         _viewModel = StateObject(wrappedValue: SearchResultsViewModel(resolver: resolver))
     }
     
