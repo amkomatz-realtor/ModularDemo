@@ -14,6 +14,7 @@
 		5752839329F82A1000BEC08C /* ModularDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5752839229F82A1000BEC08C /* ModularDemoUITests.swift */; };
 		5752839529F82A1000BEC08C /* ModularDemoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5752839429F82A1000BEC08C /* ModularDemoUITestsLaunchTests.swift */; };
 		576B5CF429F8379900971079 /* RDCSearch in Frameworks */ = {isa = PBXBuildFile; productRef = 576B5CF329F8379900971079 /* RDCSearch */; };
+		579862082A32D6050000D032 /* RDCFeed in Frameworks */ = {isa = PBXBuildFile; productRef = 579862072A32D6050000D032 /* RDCFeed */; };
 		57A222FD29F8455600BBC616 /* AppResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A222FC29F8455600BBC616 /* AppResolver.swift */; };
 		57A222FF29F8456100BBC616 /* RDCCore in Frameworks */ = {isa = PBXBuildFile; productRef = 57A222FE29F8456100BBC616 /* RDCCore */; };
 		57A2230129F8457D00BBC616 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A2230029F8457D00BBC616 /* NetworkManager.swift */; };
@@ -62,6 +63,7 @@
 				576B5CF429F8379900971079 /* RDCSearch in Frameworks */,
 				57A2230729F84B2600BBC616 /* RDCHomes in Frameworks */,
 				57A2230529F84B2300BBC616 /* RDCBusiness in Frameworks */,
+				579862082A32D6050000D032 /* RDCFeed in Frameworks */,
 				57A222FF29F8456100BBC616 /* RDCCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -170,6 +172,7 @@
 				57A222FE29F8456100BBC616 /* RDCCore */,
 				57A2230429F84B2300BBC616 /* RDCBusiness */,
 				57A2230629F84B2600BBC616 /* RDCHomes */,
+				579862072A32D6050000D032 /* RDCFeed */,
 			);
 			productName = ModularDemo;
 			productReference = 5752837429F82A0F00BEC08C /* ModularDemo.app */;
@@ -612,6 +615,10 @@
 		576B5CF329F8379900971079 /* RDCSearch */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RDCSearch;
+		};
+		579862072A32D6050000D032 /* RDCFeed */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RDCFeed;
 		};
 		57A222FE29F8456100BBC616 /* RDCCore */ = {
 			isa = XCSwiftPackageProductDependency;

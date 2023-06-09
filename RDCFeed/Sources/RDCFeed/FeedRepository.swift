@@ -10,7 +10,7 @@ class FeedRepository {
         globalStore = resolver.globalStore.resolve()
     }
     
-    func getListings() async throws -> FeedModel {
+    func getFeed() async throws -> FeedModel {
         let feed = try await networkManager.get(FeedModel.self, from: "https://api.realtor.com/feed")
         globalStore.push(feed.newOnRealtor)
         globalStore.push(feed.openHouse)

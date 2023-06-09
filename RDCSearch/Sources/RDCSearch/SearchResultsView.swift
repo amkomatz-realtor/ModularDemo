@@ -17,9 +17,9 @@ public struct SearchResultsView: View {
             case .initializing, .loading:
                 ScrollView {
                     VStack(spacing: 32) {
-                        ListingCard.Placeholder()
-                        ListingCard.Placeholder()
-                        ListingCard.Placeholder()
+                        SearchListingCard.Placeholder()
+                        SearchListingCard.Placeholder()
+                        SearchListingCard.Placeholder()
                     }
                     .padding()
                 }
@@ -40,7 +40,7 @@ public struct SearchResultsView: View {
                                     router.getDestination(forListingId: listing.id)
                                 },
                                 label: {
-                                    ListingCard(listing)
+                                    SearchListingCard(listing)
                                 }
                             )
                         }

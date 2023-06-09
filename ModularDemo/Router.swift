@@ -2,8 +2,9 @@ import SwiftUI
 import RDCBusiness
 import RDCSearch
 import RDCHomes
+import RDCFeed
 
-class Router: SearchRouting {
+class Router: SearchRouting, FeedRouting {
     private let resolver: AppResolver
     
     init(resolver: AppResolver) {

@@ -1,6 +1,7 @@
 import SwiftUI
 import RDCCore
 import RDCSearch
+import RDCFeed
 
 @main
 struct ModularDemoApp: App {
@@ -10,7 +11,7 @@ struct ModularDemoApp: App {
         WindowGroup {
             TabView {
                 NavigationView {
-                    SearchResultsView(resolver: resolver)
+                    FeedView(resolver: resolver)
                 }
                 .tabItem {
                     Image(systemName: "house.fill")

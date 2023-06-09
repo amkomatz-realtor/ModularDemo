@@ -1,7 +1,7 @@
 import SwiftUI
 import RDCBusiness
 
-struct ListingCard: View {
+struct SearchListingCard: View {
     private let listing: SearchListingModel
     
     init(_ listing: SearchListingModel) {
@@ -36,7 +36,7 @@ struct ListingCard: View {
     }
 }
 
-extension ListingCard {
+extension SearchListingCard {
     struct Placeholder: View {
         var body: some View {
             VStack(alignment: .leading) {
