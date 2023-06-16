@@ -4,9 +4,11 @@ import RDCBusiness
 
 public struct ListingDetailView: View {
     @StateObject private var viewModel: ListingDetailViewModel
+    private let router: HostRouter
     
     public init(id: UUID, resolver: HomesResolving) {
         _viewModel = StateObject(wrappedValue: ListingDetailViewModel(id: id, resolver: resolver))
+        router = resolver.router.resolve()
     }
     
     public var body: some View {
@@ -89,6 +91,13 @@ public struct ListingDetailView: View {
                                 + Text(" sqft")
                         )
                         .font(.footnote)
+                        
+                        Spacer()
+                            .frame(height: 16)
+                        
+                        Button("See more details") {
+                            router.append("listing-additional-details_\(viewModel.id)")
+                        }
                         
                         Spacer()
                     }

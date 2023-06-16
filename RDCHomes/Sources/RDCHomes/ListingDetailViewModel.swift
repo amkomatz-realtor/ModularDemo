@@ -5,7 +5,7 @@ import RDCBusiness
 class ListingDetailViewModel: ObservableObject {
     private let homesRepository: HomesRepository
     
-    private let id: UUID
+    let id: UUID
     
     @Published private(set) var cacheState: ViewState<any ListingModel> = .initializing
     @Published private(set) var detailState: ViewState<DetailListingModel> = .initializing
