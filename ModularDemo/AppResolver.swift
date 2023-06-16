@@ -13,11 +13,15 @@ public class AppResolver: CoreResolving, BusinessResolving, SearchResolving, Hom
         GlobalStore()
     }
     
-    public lazy var searchRouter: any Resolver<SearchRouting> = SingletonResolver { [unowned self] in
+    public lazy var router: any Resolver<HostRouter> = SingletonResolver { [unowned self] in
         Router(resolver: self)
     }
     
+    public lazy var searchRouter: any Resolver<SearchRouting> = SingletonResolver { [unowned self] in
+        fatalError()
+    }
+    
     public lazy var feedRouter: any Resolver<FeedRouting> = SingletonResolver { [unowned self] in
-        Router(resolver: self)
+        fatalError()
     }
 }

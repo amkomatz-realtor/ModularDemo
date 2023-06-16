@@ -2,12 +2,12 @@ import SwiftUI
 import RDCCore
 
 public struct SearchResultsView: View {
-    private let router: SearchRouting
+    private let router: HostRouter
     
     @StateObject private var viewModel: SearchResultsViewModel
     
     public init(resolver: CoreResolving & SearchResolving) {
-        router = resolver.searchRouter.resolve()
+        router = resolver.router.resolve()
         _viewModel = StateObject(wrappedValue: SearchResultsViewModel(resolver: resolver))
     }
     
@@ -35,14 +35,9 @@ public struct SearchResultsView: View {
                 ScrollView {
                     VStack(spacing: 32) {
                         ForEach(listings) { listing in
-                            NavigationLink(
-                                destination: {
-                                    router.getDestination(forListingId: listing.id)
-                                },
-                                label: {
-                                    SearchListingCard(listing)
-                                }
-                            )
+                            SearchListingCard(listing).onTapGesture {
+                                router.append("listing_\(listing.id)")
+                            }
                         }
                     }
                     .padding()
