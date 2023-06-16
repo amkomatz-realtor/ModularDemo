@@ -21,7 +21,7 @@
 		57A2230129F8457D00BBC616 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A2230029F8457D00BBC616 /* NetworkManager.swift */; };
 		57A2230529F84B2300BBC616 /* RDCBusiness in Frameworks */ = {isa = PBXBuildFile; productRef = 57A2230429F84B2300BBC616 /* RDCBusiness */; };
 		57A2230729F84B2600BBC616 /* RDCHomes in Frameworks */ = {isa = PBXBuildFile; productRef = 57A2230629F84B2600BBC616 /* RDCHomes */; };
-		57A2230929F84E1400BBC616 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A2230829F84E1400BBC616 /* Router.swift */; };
+		57A2230929F84E1400BBC616 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A2230829F84E1400BBC616 /* AppRouter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,7 +54,7 @@
 		5752839429F82A1000BEC08C /* ModularDemoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModularDemoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		57A222FC29F8455600BBC616 /* AppResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppResolver.swift; sourceTree = "<group>"; };
 		57A2230029F8457D00BBC616 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		57A2230829F84E1400BBC616 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		57A2230829F84E1400BBC616 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,7 +111,7 @@
 		5752837629F82A0F00BEC08C /* ModularDemo */ = {
 			isa = PBXGroup;
 			children = (
-				57A2230829F84E1400BBC616 /* Router.swift */,
+				57A2230829F84E1400BBC616 /* AppRouter.swift */,
 				57A2230029F8457D00BBC616 /* NetworkManager.swift */,
 				57A222FC29F8455600BBC616 /* AppResolver.swift */,
 				5752837729F82A0F00BEC08C /* ModularDemoApp.swift */,
@@ -295,7 +295,7 @@
 				57A2230129F8457D00BBC616 /* NetworkManager.swift in Sources */,
 				5752837829F82A0F00BEC08C /* ModularDemoApp.swift in Sources */,
 				574EA0552A3C0553001AB395 /* AppView.swift in Sources */,
-				57A2230929F84E1400BBC616 /* Router.swift in Sources */,
+				57A2230929F84E1400BBC616 /* AppRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

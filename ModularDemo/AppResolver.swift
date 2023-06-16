@@ -14,7 +14,7 @@ public class AppResolver: CoreResolving, BusinessResolving, SearchResolving, Hom
     }
     
     public lazy var router: any Resolver<HostRouter> = SingletonResolver { [unowned self] in
-        Router(resolver: self)
+        AppRouter(resolver: self)
     }
     
     public lazy var searchRouter: any Resolver<SearchRouting> = SingletonResolver { [unowned self] in
