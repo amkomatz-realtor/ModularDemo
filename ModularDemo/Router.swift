@@ -24,7 +24,13 @@ class Router: HostRouter, NavigationState, ObservableObject {
         childRouters.append(router)
     }
     
-    func append(_ destination: String) {
+    func route(_ destination: String) {
+        if destination == "search" {
+            tabIndex = 1
+            path = []
+            return
+        }
+        
         path.append(destination)
     }
     

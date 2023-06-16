@@ -3,7 +3,7 @@ import SwiftUI
 
 public protocol HostRouter: NavigationState {
     func register(_ router: ModuleRouter)
-    func append(_ destination: String)
+    func route(_ destination: String)
     func view(for destination: String) -> AnyView
     func onDismiss(_ index: Int)
 }

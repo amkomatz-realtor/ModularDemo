@@ -36,7 +36,7 @@ public struct SearchResultsView: View {
                     VStack(spacing: 32) {
                         ForEach(listings) { listing in
                             SearchListingCard(listing).onTapGesture {
-                                router.append("listing_\(listing.id)")
+                                router.route("listing_\(listing.id)")
                             }
                         }
                     }

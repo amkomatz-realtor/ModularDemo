@@ -96,7 +96,14 @@ public struct ListingDetailView: View {
                             .frame(height: 16)
                         
                         Button("See more details") {
-                            router.append("listing-additional-details_\(viewModel.id)")
+                            router.route("listing-additional-details_\(viewModel.id)")
+                        }
+                        
+                        Spacer()
+                            .frame(height: 16)
+                        
+                        Button("See similar homes") {
+                            router.route("search")
                         }
                         
                         Spacer()
