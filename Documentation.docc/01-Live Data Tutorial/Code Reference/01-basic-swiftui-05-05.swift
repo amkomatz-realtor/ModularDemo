@@ -1,27 +1,57 @@
 import Foundation
+import SwiftUI
 import Combine
 
-final class WeatherReportViewVM: ObservableObject {
-    
-    @Published var locationTemperatures: [LocationTemperature] = []
-    
-    init(responsePublisher: AnyPublisher<[WeatherResponse], Error>) {
-        responsePublisher
-            .replaceError(with: [])
-            .map { responses in
-                return responses.mapToLocationTemperature()
-            }
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$locationTemperatures)
-    }
-}
+// MARK: - Cell
 
-// MARK: - Parsing
-
-private extension Array where Element == WeatherResponse {
-    func mapToLocationTemperature() -> [LocationTemperature] {
-        map { response in
-            LocationTemperature(name: response.name, temperature: response.main.temp)
+struct WeatherLocationCell: View {
+    let title: String
+    let detailTitle: String
+    
+    var body: some View {
+        HStack {
+            Text(title)
+            Spacer()
+            Text(detailTitle)
         }
     }
 }
+
+// MARK: - List View
+
+struct WeatherReportView: View {
+    let viewModel: WeatherReportViewVM
+    
+    var body: some View {
+        /// Pseudo code:
+        /// if viewModel.isLoading {
+        ///    ProgressView()
+        /// }
+        List {
+            ForEach(viewModel.locationTemperatures) { location in
+                WeatherLocationCell(
+                    title: location.name,
+                    detailTitle: "\(location.temperature) F"
+                )
+            }
+        }
+    }
+}
+
+// MARK: - Preview
+
+#if targetEnvironment(simulator)
+struct WeatherReportView_Previews: PreviewProvider {
+    static var previews: some View {
+        let responsePubliser = Just(WeatherResponse.stubResponses)
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+        
+        WeatherReportView(
+            viewModel: WeatherReportViewVM(
+                responsePublisher: responsePubliser
+            )
+        )
+    }
+}
+#endif

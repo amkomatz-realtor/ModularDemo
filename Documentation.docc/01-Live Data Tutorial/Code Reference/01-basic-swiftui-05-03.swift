@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import Combine
 
 // MARK: - Cell
 
@@ -16,64 +17,37 @@ struct WeatherLocationCell: View {
     }
 }
 
-// MARK: - Data
-
-struct LocationTemperature: HashIdentifiable {
-    let name: String
-    let temperature: Int
-}
-
 // MARK: - List View
 
-protocol WeatherReportViewDataSource {
-    func fetchWeatherResponse() async -> [WeatherResponse]
-}
-
 struct WeatherReportView: View {
-    @State var locationTemperatures: [LocationTemperature]
-    let dataSource: WeatherReportViewDataSource
+    let viewModel: WeatherReportViewVM
     
     var body: some View {
         List {
-            ForEach(locationTemperatures) { location in
-                // This translation is not unit testable
+            ForEach(viewModel.locationTemperatures) { location in
                 WeatherLocationCell(
                     title: location.name,
                     detailTitle: "\(location.temperature) F"
                 )
             }
         }
-        .task {
-            locationTemperatures = await fetchDataFromApi()
-        }
-    }
-    
-    private func fetchDataFromApi() async -> [LocationTemperature] {
-        let responses = await dataSource.fetchWeatherResponse()
-        return responses.mapToLocationTemperature()
-    }
-}
-
-// MARK: - Parsing
-
-private extension Array where Element == WeatherResponse {
-    func mapToLocationTemperature() -> [LocationTemperature] {
-        map { response in
-            LocationTemperature(name: response.name, temperature: response.main.temp)
-        }
     }
 }
 
 // MARK: - Preview
 
-final class MockWeatherReportViewDataSource: WeatherReportViewDataSource {
-    func fetchWeatherResponse() async -> [WeatherResponse] {
-        return WeatherResponse.stubResponses
-    }
-}
-
+#if targetEnvironment(simulator)
 struct WeatherReportView_Previews: PreviewProvider {
     static var previews: some View {
-        WeatherReportView(locationTemperatures: [], dataSource: MockWeatherReportViewDataSource())
+        let responsePubliser = Just(WeatherResponse.stubResponses)
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+        
+        WeatherReportView(
+            viewModel: WeatherReportViewVM(
+                responsePublisher: responsePubliser
+            )
+        )
     }
 }
+#endif

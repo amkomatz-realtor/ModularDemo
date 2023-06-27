@@ -204,62 +204,74 @@
         
         @Steps {
             @Step {
-                Let's take the simple approach of using @State. We will define a pure model `LocationTemperature` to be the data view that backed the presentation of this view, and layout the View by creating the `WeatherLocationCell` from this model.
+                We will skip the @State solution and build an equivalent conventional solution using a view owning a `viewModel`. In order to do this, we will define an addtional Data View state `LocationTemperature` that the viewModel will published, and our UI will redraw the cell based on this model. Let's call this `WeatherReportViewVM` to avoid naming conflict with the previous version.
+                
+                We can leverage previous approach to have our viewModel taking a combine publisher that will emit the `WeatherResponse`.
                 
                 
-                @Code(name: "WeatherReportView.swift", file: 01-basic-swiftui-05-01.swift) {
-                    @Image(source: "preview-01-basic-swiftui-05-01", alt: "-")
-                }
+                @Code(name: "WeatherReportViewVM.swift", file: 01-basic-swiftui-05-01.swift) 
             }
             
             @Step {
-                Then abstract the network fetching code using dependency injection, and provide a mock datasource for preview code to consume
+                Then we can go on and create the view. The `body` of the view will need to translate the Data View state into the actual cell (vs. rendering the data directly as in our previous approach)
                 
-                @Code(name: "WeatherReportView.swift", file: 01-basic-swiftui-05-02.swift) {
-                    @Image(source: "preview-01-basic-swiftui-05-02", alt: "-")
-                }
+                @Code(name: "WeatherReportView.swift", file: 01-basic-swiftui-05-02.swift)
             }
             
             @Step {
-                While this looks straight forward, we probably don't realize that line 40-43 is not unit testable. Any translation code, `if` condition or logic combination in the `body` section is not unit testable. **This problem is exponentially increased with every additional `@State` that we add to a struct.** And when someone use `@Binding` to spread these states to its subviews, the cancer spread since now we have multiple side effects happening in various subviews that is not unit testable. We can unit test that the proper state is produced, but there is no guarantee that state will translate to the proper presentations, let alone combining with other states.
-                
-                **Comparison Note** Our model driven approach does not use additional model and eliminate additional translation. The DataView that is produced by the `ViewModel` is a. closest to the presentation and b. isolated and can't be combined with any other states / logic. Someone can definitely include more logic if they really want to, but at least the architecture would make it harder to go the wrong way.  
+                And last, adding the preview, using the same `Just` publisher and `stubResponse` as earlier. 
                 
                 @Code(name: "WeatherReportView.swift", file: 01-basic-swiftui-05-03.swift)
             }
             
             @Step {
-                Moreover, in order to test the serialization code from response to our intermediate state, we would need to expose the `fetchDataFromApi` function beyond private scope.  
+                With this approach, there is an additional of abstraction of translating between `LocationTemperature` -> `WeatherLocationCell` that is not testable since it is within the `body` portion of the view. We can unit test that the `viewModel` produce the proper `locationTemperature` but there is no guarantee that the field will map correctly to the cell the user is seeing. **This problem is magnified when people start writing extension on `LocationTemperature` to perform complex computation to get the derived data the view need.**
+                
+                **Comparison Note**: LiveData approach maintains that the dataView will inflate itself to be the view that user will see, so no extension, no additional translation.
                 
                 @Code(name: "WeatherReportView.swift", file: 01-basic-swiftui-05-04.swift)
             }
             
             @Step {
-                Let's use our previous technique to leverage combine publisher to eliminate this extra public function, and the untestable code in `.task`
+                Another common mistake is that we would leverage multiple @Published var to render the view. With any additional property, we are adding multiple untestable UI combinations.
                 
-                **Implementation note**: `.task` may look simple in this sample, but production code has proved that developers has the tendency of doing more than just calling `fetchDataFromApi()`. Regardless of how simple / complex, the code that takes the output for the fetch data function and assign it to `locationTemperatures` is not unit testable. Converting to combine publisher eliminates this weak link.
+                **Comparison Note**: LiveData approach maintains that each mutable piece of information map 1 to 1 with a single UI, so there is no additional permutation. More details will be on Advanced modeling section
                 
-                @Code(name: "WeatherReportViewVM.swift", file: 01-basic-swiftui-05-05.swift)
+                @Code(name: "WeatherReportView.swift", file: 01-basic-swiftui-05-05.swift)
             }
             
             @Step {
-                Then our view code is simplified greatly. The issue with untestable translation code at the view layer remains, however.
+                Let's attempt to handle composition with this conventional approach. We will replicate the earlier use case where we have a `SpaceWeatherReportView` that need to encapsulate 2 seaprate reports, each may have different data source.
                 
-                **Implementation note**: This is the cleanest implementation of the `ViewModel` in term of data loading and open better route for composition. Other chapters (esp. side effect will expose more weak links with this approach)
+                The cleanest approach is to convert our `viewModel` to `@Binding`, since we would need to supply different data for our earth report vs. mars report.
                 
                 @Code(name: "WeatherReportView.swift", file: 01-basic-swiftui-05-06.swift)
             }
             
             @Step {
-                Let's take a look at how composition work. In fact, let's make this a challenge. How can we compose the new `SpaceWeatherOverviewView` without changing any logic in `WeatherReportView` or `WeatherReportViewVM`, yet still support the use case of different data behaviors between `earthReport` and `marsReport`.
+                Then we can create the Composite view model `SpaceWeatherOverviewVM` to hold 2 separates report for earth and mars.
                 
-                **Implementation note**: Closed code is much more superior. Not touching previous code simply translated to no regression on any other component sharing that code, not having to rewrite unit test, ...
+                @Code(name: "SpaceWeatherOverviewVM.swift", file: 01-basic-swiftui-05-07.swift)
             }
             
             @Step {
-                It is still doable but would come at a higher cost: Please feel free to try it.
+                And putting everything together in the `SpaceWeatherOverviewView`
                 
-                **Comparison note**: Composition with `LiveData` is very straight forward. If you need to be reminded how simple it is, just review `Composition` section step 2, and by the way, we did not have to change a single line of code in `WeatherReport` or `WeatherReportViewModel`
+                @Code(name: "SpaceWeatherOverviewView.swift", file: 01-basic-swiftui-05-08.swift)
+            }
+            
+            @Step {
+                As we composed, the number of @Published and @Binding increase, which mean the number of untestable UI presentation's permutation increase. E.g. There is no guaranteed that we would assign the proper array of temperature to the proper UI in the VStack, and there is no guarantee that each `WeatherReportView` will map the correct field on `LocationTemperature` to its UI.
+                
+                **Comparison Note**: `SpaceWeatherOverview` extended the testing to cover the exact view that will be produced by the viewModel. We can review this code. The only minimal logic that is untestable is the view layout code.
+                
+                @Code(name: "SpaceWeatherOverview.swift", file: 01-basic-swiftui-05-09.swift)
+            }
+            
+            @Step {
+                And last but not least, when we compose with the conventional approach, we would have to convert a `viewModel` code to an @Binding, which change how we mock data for preview, change how we supply unit test, .... and possibly result in regression. In addition, **This problem will increase when we compose at a higher level**
+                
+                **Comparison Note**: When we compose using `LiveData` approach, we did not have change a single line of code in `WeatherReport`. And won't need to change `SpaceWeatherOverView` when we composed at a higher level either. The code is closed, tested and untouched.
             }
         }
     }

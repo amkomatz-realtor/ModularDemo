@@ -1,49 +1,27 @@
 import Foundation
-import SwiftUI
+import Combine
 
-// MARK: - Cell
-
-struct WeatherLocationCell: View {
-    let title: String
-    let detailTitle: String
-    
-    var body: some View {
-        HStack {
-            Text(title)
-            Spacer()
-            Text(detailTitle)
-        }
-    }
-}
-
-// MARK: - Data
+// MARK: - DataView
 
 struct LocationTemperature: HashIdentifiable {
     let name: String
     let temperature: Int
 }
 
-// MARK: - List View
+// MARK: - ViewModel
 
-struct WeatherReportView: View {
-    @State var locationTemperatures: [LocationTemperature]
+final class WeatherReportViewVM: ObservableObject {
     
-    var body: some View {
-        List {
-            ForEach(locationTemperatures) { location in
-                WeatherLocationCell(
-                    title: location.name,
-                    detailTitle: "\(location.temperature) F"
-                )
+    @Published var locationTemperatures: [LocationTemperature] = []
+    
+    init(responsePublisher: AnyPublisher<[WeatherResponse], Error>) {
+        responsePublisher
+            .replaceError(with: [])
+            .map { responses in
+                return responses.mapToLocationTemperature()
             }
-        }
-        .task {
-            locationTemperatures = await fetchDataFromApi()
-        }
-    }
-    
-    private func fetchDataFromApi() async -> [LocationTemperature] {
-        return WeatherResponse.stubResponses.mapToLocationTemperature()
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$locationTemperatures)
     }
 }
 
@@ -54,13 +32,5 @@ private extension Array where Element == WeatherResponse {
         map { response in
             LocationTemperature(name: response.name, temperature: response.main.temp)
         }
-    }
-}
-
-// MARK: - Preview
-
-struct WeatherReportView_Previews: PreviewProvider {
-    static var previews: some View {
-        WeatherReportView(locationTemperatures: [])
     }
 }

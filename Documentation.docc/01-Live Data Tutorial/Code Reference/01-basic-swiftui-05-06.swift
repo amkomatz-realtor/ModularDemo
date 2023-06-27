@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import Combine
 
 // MARK: - Cell
 
@@ -16,23 +17,14 @@ struct WeatherLocationCell: View {
     }
 }
 
-// MARK: - Data
-
-struct LocationTemperature: HashIdentifiable {
-    let name: String
-    let temperature: Int
-}
-
 // MARK: - List View
 
 struct WeatherReportView: View {
-    let viewModel: WeatherReportViewVM
+    @Binding var locationTemperatures: [LocationTemperature]
     
     var body: some View {
         List {
-            ForEach(viewModel.locationTemperatures) { location in
-                // This translation is still untestable
-                // And the more @Published we have, these untestable code would multiply.
+            ForEach(locationTemperatures) { location in
                 WeatherLocationCell(
                     title: location.name,
                     detailTitle: "\(location.temperature) F"
@@ -44,16 +36,13 @@ struct WeatherReportView: View {
 
 // MARK: - Preview
 
+#if targetEnvironment(simulator)
 struct WeatherReportView_Previews: PreviewProvider {
     static var previews: some View {
-        let responsePubliser = Just(WeatherResponse.stubResponses)
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
-        
-        WeatherReportView(
-            viewModel: WeatherReportViewVM(
-                responsePublisher: responsePubliser
-            )
-        )
+        WeatherReportView(locationTemperatures: .constant([
+            LocationTemperature(name: "Texas", temperature: 80),
+            LocationTemperature(name: "New Orlean", temperature: 60),
+        ]))
     }
 }
+#endif

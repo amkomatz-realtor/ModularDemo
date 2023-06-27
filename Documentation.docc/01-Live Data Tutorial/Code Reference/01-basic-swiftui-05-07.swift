@@ -1,27 +1,25 @@
 import Foundation
 import Combine
 
-// MARK: - DataView
-
-struct LocationTemperature: HashIdentifiable {
-    let name: String
-    let temperature: Int
-}
-
 // MARK: - ViewModel
 
-final class WeatherReportViewVM: ObservableObject {
+final class SpaceWeatherOverviewVM: ObservableObject {
     
-    @Published var locationTemperatures: [LocationTemperature] = []
+    @Published var earthTemperatures: [LocationTemperature] = []
+    @Published var marsTemperatures: [LocationTemperature] = []
     
-    init(responsePublisher: AnyPublisher<[WeatherResponse], Error>) {
-        responsePublisher
+    init(earthResponsePublisher: AnyPublisher<[WeatherResponse], Error>) {
+        earthResponsePublisher
             .replaceError(with: [])
             .map { responses in
                 return responses.mapToLocationTemperature()
             }
             .receive(on: DispatchQueue.main)
-            .assign(to: &$locationTemperatures)
+            .assign(to: &$earthTemperatures)
+        
+        marsTemperatures = [
+            .init(name: "unknown", temperature: 0)
+        ]
     }
 }
 
