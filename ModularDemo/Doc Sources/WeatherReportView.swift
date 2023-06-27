@@ -1,8 +1,6 @@
-
-// MARK: - Alternative
-
 import Foundation
 import SwiftUI
+import Combine
 
 // MARK: - Cell
 
@@ -47,6 +45,7 @@ struct WeatherReportView: View {
 
 // MARK: - Preview
 
+#if targetEnvironment(simulator)
 struct WeatherReportView_Previews: PreviewProvider {
     static var previews: some View {
         let responsePubliser = Just(WeatherResponse.stubResponses)
@@ -60,3 +59,4 @@ struct WeatherReportView_Previews: PreviewProvider {
         )
     }
 }
+#endif
