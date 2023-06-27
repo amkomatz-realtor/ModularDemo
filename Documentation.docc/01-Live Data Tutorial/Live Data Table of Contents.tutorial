@@ -1,0 +1,15 @@
+@Tutorials(name: "LiveData tutorial") {
+    @Intro(title: "A simpler approach to build SwiftUI") {
+        This tutorial series provide discussion on how `LiveData` can be leverage to build SwiftUI more efficient.
+        
+        @Image(source: "swift-ui.png", alt: "-")
+    }
+    
+    @Chapter(name: "Building a basic weather report") {
+        This chapter provides an overview on how we can leverage LiveData and MVVM pattern to fetch data and render the UI. 
+        
+        @Image(source: "intro-01.jpg", alt: "-")
+        
+        @TutorialReference(tutorial: "doc:01-basic-swiftui")
+    }
+}

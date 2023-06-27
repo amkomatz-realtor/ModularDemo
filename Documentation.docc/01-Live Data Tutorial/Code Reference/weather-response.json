@@ -1,0 +1,38 @@
+[
+    {
+        "main": {
+            "temp": 62,
+            "feels_like": 61,
+            "temp_min": 50,
+            "temp_max": 84,
+            "pressure": 1023,
+            "humidity": 20
+        },
+        "id": 4353,
+        "name": "Mountain View",
+    },
+    {
+        "main": {
+            "temp": 82,
+            "feels_like": 80,
+            "temp_min": 70,
+            "temp_max": 84,
+            "pressure": 103,
+            "humidity": 100
+        },
+        "id": 4354,
+        "name": "Mountain View",
+    },
+    {
+        "main": {
+            "temp": 85,
+            "feels_like": 85,
+            "temp_min": 70,
+            "temp_max": 94,
+            "pressure": 1013,
+            "humidity": 60
+        },
+        "id": 4355,
+        "name": "Florida",
+    }
+]

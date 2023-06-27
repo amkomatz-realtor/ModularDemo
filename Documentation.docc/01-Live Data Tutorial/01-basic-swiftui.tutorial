@@ -1,0 +1,266 @@
+@Tutorial(time: 30) {
+    @Intro(title: "MVVM with LiveData") {
+        Overview on how we can receive data and refresh the SwiftUI rendering using `LiveData`
+        
+        @Image(source: "intro-01.jpg", alt: "-")
+    }
+    
+    @Section(title: "Building a simple weather report") {
+        @ContentAndMedia {
+            Let's get started by building a simple weather report
+            
+            @Image(source: "weather-01.jpg", alt: "-")
+        }
+        
+        @Steps {
+            @Step {
+                Assuming we want to build a simple list view of temperature across different locations as seen in the preview image. We can start modeling our UI as follow.
+                
+                @Code(name: "WeatherReport.swift", file: 01-basic-swiftui-01-01.swift) {
+                    @Image(source: "preview-01-basic-swiftui-01-01", alt: "-")
+                }
+            }
+            
+            @Step {
+                Then build the UI for the row based on our `WeatherLocation` model. Since we will have to render these in an array via `ForEach` loops. Let's also make our `WeatherLocation` conform to `HashIdentifiable`
+                
+                **Implementation Note**: `HashIdentiable` is just a convenient protocol to say that if an object is `Hashable`, it will satisfy the `Identifable` requirement that SwiftUI has for including items in the `ForEach` element. Since most foundation type already conforming to `Hashable`, this allow us not having to redundantly declaring the `id` var. 
+                
+                @Code(name: "WeatherReport.swift", file: 01-basic-swiftui-01-02.swift) {
+                    @Image(source: "preview-01-basic-swiftui-01-02", alt: "-")
+                }
+            }
+            
+            @Step {
+                Since our `WeatherReport` has an array of `WeatherLocation`, each can be rendered independently, we can simply pop these into a `List` to render the desired UI.
+                
+                @Code(name: "WeatherReport.swift", file: 01-basic-swiftui-01-03.swift) {
+                    @Image(source: "preview-01-basic-swiftui-01-03", alt: "-")
+                }
+            }
+            
+            @Step {
+                So far, one interesting detail that may make you wonder is that we never had any official object dedicated to be a View in our example. Since SwiftUI leverages immutable types like `struct`, we can be fully model-driven without creating additional View or Cell object. And these models can be rendered differently as needed (e.g. list on iPhone and grid on iPad). For the rest of this tutorial, we will refer to these models as `DataView`. 
+                
+                In the next section, we will explore how data can be translated from json response into our DataView representation using a `ViewModel`.
+            }
+        }
+    }
+    
+    @Section(title: "Creating ViewModel") {
+        @ContentAndMedia {
+            In this section we will use the json response from an api to populate our list. The `ViewModel` will need to subclass `LiveData` constrained to the same DataView type we created earlier.
+        }
+        
+        @Steps {
+            @Step {
+                Given this is the json response we receive from the API
+                
+                @Code(name: "weather-response.json", file: weather-response.json)
+            }
+            
+            @Step {
+                We can decode it into a codable response. Since we would need to test this response later on, let's also create a stub.
+                
+                **Implementation Note**: Using `#if targetEnvironment(simulator)` to exclude your testing / previewing code from being bundled with production code.
+            
+                @Code(name: "WeatherResponse.swift", file: 01-basic-swiftui-02-01.swift)
+            }
+            
+            @Step {
+                Then create a `ViewModel` class that can subscribe to this response stream and translate it into the `WeatherReport` data view. It will need to be a subclass of `LiveData<WeatherReport>`.
+                
+                For now we would assume the network layer will give us the response via a combine publisher. The responsibility of the view model is simply to map an array of `WeatherResponse` into an array of `WeatherLocation` to be included on our `WeatherReport`
+                
+                @Code(name: "WeatherReportViewModel.swift", file: 01-basic-swiftui-02-02.swift)
+            }
+            
+            @Step {
+                `LiveData` subclass will have access to `update(using:)` method to subscribe to a publisher, and the data view will refresh whenever a new response is being emitted. If you prefer to fetch data via async / await or completion closure, you can use the `publish(_:)` method to manually trigger this refresh when the response is received. These convenient method simply ensure the UI refresh is being dispatched on main, so you don't have to worry about threading.
+                
+                **Implementation Note** `replaceError` convert any error received by the api into an empty response. This may or may not be the desired behavior for your app. You can learn more about error handling in a separate chapter.
+                
+                @Code(name: "WeatherReportViewModel.swift", file: 01-basic-swiftui-02-03.swift)
+            }
+            
+            @Step {
+                *Testing your code:* The nice thing about subclassing `LiveData` and using combine publisher for input is that you can test your `ViewModel` mapping code with the same preview functionality provided by SwiftUI for immediate feedback. To do this, we can leverage the stub response created earlier
+                
+                **Implementation Note** Using `Just` create a publisher that immediately publish the `stubResponses`. Since `Just` is a publisher with `Never` error, we would need to use `.setFailureType(to: Error.self)` to convert it to a publisher with Error type. In production code, our network layer will emit proper error type. Testing error scenario will be discussed in the error handling chapter.
+                
+                @Code(name: "WeatherReportViewModel.swift", file: 01-basic-swiftui-02-04.swift)
+            }
+            
+            @Step {
+                `LiveData` has `.dataView()` methods to return a SwiftUI view that will be refreshed whenever its value change. This allows us to compose it directly within any other SwiftUI rendering code
+                
+                We will leverage this benefit to nest it under the preview body to see how the rendering code behave with different dataset coming back from api without even writing any api code.
+                
+                @Code(name: "WeatherReportViewModel.swift", file: 01-basic-swiftui-02-05.swift) {
+                    @Image(source: "preview-01-basic-swiftui-02-05", alt: "-")
+                }
+            }
+        }
+    }
+    
+    @Section(title: "Composition") {
+        @ContentAndMedia {
+            Since SwiftUI is highly composable in nature, we would be able to compose complex view using LiveData as well. In this section, we will go beyond earth to get weather report for other planets in our solar system.
+        }
+        
+        @Steps {
+            @Step {
+                Let's create a new data view `SpaceWeatherOverview`, to capture just two plannets for now, Earth and Mars.
+                
+                The same as before, since each `WeatherReport` can be rendered invidually, we just need to pop them into a horizontal stack when rendering the composite `SpaceWeatherOverview`.
+                
+                @Code(name: "SpaceWeatherOverview.swift", file: 01-basic-swiftui-03-01.swift) {
+                    @Image(source: "preview-01-basic-swiftui-03-01", alt: "-")
+                }
+            }
+            
+            @Step {
+                It turns out that we only have weather report from Earth coming back from the API, weather on Mars is pretty much unknown at this point (duhh!). Luckily, we can achieve this simply by converting only `earthReport` to be `LiveData`
+                
+                **Implementation Note**: Since any `LiveData` can produce a refreshable SwiftUI view via `dataView()`, we can just use it directly within the rendering code. In addition, the `.constant` static factory allows us to assign fixed value for preview code. This creates minimal alteration to existing rendering flow. 
+                
+                @Code(name: "SpaceWeatherOverview.swift", file: 01-basic-swiftui-03-02.swift) {
+                    @Image(source: "preview-01-basic-swiftui-03-02", alt: "-")
+                }
+            }
+            
+            @Step {
+                We now simply repeat the process of creating the `ViewModel` for this composition, `SpaceWeatherOverviewViewModel`
+                
+                **Implementation Note**: since `LiveData` is a concrete type, we can just directly create it as we do here on line 9 just to update the data being shown. For more complex interaction, you can inject the previously created `WeatherReportViewModel`
+                
+                @Code(name: "SpaceWeatherOverviewViewModel.swift", file: 01-basic-swiftui-03-03.swift) 
+            }
+            
+            @Step {
+                And testing our newly created `ViewModel`
+                
+                @Code(name: "SpaceWeatherOverviewViewModel.swift", file: 01-basic-swiftui-03-04.swift) {
+                    @Image(source: "preview-01-basic-swiftui-03-04", alt: "-")
+                }
+            }
+            
+            @Step {
+                If you want to inject a dedicated view model, e.g. for side effect call back, this is one way it can be done. (More details on separated chapters for SideEffect)
+                
+                **Implementation note**: You can either inject the child view model directly, or have a resolver that lazily instantiates it when needed. It is all depending on the nature of the composition you are handling.
+                
+                @Code(name: "SpaceWeatherOverviewViewModel.swift", file: 01-basic-swiftui-03-05.swift) {
+                    @Image(source: "preview-01-basic-swiftui-03-05", alt: "-")
+                }
+            }
+            
+            @Step {
+                *One last thing:* We should aim for the highest abstraction possible. If you only need the child view model for composition and not for other specific operations on `WeatherReportViewModel`, you should only inject `LiveData<WeatherReport>` to maximize reusability
+                
+                **Implementation note**: Using `LiveData<WeatherReport>` allow us to inject different view model subclasses as needed.
+                
+                @Code(name: "SpaceWeatherOverviewViewModel.swift", file: 01-basic-swiftui-03-06.swift) {
+                    @Image(source: "preview-01-basic-swiftui-03-06", alt: "-")
+                }
+            }
+        }
+    }
+        
+    @Section(title: "Unit Testing") {
+        @ContentAndMedia {
+            In this section, we will walk through how LiveData enable us to maximize unit test coverage.
+        }
+        
+        @Steps {
+            @Step {
+                Let's create a unit test file `SpaceWeatherOverviewViewModelTests` to test our newly created `SpaceWeatherOverviewViewModel`. Since we already have the stub response, we will use it as the input for the happy path unit test.
+                
+                You may notice that the code to create the `sut` for unit test is identical to the preview we had earlier for `ViewModel`. This is intentional. The preview allows human being to visualize the result, whereas unit test will assert individual fields so that a CI system can validate regression.
+                
+                @Code(name: "SpaceWeatherOverviewViewModelTests.swift", file: 01-basic-swiftui-04-01.swift)
+            }
+            
+            @Step {
+                Since the viewModel inherits `LiveData`, we would have read access to its `latestValue` to write assertion for unit test. We first assert that the weather report for earth has 3 rows based on our stub response.
+                
+                @Code(name: "SpaceWeatherOverviewViewModelTests.swift", file: 01-basic-swiftui-04-02.swift)
+            }
+            
+            @Step {
+                Then we can drill down further to assert for individual piece of data and validate it matched our expectation. In the case where we have multiple publisher input to the `ViewModel`, these unit test ensures that we properly combine all the inputs and translate it to the expected UI. 
+                
+                Since the output of `LiveData` is immutable view data, our unit test coverage is extended the furthest to safeguard all business logics and only exclude the rendering code.
+                
+                @Code(name: "SpaceWeatherOverviewViewModelTests.swift", file: 01-basic-swiftui-04-03.swift)
+            }
+        }
+    }
+        
+    @Section(title: "Optional: Why is this better?") {
+        @ContentAndMedia {
+            If you have been doing SwiftUI for a little while or used to implement some flavors of MVVM in the past, this may look strange at first and the question: "Why is this better?" is a natural thought. Apple provides tools like @State and @Binding out of the box for some of the basic state observation, and tradditional MVVM implementation has always had a `View` owning a `ViewModel` of some sort. This section only focues the differences in regard to data loading and composition. Other chapters (e.g. Side Effect, Advanced Modeling, Debug & Error Handling, ...) will discuss the differences in those respective area.
+        }
+        
+        @Steps {
+            @Step {
+                Let's take the simple approach of using @State. We will define a pure model `LocationTemperature` to be the data view that backed the presentation of this view, and layout the View by creating the `WeatherLocationCell` from this model.
+                
+                
+                @Code(name: "WeatherReportView.swift", file: 01-basic-swiftui-05-01.swift) {
+                    @Image(source: "preview-01-basic-swiftui-05-01", alt: "-")
+                }
+            }
+            
+            @Step {
+                Then abstract the network fetching code using dependency injection, and provide a mock datasource for preview code to consume
+                
+                @Code(name: "WeatherReportView.swift", file: 01-basic-swiftui-05-02.swift) {
+                    @Image(source: "preview-01-basic-swiftui-05-02", alt: "-")
+                }
+            }
+            
+            @Step {
+                While this looks straight forward, we probably don't realize that line 40-43 is not unit testable. Any translation code, `if` condition or logic combination in the `body` section is not unit testable. **This problem is exponentially increased with every additional `@State` that we add to a struct.** And when someone use `@Binding` to spread these states to its subviews, the cancer spread since now we have multiple side effects happening in various subviews that is not unit testable. We can unit test that the proper state is produced, but there is no guarantee that state will translate to the proper presentations, let alone combining with other states.
+                
+                **Comparison Note** Our model driven approach does not use additional model and eliminate additional translation. The DataView that is produced by the `ViewModel` is a. closest to the presentation and b. isolated and can't be combined with any other states / logic. Someone can definitely include more logic if they really want to, but at least the architecture would make it harder to go the wrong way.  
+                
+                @Code(name: "WeatherReportView.swift", file: 01-basic-swiftui-05-03.swift)
+            }
+            
+            @Step {
+                Moreover, in order to test the serialization code from response to our intermediate state, we would need to expose the `fetchDataFromApi` function beyond private scope.  
+                
+                @Code(name: "WeatherReportView.swift", file: 01-basic-swiftui-05-04.swift)
+            }
+            
+            @Step {
+                Let's use our previous technique to leverage combine publisher to eliminate this extra public function, and the untestable code in `.task`
+                
+                **Implementation note**: `.task` may look simple in this sample, but production code has proved that developers has the tendency of doing more than just calling `fetchDataFromApi()`. Regardless of how simple / complex, the code that takes the output for the fetch data function and assign it to `locationTemperatures` is not unit testable. Converting to combine publisher eliminates this weak link.
+                
+                @Code(name: "WeatherReportViewVM.swift", file: 01-basic-swiftui-05-05.swift)
+            }
+            
+            @Step {
+                Then our view code is simplified greatly. The issue with untestable translation code at the view layer remains, however.
+                
+                **Implementation note**: This is the cleanest implementation of the `ViewModel` in term of data loading and open better route for composition. Other chapters (esp. side effect will expose more weak links with this approach)
+                
+                @Code(name: "WeatherReportView.swift", file: 01-basic-swiftui-05-06.swift)
+            }
+            
+            @Step {
+                Let's take a look at how composition work. In fact, let's make this a challenge. How can we compose the new `SpaceWeatherOverviewView` without changing any logic in `WeatherReportView` or `WeatherReportViewVM`, yet still support the use case of different data behaviors between `earthReport` and `marsReport`.
+                
+                **Implementation note**: Closed code is much more superior. Not touching previous code simply translated to no regression on any other component sharing that code, not having to rewrite unit test, ...
+            }
+            
+            @Step {
+                It is still doable but would come at a higher cost: Please feel free to try it.
+                
+                **Comparison note**: Composition with `LiveData` is very straight forward. If you need to be reminded how simple it is, just review `Composition` section step 2, and by the way, we did not have to change a single line of code in `WeatherReport` or `WeatherReportViewModel`
+            }
+        }
+    }
+}
