@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3194AE6B2A4B7DD500B90244 /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = 3194AE6A2A4B7DD500B90244 /* Documentation.docc */; };
+		3194AE6D2A4B7EC300B90244 /* Iterration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3194AE6C2A4B7EC300B90244 /* Iterration.swift */; };
 		5752837829F82A0F00BEC08C /* ModularDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5752837729F82A0F00BEC08C /* ModularDemoApp.swift */; };
 		5752837C29F82A1000BEC08C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5752837B29F82A1000BEC08C /* Assets.xcassets */; };
 		5752837F29F82A1000BEC08C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5752837E29F82A1000BEC08C /* Preview Assets.xcassets */; };
@@ -43,6 +44,7 @@
 
 /* Begin PBXFileReference section */
 		3194AE6A2A4B7DD500B90244 /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
+		3194AE6C2A4B7EC300B90244 /* Iterration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Iterration.swift; sourceTree = "<group>"; };
 		5752837429F82A0F00BEC08C /* ModularDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ModularDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5752837729F82A0F00BEC08C /* ModularDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModularDemoApp.swift; sourceTree = "<group>"; };
 		5752837B29F82A1000BEC08C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -87,6 +89,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3194AE6E2A4B7F9200B90244 /* Doc Sources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Doc Sources";
+			sourceTree = "<group>";
+		};
 		5752836B29F82A0F00BEC08C = {
 			isa = PBXGroup;
 			children = (
@@ -112,12 +121,14 @@
 		5752837629F82A0F00BEC08C /* ModularDemo */ = {
 			isa = PBXGroup;
 			children = (
+				3194AE6E2A4B7F9200B90244 /* Doc Sources */,
 				57A2230829F84E1400BBC616 /* Router.swift */,
 				57A2230029F8457D00BBC616 /* NetworkManager.swift */,
 				57A222FC29F8455600BBC616 /* AppResolver.swift */,
 				5752837729F82A0F00BEC08C /* ModularDemoApp.swift */,
 				5752837B29F82A1000BEC08C /* Assets.xcassets */,
 				5752837D29F82A1000BEC08C /* Preview Content */,
+				3194AE6C2A4B7EC300B90244 /* Iterration.swift */,
 			);
 			path = ModularDemo;
 			sourceTree = "<group>";
@@ -293,6 +304,7 @@
 			files = (
 				57A222FD29F8455600BBC616 /* AppResolver.swift in Sources */,
 				57A2230129F8457D00BBC616 /* NetworkManager.swift in Sources */,
+				3194AE6D2A4B7EC300B90244 /* Iterration.swift in Sources */,
 				5752837829F82A0F00BEC08C /* ModularDemoApp.swift in Sources */,
 				3194AE6B2A4B7DD500B90244 /* Documentation.docc in Sources */,
 				57A2230929F84E1400BBC616 /* Router.swift in Sources */,
