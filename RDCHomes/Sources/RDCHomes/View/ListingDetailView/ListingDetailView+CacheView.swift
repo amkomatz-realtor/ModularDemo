@@ -30,6 +30,11 @@ extension ListingDetailView {
                     ListingSizeView.Placeholder()
                     
                     Spacer()
+                        .frame(height: 2)
+                    
+                    NeighborhoodView.Placeholder()
+                    
+                    Spacer()
                     
                     HStack { Spacer() }
                 }

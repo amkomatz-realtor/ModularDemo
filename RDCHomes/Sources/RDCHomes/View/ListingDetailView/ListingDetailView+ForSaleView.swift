@@ -29,6 +29,9 @@ extension ListingDetailView {
                     
                     ListingSizeView(listing: detail)
                     
+                    Spacer()
+                        .frame(height: 2)
+                    
                     NeighborhoodView(detail: detail, resolver: resolver)
                     
                     Spacer()
