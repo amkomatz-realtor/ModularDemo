@@ -15,8 +15,10 @@ class NetworkManager: NetworkManaging {
             response = listingsJson
         } else if url == "https://api.realtor.com/feed" {
             response = feedJson
-        } else if let id = url.wholeMatch(of: /(https:\/\/api.realtor.com\/listings\/(.*))/)?.output.2.lowercased() {
+        } else if let id = url.wholeMatch(of: /^(https:\/\/api.realtor.com\/listings\/([a-zA-Z0-9\\-]*))$/)?.output.2.lowercased() {
             response = detailJson[id]!
+        } else if let id = url.wholeMatch(of: /^(https:\/\/api.realtor.com\/listings\/([a-zA-Z0-9\\-]*)\/neighborhood)$/)?.output.2.lowercased() {
+            response = neighborhoodJson[id]!
         } else {
             fatalError("URL not mocked")
         }
@@ -140,6 +142,33 @@ private let detailJson = [
             "beds": 3,
             "baths": 2,
             "sqft": 3000
+        }
+    """.data(using: .utf8)!,
+]
+
+private let neighborhoodJson = [
+    "f7ff90eb-fece-4f3c-a10d-8abbb68f1e1d": """
+        {
+            "name": "Downtown",
+            "rating": 8
+        }
+    """.data(using: .utf8)!,
+    "f3412fa4-e12a-4899-ae1a-0b85c47e46f8": """
+        {
+            "name": "Uptown",
+            "rating": 6
+        }
+    """.data(using: .utf8)!,
+    "935324b4-0e0f-49c4-9361-469cfeea67e4": """
+        {
+            "name": "Downtown",
+            "rating": 8
+        }
+    """.data(using: .utf8)!,
+    "c08c3e50-818f-4899-8b66-f8ee2381173e": """
+        {
+            "name": "Downtown",
+            "rating": 8
         }
     """.data(using: .utf8)!,
 ]
