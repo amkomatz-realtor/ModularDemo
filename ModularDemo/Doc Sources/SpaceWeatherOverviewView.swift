@@ -10,11 +10,11 @@ struct SpaceWeatherOverviewView: View {
         HStack(spacing: 0) {
             VStack {
                 Text("Earth")
-                WeatherReportView(locationTemperatures: $viewModel.earthTemperatures)
+                WeatherReportView(locationTemperatures: viewModel.earthTemperatures)
             }
             VStack {
                 Text("Mars")
-                WeatherReportView(locationTemperatures: $viewModel.marsTemperatures)
+                WeatherReportView(locationTemperatures: viewModel.marsTemperatures)
             }
         }
     }

@@ -20,7 +20,7 @@ struct WeatherLocationCell: View {
 // MARK: - List View
 
 struct WeatherReportView: View {
-    @Binding var locationTemperatures: [LocationTemperature]
+    let locationTemperatures: [LocationTemperature]
     
     var body: some View {
         List {
