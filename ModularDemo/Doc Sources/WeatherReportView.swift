@@ -36,13 +36,13 @@ struct WeatherReportView: View {
 
 // MARK: - Preview
 
-#if targetEnvironment(simulator)
-struct WeatherReportView_Previews: PreviewProvider {
-    static var previews: some View {
-        WeatherReportView(locationTemperatures: .constant([
-            LocationTemperature(name: "Texas", temperature: 80),
-            LocationTemperature(name: "New Orlean", temperature: 60),
-        ]))
-    }
-}
-#endif
+//#if targetEnvironment(simulator)
+//struct WeatherReportView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        WeatherReportView(locationTemperatures: .constant([
+//            LocationTemperature(name: "Texas", temperature: 80),
+//            LocationTemperature(name: "New Orlean", temperature: 60),
+//        ]))
+//    }
+//}
+//#endif
