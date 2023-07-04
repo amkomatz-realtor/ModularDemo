@@ -12,7 +12,7 @@ extension ListingDetail {
         
         var body: some View {
             VStack(alignment: .leading) {
-                ListingHeroView(detail)
+//                ListingHeroView(detail)
                 
                 VStack(alignment: .leading, spacing: 16) {
                     Text("For rent")

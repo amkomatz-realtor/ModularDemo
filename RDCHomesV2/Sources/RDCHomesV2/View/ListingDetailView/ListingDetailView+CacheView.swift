@@ -11,7 +11,7 @@ extension ListingDetail {
         
         var body: some View {
             VStack(alignment: .leading) {
-                ListingHeroView(cache)
+//                ListingHeroView(cache)
                 
                 VStack(alignment: .leading, spacing: 16) {
                     Text("For rent")

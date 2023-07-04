@@ -21,13 +21,13 @@ struct ListingSize: View {
 #if targetEnvironment(simulator)
 struct ListingSize_Previews: PreviewProvider {
     static var previews: some View {
-        ListingSize.previewStandardSize()
+        ListingSize.previewListingSize()
             .previewDisplayName(".listing size")
     }
 }
 
 extension ListingSize {
-    static func previewStandardSize() -> Self {
+    static func previewListingSize() -> Self {
         .init(beds: 3, baths: 2, sqft: 1600)
     }
 }
