@@ -18,6 +18,9 @@
       location = "container:"
       name = "RDCHomes">
       <FileRef
+         location = "group:RDCHomesV2">
+      </FileRef>
+      <FileRef
          location = "group:RDCHomes">
       </FileRef>
       <FileRef
