@@ -5,6 +5,12 @@ import RDCBusiness
 import SwiftUI
 
 public final class NeighborhoodViewModel: StatefulLiveData<Neighborhood> {
+    
+    public convenience init(forListingId id: UUID, resolver: HomesV2Resolving) {
+        let homesRepository = HomesRepository(resolver: resolver)
+        self.init(homesRepository.getNeighborhoodDetail(forListingId: id))
+    }
+    
     init(_ publisher: AnyPublisher<NeighborhoodDataState, Never>) {
         
         super.init(publisher: publisher

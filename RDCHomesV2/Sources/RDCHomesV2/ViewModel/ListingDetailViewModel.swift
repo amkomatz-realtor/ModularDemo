@@ -5,8 +5,14 @@ import RDCBusiness
 import SwiftUI
 
 public final class ListingDetailViewModel: StatefulLiveData<ListingDetail> {
+    public convenience init(forListingId id: UUID, resolver: HomesV2Resolving) {
+        let homesRepository = HomesRepository(resolver: resolver)
+        let neighborhoodViewModel = NeighborhoodViewModel(forListingId: id, resolver: resolver)
+        self.init(homesRepository.getListingDetail(id: id), neighborhoodViewModel: neighborhoodViewModel)
+    }
+    
     init(_ publisher: AnyPublisher<DetailDataState, Never>,
-         neighborhoodViewModel: StatefulLiveData<Neighborhood>) {
+         neighborhoodViewModel: NeighborhoodViewModel) {
         
         super.init(publisher: publisher
             .map { dataState in
@@ -18,7 +24,7 @@ public final class ListingDetailViewModel: StatefulLiveData<ListingDetail> {
 }
 
 extension DetailDataState {
-    func mapToDataViewState(neighborhoodViewModel: StatefulLiveData<Neighborhood>) -> DataViewState<ListingDetail> {
+    func mapToDataViewState(neighborhoodViewModel: NeighborhoodViewModel) -> DataViewState<ListingDetail> {
         switch self {
         case .pending:
             return .custom(view: AnyView(ProgressView()))

@@ -28,18 +28,18 @@ class HomesRepository {
     func getListingDetail(id: UUID) -> AnyPublisher<DetailDataState, Never> {
         let publisher: CurrentValueSubject<DetailDataState, Never> = .init(.pending)
         
-        // no need to handle cache missed.
-        if let cachedListing = try? globalStore.require(id: id) {
-            publisher.value = .cached(cachedListing)
-        }
-        
         Task {
+            // no need to handle cache missed error
+            if let cachedListing = try? globalStore.require(id: id) {
+                await publisher.updateValue(.cached(cachedListing))
+            }
+                
             do {
                 let detail = try await networkManager.get(DetailListingModel.self, from: "https://api.realtor.com/listings/\(id)")
-                publisher.value = .detail(detail)
+                await publisher.updateValue(.detail(detail))
             }
             catch {
-                publisher.value = .failure(error)
+                await publisher.updateValue(.failure(error))
             }
         }
         
@@ -52,13 +52,19 @@ class HomesRepository {
         Task {
             do {
                 let neighborhoodModel = try await networkManager.get(NeighborhoodModel.self, from: "https://api.realtor.com/listings/\(id)/neighborhood")
-                publisher.value = .success(neighborhoodModel)
+                await publisher.updateValue(.success(neighborhoodModel))
             }
             catch {
-                publisher.value = .failure(error)
+                await publisher.updateValue(.failure(error))
             }
         }
         
         return publisher.eraseToAnyPublisher()
+    }
+}
+
+private extension CurrentValueSubject where Failure == Never {
+    @MainActor func updateValue(_ value: Output) {
+        self.value = value
     }
 }

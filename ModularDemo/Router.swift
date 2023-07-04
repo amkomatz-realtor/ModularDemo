@@ -16,7 +16,7 @@ class Router: SearchRouting, FeedRouting {
     
     func getDestination(forListingId id: UUID) -> AnyView {
         return isV2Enabled
-            ? AnyView(resolver.listingDetailViewModel(forListing: id).resolve().dataView())
+            ? AnyView(ListingDetailViewModel(forListingId: id, resolver: resolver).dataView())
             : AnyView(ListingDetailView(id: id, resolver: resolver))
     }
 }
