@@ -1,11 +1,11 @@
 import SwiftUI
 
-struct CacheListingDetail: View {
+public struct CacheListingDetail: View {
     let listingHero: ListingHero
     let price: Double
     let listingAddress: ListingAddress
     
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .leading) {
             listingHero
             

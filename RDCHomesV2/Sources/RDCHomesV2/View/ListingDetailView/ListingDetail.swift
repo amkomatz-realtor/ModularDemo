@@ -3,7 +3,7 @@ import RDCCore
 import RDCBusiness
 
 public enum ListingDetail {
-    case cached
+    case cached(CacheListingDetail)
     case rental(RentalListingDetail)
     case nonRental(NonRentalListingDetail)
     case failure
@@ -14,8 +14,8 @@ extension ListingDetail: View {
         ScrollView {
             ZStack {
                 switch self {
-                case .cached:
-                    ProgressView()
+                case .cached(let cacheListingDetail):
+                    cacheListingDetail
                 case .rental(let rentalListingDetail):
                     rentalListingDetail
                 case .nonRental(let nonRentalListingDetail):
@@ -33,6 +33,9 @@ extension ListingDetail: View {
 #if targetEnvironment(simulator)
 struct ListingDetail_Previews: PreviewProvider {
     static var previews: some View {
+        ListingDetail.previewCache()
+            .previewDisplayName(".cache")
+        
         ListingDetail.previewRental()
             .previewDisplayName(".rental")
         
@@ -42,6 +45,10 @@ struct ListingDetail_Previews: PreviewProvider {
 }
 
 extension ListingDetail {
+    static func previewCache() -> Self {
+        .cached(.previewCacheListingDetail())
+    }
+    
     static func previewRental() -> Self {
         .rental(.previewRentalListingDetail())
     }
