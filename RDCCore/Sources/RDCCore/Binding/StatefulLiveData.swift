@@ -2,15 +2,18 @@ import Foundation
 import SwiftUI
 import Combine
 
-public enum DataLoadingState<T: View> {
+public enum DataViewState<T: View> {
+    case empty
     case placeholder(view: T)
-    case custom(loadingView: AnyView)
+    case custom(view: AnyView)
     case loaded(dataView: T)
 }
 
-extension DataLoadingState: View {
+extension DataViewState: View {
     public var body: some View {
         switch self {
+        case .empty:
+            EmptyView()
         case .placeholder(let view):
             view.redacted(reason: .placeholder)
         case .custom(let loadingView):
@@ -21,19 +24,20 @@ extension DataLoadingState: View {
     }
 }
 
-open class StatefulLiveData<T: View>: LiveData<DataLoadingState<T>> {
-    init(placeholder: T) {
-        super.init(.placeholder(view: placeholder))
+open class StatefulLiveData<T: View>: LiveData<DataViewState<T>> {
+    public init(publisher: AnyPublisher<DataViewState<T>, Never>) {
+        super.init(.empty)
+        
+        update(using: publisher)
     }
     
-    init(customLoadingView: T) {
-        super.init(.custom(loadingView: AnyView(customLoadingView)))
+    // MARK: - Factory
+    
+    public static func loaded<T>(_ value: T) -> StatefulLiveData<T> {
+        .init(publisher: Just(.loaded(dataView: value)).eraseToAnyPublisher())
     }
     
-    /// Updating the latest value using a `combine publisher`
-    public func update(using publisher: AnyPublisher<T, Never>) {
-        self.update(using: publisher
-            .map { .loaded(dataView: $0) }
-            .eraseToAnyPublisher())
+    public static func placeholder<T>(_ value: T) -> StatefulLiveData<T> {
+        .init(publisher: Just(.placeholder(view: value)).eraseToAnyPublisher())
     }
 }

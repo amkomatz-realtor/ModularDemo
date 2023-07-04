@@ -1,11 +1,12 @@
 import SwiftUI
+import RDCCore
 
 public struct RentalListingDetail: View {
     let listingHero: ListingHero
     let price: Double
     let listingAddress: ListingAddress
     let listingSize: ListingSize
-    let neighborhood: Neighborhood
+    let neighborhood: StatefulLiveData<Neighborhood>
     
     public var body: some View {
         VStack(alignment: .leading) {
@@ -29,7 +30,7 @@ public struct RentalListingDetail: View {
                 Spacer()
                     .frame(height: 2)
                 
-                neighborhood
+                neighborhood.dataView()
                 
                 Spacer()
                 
@@ -44,18 +45,29 @@ public struct RentalListingDetail: View {
 #if targetEnvironment(simulator)
 struct RentalListingDetail_Previews: PreviewProvider {
     static var previews: some View {
+        RentalListingDetail.previewLoadingNeighborhood()
+            .previewDisplayName(".neighborhood loading")
+        
         RentalListingDetail.previewRentalListingDetail()
-            .previewDisplayName(".rental listing detail")
+            .previewDisplayName(".all details loaded")
     }
 }
 
 extension RentalListingDetail {
+    static func previewLoadingNeighborhood() -> Self {
+        .init(listingHero: .previewListingHero(),
+              price: 389999,
+              listingAddress: .previewListingAddress(),
+              listingSize: .previewListingSize(),
+              neighborhood: .placeholder(.previewNeighborhood()))
+    }
+    
     static func previewRentalListingDetail() -> Self {
         .init(listingHero: .previewListingHero(),
               price: 389999,
               listingAddress: .previewListingAddress(),
               listingSize: .previewListingSize(),
-              neighborhood: .previewNeighborhood())
+              neighborhood: .loaded(.previewNeighborhood()))
     }
 }
 #endif
