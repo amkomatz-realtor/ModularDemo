@@ -25,7 +25,8 @@ public struct ListingDetail: View {
                 case .success(let detail):
                     switch detail.status {
                     case .forRent:
-                        ForRentView(detail, resolver: resolver)
+//                        ForRentView(detail, resolver: resolver)
+                        EmptyView()
                     case .forSale:
                         ForSaleView(detail, resolver: resolver)
                     case .offMarket:
