@@ -1,7 +1,7 @@
 import SwiftUI
 import RDCBusiness
 
-extension ListingDetailView {
+extension ListingDetail {
     struct CacheView: View {
         private let cache: any ListingModel
         

@@ -2,7 +2,7 @@ import SwiftUI
 import RDCCore
 import RDCBusiness
 
-public struct ListingDetailView: View {
+public struct ListingDetail: View {
     private let resolver: HomesResolving
     
     @StateObject private var viewModel: ViewModel

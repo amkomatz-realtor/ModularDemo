@@ -2,7 +2,7 @@ import SwiftUI
 import RDCCore
 import RDCBusiness
 
-extension ListingDetailView {
+extension ListingDetail {
     class ViewModel: ObservableObject {
         private let listingId: UUID
         private let homesRepository: HomesRepository

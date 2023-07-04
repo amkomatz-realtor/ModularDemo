@@ -1,6 +1,6 @@
 import SwiftUI
 
-extension ListingDetailView {
+extension ListingDetail {
     struct ForSaleView: View {
         private let detail: DetailListingModel
         private let resolver: HomesResolving
