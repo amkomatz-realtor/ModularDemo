@@ -1,36 +1,36 @@
 import SwiftUI
-import RDCCore
 
-public struct NonRentalListingDetail: View {
+struct CacheListingDetail: View {
     let listingHero: ListingHero
     let price: Double
     let listingAddress: ListingAddress
-    let listingSize: ListingSize
-    let neighborhood: StatefulLiveData<Neighborhood>
     
-    public var body: some View {
+    var body: some View {
         VStack(alignment: .leading) {
             listingHero
             
             VStack(alignment: .leading, spacing: 16) {
-                Text("For sale")
+                Text("Status Placeholder")
                     .font(.caption)
                     .foregroundColor(.gray)
+                    .redacted(reason: .placeholder)
                 
                 VStack(alignment: .leading) {
                     Text(price.toCurrency())
                         .font(.title2)
                         .foregroundColor(.black)
                     
-                        listingAddress
+                    listingAddress
                 }
                 
-                listingSize
+                ListingSize(beds: 3, baths: 2, sqft: 1600)
+                    .redacted(reason: .placeholder)
                 
                 Spacer()
                     .frame(height: 2)
                 
-                neighborhood.dataView()
+                Neighborhood(name: "Placeholder", rating: 10)
+                    .redacted(reason: .placeholder)
                 
                 Spacer()
                 
@@ -43,20 +43,18 @@ public struct NonRentalListingDetail: View {
 }
 
 #if targetEnvironment(simulator)
-struct NonRentalListingDetail_Previews: PreviewProvider {
+struct CacheListingDetail_Previews: PreviewProvider {
     static var previews: some View {
-        NonRentalListingDetail.previewNonRentalListingDetail()
-            .previewDisplayName(".non-rental listing detail")
+        CacheListingDetail.previewCacheListingDetail()
+            .previewDisplayName(".cache listing detail")
     }
 }
 
-extension NonRentalListingDetail {
-    static func previewNonRentalListingDetail() -> Self {
+extension CacheListingDetail {
+    static func previewCacheListingDetail() -> Self {
         .init(listingHero: .previewListingHero(),
-              price: 389999,
-              listingAddress: .previewListingAddress(),
-              listingSize: .previewListingSize(),
-              neighborhood: .loaded(.previewNeighborhood()))
+              price: 140000,
+              listingAddress: .previewListingAddress())
     }
 }
 #endif
