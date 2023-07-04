@@ -24,7 +24,7 @@ extension ListingDetail {
                             .font(.title2)
                             .foregroundColor(.black)
                         
-                        ListingAddressView(listing: cache)
+//                        ListingAddressView(listing: cache)
                     }
                     
 //                    ListingSizeView.Placeholder()
