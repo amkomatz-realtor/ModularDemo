@@ -3,9 +3,16 @@ import SwiftUI
 import Combine
 
 public enum DataViewState<T: View> {
+    /// Hidden
     case empty
+    
+    /// Skeleton from view
     case placeholder(view: T)
+    
+    /// Custom loading view, or error handling
     case custom(view: AnyView)
+    
+    /// View is loaded with data
     case loaded(dataView: T)
 }
 
@@ -16,8 +23,8 @@ extension DataViewState: View {
             EmptyView()
         case .placeholder(let view):
             view.redacted(reason: .placeholder)
-        case .custom(let loadingView):
-            loadingView
+        case .custom(let customView):
+            customView
         case .loaded(let dataView):
             dataView
         }

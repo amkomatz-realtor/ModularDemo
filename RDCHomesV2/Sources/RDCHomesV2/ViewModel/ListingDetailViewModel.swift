@@ -30,7 +30,7 @@ extension DetailDataState {
             return .custom(view: AnyView(ProgressView()))
             
         case .cached(let listingModel):
-            return .loaded(dataView: .cached(CacheListingDetail(
+            return .loaded(dataView: .cached(ListingDetail.CacheView(
                 listingHero: ListingHero(thumbnail: listingModel.thumbnail),
                 price: listingModel.price,
                 listingAddress: ListingAddress(address: listingModel.address)
@@ -38,22 +38,25 @@ extension DetailDataState {
             
         case .detail(let listingModel):
             switch listingModel.status {
+                
             case .forRent:
-                return .loaded(dataView: .rental(RentalListingDetail(
+                return .loaded(dataView: .forRent(ListingDetail.ForRentView(
                     listingHero: ListingHero(thumbnail: listingModel.thumbnail),
                     price: listingModel.price,
                     listingAddress: ListingAddress(address: listingModel.address),
                     listingSize: ListingSize(beds: listingModel.beds, baths: listingModel.baths, sqft: listingModel.sqft),
                     neighborhood: neighborhoodViewModel
                 )))
+                
             case .forSale:
-                return .loaded(dataView: .nonRental(NonRentalListingDetail(
+                return .loaded(dataView: .forSale(ListingDetail.ForSaleView(
                     listingHero: ListingHero(thumbnail: listingModel.thumbnail),
                     price: listingModel.price,
                     listingAddress: ListingAddress(address: listingModel.address),
                     listingSize: ListingSize(beds: listingModel.beds, baths: listingModel.baths, sqft: listingModel.sqft),
                     neighborhood: neighborhoodViewModel
                 )))
+                
             case .offMarket:
                 return .custom(view: AnyView(Text("Not Implemented")))
             }

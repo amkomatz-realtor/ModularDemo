@@ -3,9 +3,9 @@ import RDCCore
 import RDCBusiness
 
 public enum ListingDetail {
-    case cached(CacheListingDetail)
-    case rental(RentalListingDetail)
-    case nonRental(NonRentalListingDetail)
+    case cached(CacheView)
+    case forRent(ForRentView)
+    case forSale(ForSaleView)
     case failure
 }
 
@@ -16,9 +16,9 @@ extension ListingDetail: View {
                 switch self {
                 case .cached(let cacheListingDetail):
                     cacheListingDetail
-                case .rental(let rentalListingDetail):
+                case .forRent(let rentalListingDetail):
                     rentalListingDetail
-                case .nonRental(let nonRentalListingDetail):
+                case .forSale(let nonRentalListingDetail):
                     nonRentalListingDetail
                 case .failure:
                     Text("Unable to load listing detail")
@@ -50,11 +50,11 @@ extension ListingDetail {
     }
     
     static func previewRental() -> Self {
-        .rental(.previewRentalListingDetail())
+        .forRent(.previewRentalListingDetail())
     }
     
     static func previewNonRental() -> Self {
-        .nonRental(.previewNonRentalListingDetail())
+        .forSale(.previewNonRentalListingDetail())
     }
 }
 #endif

@@ -53,6 +53,17 @@ public extension LiveData where T: View {
     }
 }
 
+/// Fix `NavigationLink` non-lazy behavior
+public struct LazyView<Content: View>: View {
+    private let build: () -> LiveData<Content>
+    public init(_ build: @autoclosure @escaping () -> LiveData<Content>) {
+        self.build = build
+    }
+    public var body: some View {
+        build().dataView()
+    }
+}
+
 /// This definition should never change.
 private struct ObservableLiveData<V: View>: View {
     
