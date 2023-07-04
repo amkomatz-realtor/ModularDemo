@@ -27,7 +27,7 @@ extension ListingDetail {
                         ListingAddressView(listing: detail)
                     }
                     
-                    ListingSizeView(listing: detail)
+//                    ListingSizeView(listing: detail)
                     
                     Spacer()
                         .frame(height: 2)

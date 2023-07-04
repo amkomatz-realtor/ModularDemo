@@ -27,7 +27,7 @@ extension ListingDetail {
                         ListingAddressView(listing: cache)
                     }
                     
-                    ListingSizeView.Placeholder()
+//                    ListingSizeView.Placeholder()
                     
                     Spacer()
                         .frame(height: 2)
