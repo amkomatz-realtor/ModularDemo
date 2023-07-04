@@ -43,4 +43,7 @@
    <FileRef
       location = "group:RDCCore">
    </FileRef>
+   <FileRef
+      location = "group:RDCHomes/Tests/RDCHomes.xctestplan">
+   </FileRef>
 </Workspace>
