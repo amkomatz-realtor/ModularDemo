@@ -2,38 +2,24 @@ import SwiftUI
 import RDCCore
 import RDCBusiness
 
-public struct ListingDetail: View {
-    private let resolver: HomesResolving
-    
-    @StateObject private var viewModel: ViewModel
-    
-    public init(id listingId: UUID, resolver: HomesResolving) {
-        self.resolver = resolver
-        
-        _viewModel = StateObject(wrappedValue: ViewModel(id: listingId, resolver: resolver))
-    }
-    
+public enum ListingDetail {
+    case cached
+    case rental(RentalListingDetail)
+    case nonRental(NonRentalListingDetail)
+    case failure
+}
+
+extension ListingDetail: View {
     public var body: some View {
         ScrollView {
             ZStack {
-                switch viewModel.detailState {
-                case .initializing, .loading:
-                    if case .success(let cache) = viewModel.cacheState {
-                        CacheView(cache)
-                    }
-                    
-                case .success(let detail):
-                    switch detail.status {
-                    case .forRent:
-//                        ForRentView(detail, resolver: resolver)
-                        EmptyView()
-                    case .forSale:
-//                        ForSaleView(detail, resolver: resolver)
-                        EmptyView()
-                    case .offMarket:
-                        fatalError("Not implemented")
-                    }
-                    
+                switch self {
+                case .cached:
+                    ProgressView()
+                case .rental(let rentalListingDetail):
+                    rentalListingDetail
+                case .nonRental(let nonRentalListingDetail):
+                    nonRentalListingDetail
                 case .failure:
                     Text("Unable to load listing detail")
                 }
@@ -41,9 +27,27 @@ public struct ListingDetail: View {
             .frame(maxWidth: .infinity)
         }
         .edgesIgnoringSafeArea(.top)
-        .task {
-            viewModel.loadCache()
-            await viewModel.loadDetail()
-        }
     }
 }
+
+#if targetEnvironment(simulator)
+struct ListingDetail_Previews: PreviewProvider {
+    static var previews: some View {
+        ListingDetail.previewRental()
+            .previewDisplayName(".rental")
+        
+        ListingDetail.previewNonRental()
+            .previewDisplayName(".non-rental")
+    }
+}
+
+extension ListingDetail {
+    static func previewRental() -> Self {
+        .rental(.previewRentalListingDetail())
+    }
+    
+    static func previewNonRental() -> Self {
+        .nonRental(.previewNonRentalListingDetail())
+    }
+}
+#endif

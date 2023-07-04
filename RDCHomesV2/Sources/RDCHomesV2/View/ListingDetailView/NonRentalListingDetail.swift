@@ -1,13 +1,13 @@
 import SwiftUI
 
-struct NonRentalListingDetail: View {
+public struct NonRentalListingDetail: View {
     let listingHero: ListingHero
     let price: Double
     let listingAddress: ListingAddress
     let listingSize: ListingSize
     let neighborhood: Neighborhood
     
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .leading) {
             listingHero
             
