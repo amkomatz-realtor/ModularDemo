@@ -1,5 +1,4 @@
 import SwiftUI
-import RDCCore
 
 struct ListingSize: View {
     let beds: Int
