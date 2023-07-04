@@ -1,5 +1,5 @@
 import XCTest
-@testable import RDCHomes
+@testable import RDCHomesV2
 
 final class NeighborhoodResultsViewTests: XCTestCase {
     func test_name_isCorrect() {

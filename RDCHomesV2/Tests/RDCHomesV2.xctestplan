@@ -1,0 +1,32 @@
+{
+  "configurations" : [
+    {
+      "id" : "C6C478FD-177C-4591-97E5-A8FA9F213AF9",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:",
+          "identifier" : "RDCHomesV2",
+          "name" : "RDCHomesV2"
+        }
+      ]
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "RDCHomesV2Tests",
+        "name" : "RDCHomesV2Tests"
+      }
+    }
+  ],
+  "version" : 1
+}

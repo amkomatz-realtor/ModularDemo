@@ -1,6 +1,6 @@
 import RDCCore
 import RDCBusiness
-import RDCHomes
+import RDCHomesV2
 
 class StubHomesResolver: HomesResolving {
     var stubNetworkManager: StubNetworkManager = StubNetworkManager()

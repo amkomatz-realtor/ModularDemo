@@ -1,7 +1,7 @@
 import Foundation
 import RDCCore
 import RDCBusiness
-@testable import RDCHomes
+@testable import RDCHomesV2
 
 class StubNetworkManager: NetworkManaging {
     var delay: Duration = .zero

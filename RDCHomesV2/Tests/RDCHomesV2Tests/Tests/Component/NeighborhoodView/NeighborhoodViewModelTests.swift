@@ -1,6 +1,6 @@
 import XCTest
 import RDCCore
-@testable import RDCHomes
+@testable import RDCHomesV2
 
 final class NeighborhoodViewModelTests: XCTestCase {
     private let listing = DetailListingModel(
