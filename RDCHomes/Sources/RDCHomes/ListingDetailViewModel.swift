@@ -19,8 +19,8 @@ class ListingDetailViewModel: ObservableObject {
             let cacheModel = try resolver.globalStore.resolve().require(id: id)
             cacheState = .success(cacheModel)
         } catch {
-            cacheState = .failure(error)
-            detailState = .failure(error)
+            cacheState = .failure(error.localizedDescription)
+            detailState = .failure(error.localizedDescription)
         }
     }
     
@@ -33,7 +33,7 @@ class ListingDetailViewModel: ObservableObject {
                 let detail = try await homesRepository.getListingDetail(id: id)
                 detailState = .success(detail)
             } catch {
-                detailState = .failure(error)
+                detailState = .failure(error.localizedDescription)
             }
         }
     }

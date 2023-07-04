@@ -7,7 +7,10 @@ extension NeighborhoodView {
         
         init(name: String, rating: Double) {
             self.name = name
-            self.rating = "\(Int(rating))/10"
+            
+            let formatter = NumberFormatter()
+            formatter.maximumFractionDigits = 1
+            self.rating = "\(formatter.string(from: rating as NSNumber)!)/10"
         }
         
         init(neighborhood: NeighborhoodModel) {

@@ -20,7 +20,7 @@ class SearchResultsViewModel: ObservableObject {
                 let listings = try await searchRepository.getListings()
                 listingState = .success(listings)
             } catch {
-                listingState = .failure(error)
+                listingState = .failure(error.localizedDescription)
             }
         }
     }

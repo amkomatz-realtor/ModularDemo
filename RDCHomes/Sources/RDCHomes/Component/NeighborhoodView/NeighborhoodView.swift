@@ -20,9 +20,7 @@ struct NeighborhoodView: View {
             }
         }
         .task {
-            if case .initializing = viewModel.neighborhoodDetailState {
-                await viewModel.loadDetail()
-            }
+            await viewModel.loadDetail()
         }
     }
 }

@@ -21,8 +21,8 @@ public struct ListingDetailView: View {
             let cacheModel = try resolver.globalStore.resolve().require(id: listingId)
             cacheState = .success(cacheModel)
         } catch {
-            cacheState = .failure(error)
-            detailState = .failure(error)
+            cacheState = .failure(error.localizedDescription)
+            detailState = .failure(error.localizedDescription)
         }
     }
     
@@ -33,7 +33,7 @@ public struct ListingDetailView: View {
             let detail = try await homesRepository.getListingDetail(id: listingId)
             detailState = .success(detail)
         } catch {
-            detailState = .failure(error)
+            detailState = .failure(error.localizedDescription)
         }
     }
     
