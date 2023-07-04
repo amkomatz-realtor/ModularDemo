@@ -29,7 +29,7 @@ struct ListingHero_Previews: PreviewProvider {
 
 extension ListingHero{
     static func previewListingHero() -> Self {
-        .init(thumbnail: URL(string: "https://picsum.photos/350/250")!)
+        .init(thumbnail: URL(string: "https://ap.rdcpix.com/56c49b1d345453ab9a9712b2f99f3c80l-m3373608447od-w480_h360_x2.webp")!)
     }
 }
 #endif
