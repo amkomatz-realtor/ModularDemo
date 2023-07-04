@@ -25,7 +25,6 @@ open class LiveData<T>: ObservableObject, HashIdentifiable {
     /// Updating the latest value using a `combine publisher`
     public func update(using publisher: AnyPublisher<T, Never>) {
         publisher
-        .receive(on: DispatchQueue.main)
         .assign(to: &$latestValue)
     }
     

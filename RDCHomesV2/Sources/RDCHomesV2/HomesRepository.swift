@@ -3,19 +3,18 @@ import RDCCore
 import RDCBusiness
 import Combine
 
+enum DetailDataModel {
+    case pending
+    case cached(any ListingModel)
+    case detail(DetailListingModel)
+}
+
+enum NeighborhoodDataModel {
+    case pending
+    case value(NeighborhoodModel)
+}
+
 class HomesRepository {
-    
-    enum DetailDataModel {
-        case pending
-        case cached(any ListingModel)
-        case detail(DetailListingModel)
-    }
-    
-    enum NeighborhoodDataModel {
-        case pending
-        case value(NeighborhoodModel)
-    }
-    
     private let networkManager: NetworkManaging
     private let globalStore: GlobalStore
     
