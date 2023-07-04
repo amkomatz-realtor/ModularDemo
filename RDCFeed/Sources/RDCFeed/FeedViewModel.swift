@@ -20,7 +20,7 @@ class FeedViewModel: ObservableObject {
                 let feed = try await feedRepository.getFeed()
                 feedState = .success(feed)
             } catch {
-                feedState = .failure(error)
+                feedState = .failure(error.localizedDescription)
             }
         }
     }

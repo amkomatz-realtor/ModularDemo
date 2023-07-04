@@ -3,46 +3,22 @@ import RDCCore
 import RDCBusiness
 
 public struct ListingDetailView: View {
-    private let listingId: UUID
-    private let homesRepository: HomesRepository
     private let resolver: HomesResolving
     
-    @State private(set) var cacheState: ViewState<any ListingModel> = .initializing
-    @State private(set) var detailState: ViewState<DetailListingModel> = .initializing
+    @StateObject private var viewModel: ViewModel
     
     public init(id listingId: UUID, resolver: HomesResolving) {
-        self.listingId = listingId
-        homesRepository = HomesRepository(resolver: resolver)
         self.resolver = resolver
-    }
-    
-    private func loadCache() {
-        do {
-            let cacheModel = try resolver.globalStore.resolve().require(id: listingId)
-            cacheState = .success(cacheModel)
-        } catch {
-            cacheState = .failure(error.localizedDescription)
-            detailState = .failure(error.localizedDescription)
-        }
-    }
-    
-    private func loadDetail() async {
-        detailState = .loading
         
-        do {
-            let detail = try await homesRepository.getListingDetail(id: listingId)
-            detailState = .success(detail)
-        } catch {
-            detailState = .failure(error.localizedDescription)
-        }
+        _viewModel = StateObject(wrappedValue: ViewModel(id: listingId, resolver: resolver))
     }
     
     public var body: some View {
         ScrollView {
             ZStack {
-                switch detailState {
+                switch viewModel.detailState {
                 case .initializing, .loading:
-                    if case .success(let cache) = cacheState {
+                    if case .success(let cache) = viewModel.cacheState {
                         CacheView(cache)
                     }
                     
@@ -64,11 +40,8 @@ public struct ListingDetailView: View {
         }
         .edgesIgnoringSafeArea(.top)
         .task {
-            loadCache()
-            
-            if case .initializing = detailState {
-                await loadDetail()
-            }
+            viewModel.loadCache()
+            await viewModel.loadDetail()
         }
     }
 }
