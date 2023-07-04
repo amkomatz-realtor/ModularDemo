@@ -3,8 +3,9 @@ import RDCBusiness
 import RDCSearch
 import RDCHomes
 import RDCFeed
+import RDCHomesV2
 
-public class AppResolver: CoreResolving, BusinessResolving, SearchResolving, HomesResolving, FeedResolving {
+public class AppResolver: CoreResolving, BusinessResolving, SearchResolving, HomesResolving, HomesV2Resolving, FeedResolving {
     public let networkManager: any Resolver<NetworkManaging> = SingletonResolver {
         NetworkManager()
     }

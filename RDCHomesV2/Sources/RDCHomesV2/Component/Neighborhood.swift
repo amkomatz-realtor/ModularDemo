@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct Neighborhood: View {
+public struct Neighborhood: View {
     let name: String
     let rating: String
     
@@ -12,7 +12,7 @@ struct Neighborhood: View {
         self.rating = "\(formatter.string(from: rating as NSNumber)!)/10"
     }
     
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Neighborhood")
                 .font(.caption.bold())

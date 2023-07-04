@@ -20,7 +20,7 @@ class HomesRepository {
     private let networkManager: NetworkManaging
     private let globalStore: GlobalStore
     
-    init(resolver: HomesResolving) {
+    init(resolver: HomesV2Resolving) {
         networkManager = resolver.networkManager.resolve()
         globalStore = resolver.globalStore.resolve()
     }

@@ -4,6 +4,7 @@ import RDCSearch
 import RDCHomes
 import RDCFeed
 import RDCHomesV2
+import RDCCore
 
 class Router: SearchRouting, FeedRouting {
     private let resolver: AppResolver
@@ -15,7 +16,7 @@ class Router: SearchRouting, FeedRouting {
     
     func getDestination(forListingId id: UUID) -> AnyView {
         return isV2Enabled
-            ? AnyView(EmptyView())
+            ? AnyView(resolver.listingDetailViewModel(forListing: id).resolve().dataView())
             : AnyView(ListingDetailView(id: id, resolver: resolver))
     }
 }

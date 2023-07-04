@@ -1,4 +1,5 @@
 import SwiftUI
+import RDCCore
 
 extension DataView {
     public enum Assembler<T: View> {

@@ -4,7 +4,7 @@ import RDCCore
 import RDCBusiness
 import SwiftUI
 
-final class NeighborhoodViewModel: StatefulLiveData<Neighborhood> {
+public final class NeighborhoodViewModel: StatefulLiveData<Neighborhood> {
     init(_ publisher: AnyPublisher<NeighborhoodDataState, Never>) {
         
         super.init(publisher: publisher
