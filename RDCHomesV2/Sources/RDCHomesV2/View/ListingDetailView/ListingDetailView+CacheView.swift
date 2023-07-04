@@ -32,7 +32,7 @@ extension ListingDetail {
                     Spacer()
                         .frame(height: 2)
                     
-                    NeighborhoodView.Placeholder()
+//                    NeighborhoodView.Placeholder()
                     
                     Spacer()
                     
