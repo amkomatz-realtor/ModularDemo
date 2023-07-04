@@ -28,7 +28,8 @@ public struct ListingDetail: View {
 //                        ForRentView(detail, resolver: resolver)
                         EmptyView()
                     case .forSale:
-                        ForSaleView(detail, resolver: resolver)
+//                        ForSaleView(detail, resolver: resolver)
+                        EmptyView()
                     case .offMarket:
                         fatalError("Not implemented")
                     }
