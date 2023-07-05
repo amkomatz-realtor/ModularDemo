@@ -8,8 +8,7 @@ extension ListingDetailView {
         private let homesRepository: HomesRepository
         private let resolver: HomesResolving
         
-        @Published private(set) var cacheState: ViewState<any ListingModel> = .initializing
-        @Published private(set) var detailState: ViewState<DetailListingModel> = .initializing
+        @Published private(set) var state: State = .initializing
         
         public init(id listingId: UUID, resolver: HomesResolving) {
             self.listingId = listingId
@@ -18,29 +17,43 @@ extension ListingDetailView {
         }
         
         @MainActor
-        func loadCache() {
-            do {
-                let cacheModel = try resolver.globalStore.resolve().require(id: listingId)
-                cacheState = .success(cacheModel)
-            } catch {
-                cacheState = .failure(error.localizedDescription)
-                detailState = .failure(error.localizedDescription)
-            }
-        }
-        
-        @MainActor
-        func loadDetail() async {
-            if case .loading = detailState { return }
-            if case .success = detailState { return }
+        func activate() async {
+            if case .loading = state { return }
+            if case .loadingWithCache = state { return }
+            if case .successForSale = state { return }
+            if case .successForRent = state { return }
             
-            detailState = .loading
+            state = .loading
+            
+            if let cache = try? resolver.globalStore.resolve().require(id: listingId) {
+                state = .loadingWithCache(cache)
+            }
             
             do {
                 let detail = try await homesRepository.getListingDetail(id: listingId)
-                detailState = .success(detail)
+                
+                switch detail.status {
+                case .forSale, .offMarket:
+                    state = .successForSale(detail)
+                case .forRent:
+                    state = .successForRent(detail)
+                }
             } catch {
-                detailState = .failure(error.localizedDescription)
+                state = .failure(error.localizedDescription)
             }
         }
+    }
+}
+
+extension ListingDetailView.ViewModel {
+    enum State {
+        case initializing
+        case loading
+        case loadingWithCache(any ListingModel)
+        
+        case successForSale(DetailListingModel)
+        case successForRent(DetailListingModel)
+        
+        case failure(String)
     }
 }

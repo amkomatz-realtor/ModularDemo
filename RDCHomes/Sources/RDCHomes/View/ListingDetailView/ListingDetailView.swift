@@ -16,22 +16,16 @@ public struct ListingDetailView: View {
     public var body: some View {
         ScrollView {
             ZStack {
-                switch viewModel.detailState {
+                switch viewModel.state {
                 case .initializing, .loading:
-                    if case .success(let cache) = viewModel.cacheState {
-                        CacheView(cache)
-                    }
-                    
-                case .success(let detail):
-                    switch detail.status {
-                    case .forRent:
-                        ForRentView(detail, resolver: resolver)
-                    case .forSale:
-                        ForSaleView(detail, resolver: resolver)
-                    case .offMarket:
-                        fatalError("Not implemented")
-                    }
-                    
+                    ProgressView()
+                        .progressViewStyle(.circular)    
+                case .loadingWithCache(let cache):
+                    CacheView(cache)
+                case .successForSale(let detail):
+                    ForSaleView(detail, resolver: resolver)
+                case .successForRent(let detail):
+                    ForRentView(detail, resolver: resolver)
                 case .failure:
                     Text("Unable to load listing detail")
                 }
@@ -40,8 +34,7 @@ public struct ListingDetailView: View {
         }
         .edgesIgnoringSafeArea(.top)
         .task {
-            viewModel.loadCache()
-            await viewModel.loadDetail()
+            await viewModel.activate()
         }
     }
 }

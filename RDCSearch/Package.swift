@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "RDCSearch",
-    platforms: [.iOS(.v16)],
+    platforms: [.iOS(.v15)],
     products: [
         .library(
             name: "RDCSearch",

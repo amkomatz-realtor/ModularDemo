@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 import RDCCore
 import RDCBusiness
 
@@ -30,7 +31,25 @@ class PreviewNetworkManager: NetworkManaging {
     }
 }
 
+class PreviewRouter: HostRouter {
+    var path: [String] = []
+    
+    func register(_ router: ModuleRouter) {}
+    
+    func route(_ destination: String) {}
+    
+    func view(for destination: String) -> AnyView {
+        AnyView(Text(destination))
+    }
+    
+    func onDismiss(_ index: Int) {}
+}
+
 struct PreviewHomesResolver: HomesResolving {
+    let router: any Resolver<HostRouter> = SingletonResolver {
+        PreviewRouter()
+    }
+    
     let networkManager: any Resolver<NetworkManaging> = SingletonResolver {
         PreviewNetworkManager()
     }
