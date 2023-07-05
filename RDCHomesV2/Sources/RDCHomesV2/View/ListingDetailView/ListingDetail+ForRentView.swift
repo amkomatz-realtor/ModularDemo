@@ -3,37 +3,14 @@ import RDCCore
 
 public extension ListingDetail {
     struct ForRentView: View, HashIdentifiable {
-        let listingHero: ListingHero
-        let price: Double
-        let listingAddress: ListingAddress
-        let listingSize: ListingSize
-        let neighborhood: StatefulLiveData<Neighborhood>
+        let sections: [ForRentSection]
         
         public var body: some View {
             VStack(alignment: .leading) {
-                listingHero
-                
                 VStack(alignment: .leading, spacing: 16) {
-                    Text("For rent")
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                    
-                    VStack(alignment: .leading) {
-                        Text(price.toCurrency())
-                            .font(.title2)
-                            .foregroundColor(.black)
-                        
-                        listingAddress
+                    ForEach(sections) { section in
+                        section
                     }
-                    
-                    listingSize
-                    
-                    Spacer()
-                        .frame(height: 2)
-                    
-                    neighborhood.dataView()
-                    
-                    Spacer()
                     
                     HStack { Spacer() }
                 }
@@ -57,19 +34,11 @@ struct ListingDetail_ForRentView_Previews: PreviewProvider {
 
 extension ListingDetail.ForRentView {
     static func previewLoadingNeighborhood() -> Self {
-        .init(listingHero: .previewListingHero(),
-              price: 389999,
-              listingAddress: .previewListingAddress(),
-              listingSize: .previewListingSize(),
-              neighborhood: .placeholder(.previewNeighborhood()))
+        .init(sections: [])
     }
     
     static func previewRentalListingDetail() -> Self {
-        .init(listingHero: .previewListingHero(),
-              price: 389999,
-              listingAddress: .previewListingAddress(),
-              listingSize: .previewListingSize(),
-              neighborhood: .loaded(.previewNeighborhood()))
+        .init(sections: [])
     }
 }
 #endif
