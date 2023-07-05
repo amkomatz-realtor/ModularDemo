@@ -4,7 +4,7 @@ import RDCBusiness
 
 public enum ListingDetail: HashIdentifiable {
     case cached(CacheView)
-    case forRent(ForRentView)
+    case forRent(StatefulLiveData<ForRentView>)
     case forSale(ForSaleView)
     case failure
 }
@@ -17,7 +17,7 @@ extension ListingDetail: View {
                 case .cached(let cacheListingDetail):
                     cacheListingDetail
                 case .forRent(let rentalListingDetail):
-                    rentalListingDetail
+                    rentalListingDetail.dataView()
                 case .forSale(let nonRentalListingDetail):
                     nonRentalListingDetail
                 case .failure:
@@ -50,7 +50,7 @@ extension ListingDetail {
     }
     
     static func previewRental() -> Self {
-        .forRent(.previewRentalListingDetail())
+        .forRent(.loaded(.previewRentalListingDetail()))
     }
     
     static func previewNonRental() -> Self {
