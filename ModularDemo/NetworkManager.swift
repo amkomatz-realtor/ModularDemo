@@ -7,17 +7,15 @@ class NetworkManager: NetworkManaging {
     func get<T>(_ type: T.Type, from url: String) async throws -> T where T: Decodable {
         try await Task.sleep(nanoseconds: 1_000_000_000)
         
-        let components = URLComponents(string: url)!
-        
         let response: Data
         
         if url == "https://api.realtor.com/listings" {
             response = listingsJson
         } else if url == "https://api.realtor.com/feed" {
             response = feedJson
-        } else if let id = url.matches(of: "^https://api.realtor.com/listings/(.*)$").get(1)?.lowercased() {
+        } else if let id = url.matches(of: "^https://api.realtor.com/listings/([a-zA-Z0-9\\-]*)$").get(1)?.lowercased() {
             response = detailJson[id]!
-        } else if let id = url.wholeMatch(of: /^(https:\/\/api.realtor.com\/listings\/([a-zA-Z0-9\\-]*)\/neighborhood)$/)?.output.2.lowercased() {
+        } else if let id = url.matches(of: "^https://api.realtor.com/listings/([a-zA-Z0-9\\-]*)/neighborhood$").get(1)?.lowercased() {
             response = neighborhoodJson[id]!
         } else {
             fatalError("URL not mocked")

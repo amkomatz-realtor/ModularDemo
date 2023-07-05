@@ -196,7 +196,6 @@
 			isa = PBXGroup;
 			children = (
 				3194AE6E2A4B7F9200B90244 /* Doc Sources */,
-				57A2230829F84E1400BBC616 /* Router.swift */,
 				57A2230829F84E1400BBC616 /* AppRouter.swift */,
 				57A2230029F8457D00BBC616 /* NetworkManager.swift */,
 				57A222FC29F8455600BBC616 /* AppResolver.swift */,
@@ -398,7 +397,7 @@
 				3194AE6B2A4B7DD500B90244 /* Documentation.docc in Sources */,
 				3194AE982A4B810600B90244 /* Int+Array.swift in Sources */,
 				3194AE9E2A4B816100B90244 /* WeatherReportViewVM.swift in Sources */,
-				57A2230929F84E1400BBC616 /* Router.swift in Sources */,
+				57A2230929F84E1400BBC616 /* AppRouter.swift in Sources */,
 				574EA0552A3C0553001AB395 /* AppView.swift in Sources */,
 				57A2230929F84E1400BBC616 /* AppRouter.swift in Sources */,
 			);
