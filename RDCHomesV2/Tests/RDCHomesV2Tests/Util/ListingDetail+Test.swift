@@ -12,7 +12,7 @@ extension ListingDetail {
     
     var forRentView: ForRentView? {
         if case .forRent(let forRentView) = self {
-            return forRentView
+            return forRentView.latestValue.loadedView
         }
         
         return nil

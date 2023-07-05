@@ -92,7 +92,8 @@ final class ListingDetailViewModelTests: XCTestCase {
     
     private func whenCreatingViewModelWith(dataState: DetailDataState) {
         sut = ListingDetailViewModel(Just(dataState).eraseToAnyPublisher(),
-                                     neighborhoodViewModel: stubNeighborhoodViewModel())
+                                     neighborhoodViewModel: stubNeighborhoodViewModel(),
+                                     forRentViewModel: stubForRentViewModel())
     }
     
     private func whenCreatingViewModelWithListingStatus(_ status: DetailListingModel.Status) {
@@ -108,11 +109,16 @@ final class ListingDetailViewModelTests: XCTestCase {
         )
         
         sut = ListingDetailViewModel(Just(.detail(rentalListingModel)).eraseToAnyPublisher(),
-                                     neighborhoodViewModel: stubNeighborhoodViewModel())
+                                     neighborhoodViewModel: stubNeighborhoodViewModel(),
+                                     forRentViewModel: stubForRentViewModel())
     }
     
     private func stubNeighborhoodViewModel() -> NeighborhoodViewModel {
         // We already test this black box and there is no need to repeat the process here, so stubbing it.
         NeighborhoodViewModel(forListingId: UUID(), resolver: StubHomesResolver())
+    }
+    
+    private func stubForRentViewModel() -> ForRentViewModel {
+        ForRentViewModel(publisher: Just(.empty).eraseToAnyPublisher())
     }
 }
