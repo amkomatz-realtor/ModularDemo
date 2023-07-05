@@ -4,7 +4,7 @@ import RDCBusiness
 @testable import RDCHomes
 
 class StubNetworkManager: NetworkManaging {
-    var delay: Duration = .zero
+    var delay: TimeInterval = 0
     
     var stubDetailListing: Result<DetailListingModel, Error> = .success(DetailListingModel(
         id: UUID(),
@@ -20,7 +20,7 @@ class StubNetworkManager: NetworkManaging {
     var stubNeighborhood: Result<NeighborhoodModel, Error> = .success(NeighborhoodModel(name: "Downtown", rating: 8))
     
     func get<T>(_ type: T.Type, from url: String) async throws -> T where T : Decodable {
-        try await Task.sleep(for: delay)
+        try await Task.sleep(seconds: delay)
         
         if T.self == DetailListingModel.self {
             return try stubDetailListing.get() as! T

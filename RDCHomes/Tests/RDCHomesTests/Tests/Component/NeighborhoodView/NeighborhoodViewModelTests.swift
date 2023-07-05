@@ -30,7 +30,7 @@ final class NeighborhoodViewModelTests: XCTestCase {
     func test_loadDetail_duringApiCall_stateIsLoading() async throws {
         // Given
         let resolver = StubHomesResolver()
-        resolver.stubNetworkManager.delay = .seconds(100)
+        resolver.stubNetworkManager.delay = 100
         resolver.stubNetworkManager.stubDetailListing = .success(listing)
         resolver.stubNetworkManager.stubNeighborhood = .failure(GenericError(message: "test -- api call failed"))
         let sut = NeighborhoodView.ViewModel(detail: listing, resolver: resolver)
@@ -39,7 +39,7 @@ final class NeighborhoodViewModelTests: XCTestCase {
         Task {
             await sut.loadDetail()
         }
-        try await Task.sleep(for: .seconds(0.25))
+        try await Task.sleep(seconds: 0.25)
         
         // Then
         XCTAssertEqual(sut.neighborhoodDetailState, .loading)
@@ -76,7 +76,7 @@ final class NeighborhoodViewModelTests: XCTestCase {
     func test_loadDetail_whileLoading_doesNothing() async throws {
         // Given
         let resolver = StubHomesResolver()
-        resolver.stubNetworkManager.delay = .seconds(100)
+        resolver.stubNetworkManager.delay = 100
         resolver.stubNetworkManager.stubDetailListing = .success(listing)
         resolver.stubNetworkManager.stubNeighborhood = .success(neighborhood)
         let sut = NeighborhoodView.ViewModel(detail: listing, resolver: resolver)
@@ -85,7 +85,7 @@ final class NeighborhoodViewModelTests: XCTestCase {
         Task {
             await sut.loadDetail()
         }
-        try await Task.sleep(for: .seconds(0.25))
+        try await Task.sleep(seconds: 0.25)
         await sut.loadDetail()
         
         // Then
