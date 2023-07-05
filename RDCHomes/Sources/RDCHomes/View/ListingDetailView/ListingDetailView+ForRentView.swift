@@ -32,7 +32,14 @@ extension ListingDetailView {
                     Spacer()
                         .frame(height: 2)
                     
-                    NeighborhoodView(detail: detail, resolver: resolver)
+                    NeighborhoodView(detail, resolver: resolver)
+                    
+                    Spacer()
+                        .frame(height: 2)
+                    
+                    ListingSeeMoreDetailsView(detail, resolver: resolver)
+                    
+                    ListingSeeSimilarHomesView(resolver: resolver)
                     
                     Spacer()
                     
@@ -44,3 +51,15 @@ extension ListingDetailView {
         }
     }
 }
+
+#if targetEnvironment(simulator)
+struct ForRentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ListingDetailView.ForRentView(
+            previewForSaleListing,
+            resolver: PreviewHomesResolver()
+        )
+        .edgesIgnoringSafeArea(.top)
+    }
+}
+#endif

@@ -1,12 +1,15 @@
 import SwiftUI
+import RDCCore
 
 extension ListingDetailView {
     struct ForSaleView: View {
         private let detail: DetailListingModel
+        private let router: HostRouter
         private let resolver: HomesResolving
         
         init(_ detail: DetailListingModel, resolver: HomesResolving) {
             self.detail = detail
+            router = resolver.router.resolve()
             self.resolver = resolver
         }
         
@@ -32,7 +35,14 @@ extension ListingDetailView {
                     Spacer()
                         .frame(height: 2)
                     
-                    NeighborhoodView(detail: detail, resolver: resolver)
+                    NeighborhoodView(detail, resolver: resolver)
+                    
+                    Spacer()
+                        .frame(height: 2)
+                    
+                    ListingSeeMoreDetailsView(detail, resolver: resolver)
+                    
+                    ListingSeeSimilarHomesView(resolver: resolver)
                     
                     Spacer()
                     
@@ -45,3 +55,14 @@ extension ListingDetailView {
     }
 }
 
+#if targetEnvironment(simulator)
+struct ForSaleView_Previews: PreviewProvider {
+    static var previews: some View {
+        ListingDetailView.ForSaleView(
+            previewForSaleListing,
+            resolver: PreviewHomesResolver()
+        )
+        .edgesIgnoringSafeArea(.top)
+    }
+}
+#endif

@@ -35,6 +35,13 @@ extension ListingDetailView {
                     NeighborhoodView.Placeholder()
                     
                     Spacer()
+                        .frame(height: 2)
+                    
+                    ListingSeeMoreDetailsView.Placeholder()
+                    
+                    ListingSeeSimilarHomesView.Placeholder()
+                    
+                    Spacer()
                     
                     HStack { Spacer() }
                 }
@@ -44,3 +51,12 @@ extension ListingDetailView {
         }
     }
 }
+
+#if targetEnvironment(simulator)
+struct CacheView_Previews: PreviewProvider {
+    static var previews: some View {
+        ListingDetailView.CacheView(previewForSaleListing)
+            .edgesIgnoringSafeArea(.top)
+    }
+}
+#endif
