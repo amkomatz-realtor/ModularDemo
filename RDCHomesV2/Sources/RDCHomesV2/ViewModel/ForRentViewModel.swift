@@ -20,8 +20,10 @@ final class ForRentViewModel: StatefulLiveData<ListingDetail.ForRentView> {
         
         super.init(publisher: publisher
             .map { dataState in
-                dataState.mapToDataViewState(listingModel: detailListingModel,
-                                             neighborhoodViewModelResolver: { NeighborhoodViewModel(forListingId: $0, resolver: resolver) })
+                dataState.mapToDataViewState(
+                    listingModel: detailListingModel,
+                    neighborhoodViewModelResolver: { NeighborhoodViewModel(forListingId: $0, resolver: resolver) }
+                )
             }
             .eraseToAnyPublisher()
         )

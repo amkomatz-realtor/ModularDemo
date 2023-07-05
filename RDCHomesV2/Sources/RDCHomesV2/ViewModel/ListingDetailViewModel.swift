@@ -7,21 +7,19 @@ import SwiftUI
 public final class ListingDetailViewModel: StatefulLiveData<ListingDetail> {
     public convenience init(forListingId id: UUID, resolver: HomesV2Resolving) {
         let homesRepository = HomesRepository(resolver: resolver)
-        let neighborhoodViewModel = NeighborhoodViewModel(forListingId: id, resolver: resolver)
         self.init(homesRepository.getListingDetail(id: id),
-                  neighborhoodViewModel: neighborhoodViewModel,
                   resolver: resolver)
     }
     
     init(_ publisher: AnyPublisher<DetailDataState, Never>,
-         neighborhoodViewModel: NeighborhoodViewModel,
-         resolver: HomesV2Resolving
-    ) {
+         resolver: HomesV2Resolving) {
         
         super.init(publisher: publisher
             .map { dataState in
-                dataState.mapToDataViewState(neighborhoodViewModel: neighborhoodViewModel,
-                                             forRentViewModelResolver: { ForRentViewModel(detailListingModel: $0, resolver: resolver) })
+                dataState.mapToDataViewState(
+                    neighborhoodViewModelResolver: { NeighborhoodViewModel(forListingId: $0, resolver: resolver) },
+                    forRentViewModelResolver: { ForRentViewModel(detailListingModel: $0, resolver: resolver) }
+                )
             }
             .eraseToAnyPublisher()
         )
@@ -29,7 +27,7 @@ public final class ListingDetailViewModel: StatefulLiveData<ListingDetail> {
 }
 
 private extension DetailDataState {
-    func mapToDataViewState(neighborhoodViewModel: NeighborhoodViewModel,
+    func mapToDataViewState(neighborhoodViewModelResolver: (UUID) -> NeighborhoodViewModel,
                             forRentViewModelResolver: (DetailListingModel) -> ForRentViewModel) -> DataViewState<ListingDetail> {
         switch self {
         case .pending:
@@ -54,7 +52,7 @@ private extension DetailDataState {
                     price: listingModel.price,
                     listingAddress: ListingAddress(address: listingModel.address),
                     listingSize: ListingSize(beds: listingModel.beds, baths: listingModel.baths, sqft: listingModel.sqft),
-                    neighborhood: neighborhoodViewModel
+                    neighborhood: neighborhoodViewModelResolver(listingModel.id)
                 )))
                 
             case .offMarket:
