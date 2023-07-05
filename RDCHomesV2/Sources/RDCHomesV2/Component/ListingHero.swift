@@ -1,6 +1,7 @@
 import SwiftUI
+import RDCCore
 
-struct ListingHero: View {
+struct ListingHero: View, HashIdentifiable {
     let thumbnail: URL
     
     var body: some View {

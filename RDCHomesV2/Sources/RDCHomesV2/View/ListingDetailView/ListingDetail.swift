@@ -2,7 +2,7 @@ import SwiftUI
 import RDCCore
 import RDCBusiness
 
-public enum ListingDetail {
+public enum ListingDetail: HashIdentifiable {
     case cached(CacheView)
     case forRent(ForRentView)
     case forSale(ForSaleView)

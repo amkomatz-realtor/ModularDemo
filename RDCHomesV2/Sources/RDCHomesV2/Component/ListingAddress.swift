@@ -1,6 +1,7 @@
 import SwiftUI
+import RDCCore
 
-struct ListingAddress: View {
+struct ListingAddress: View, HashIdentifiable {
     let address: String
     
     var body: some View {

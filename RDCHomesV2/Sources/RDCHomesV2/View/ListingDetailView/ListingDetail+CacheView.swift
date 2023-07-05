@@ -1,8 +1,9 @@
 import SwiftUI
+import RDCCore
 
 public extension ListingDetail {
     
-    struct CacheView: View {
+    struct CacheView: View, HashIdentifiable {
         let listingHero: ListingHero
         let price: Double
         let listingAddress: ListingAddress

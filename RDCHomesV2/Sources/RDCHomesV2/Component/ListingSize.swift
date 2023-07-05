@@ -1,6 +1,7 @@
 import SwiftUI
+import RDCCore
 
-struct ListingSize: View {
+struct ListingSize: View, HashIdentifiable {
     let beds: Int
     let baths: Int
     let sqft: Int
