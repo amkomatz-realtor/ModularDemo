@@ -4,7 +4,7 @@ import RDCCore
 extension ListingDetail {
     enum ForRentSection: HashIdentifiable {
         case listingHero(ListingHero)
-        case listingStatus(text: String, price: Double, address: ListingAddress)
+        case listingStatus(text: String, price: String, address: ListingAddress)
         case listingSize(ListingSize)
         case neighborhood(StatefulLiveData<Neighborhood>)
     }
@@ -22,7 +22,7 @@ extension ListingDetail.ForRentSection: View {
                     .foregroundColor(.gray)
                 
                 VStack(alignment: .leading) {
-                    Text(price.toCurrency())
+                    Text(price)
                         .font(.title2)
                         .foregroundColor(.black)
                     
@@ -69,7 +69,7 @@ extension ListingDetail.ForRentSection {
     }
     
     static func previewListingStatus() -> Self {
-        .listingStatus(text: "For Rent", price: 140000, address: .previewListingAddress())
+        .listingStatus(text: "For Rent", price: 140000.toCurrency(), address: .previewListingAddress())
     }
     
     static func previewListingSize() -> Self {
