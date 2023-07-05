@@ -28,7 +28,7 @@ public final class ListingDetailViewModel: StatefulLiveData<ListingDetail> {
     }
 }
 
-extension DetailDataState {
+private extension DetailDataState {
     func mapToDataViewState(neighborhoodViewModel: NeighborhoodViewModel,
                             forRentViewModelResolver: (DetailListingModel) -> ForRentViewModel) -> DataViewState<ListingDetail> {
         switch self {
