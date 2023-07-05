@@ -31,7 +31,7 @@ private extension DetailDataState {
                             forRentViewModelResolver: (DetailListingModel) -> ForRentViewModel) -> DataViewState<ListingDetail> {
         switch self {
         case .pending:
-            return .custom(view: AnyView(ProgressView()))
+            return .custom(view: ProgressIndicator())
             
         case .cached(let listingModel):
             return .loaded(dataView: .cached(ListingDetail.CacheView(
@@ -56,11 +56,11 @@ private extension DetailDataState {
                 )))
                 
             case .offMarket:
-                return .custom(view: AnyView(Text("Not Implemented")))
+                return .custom(view: ErrorText(message: "Not implemented"))
             }
             
         case .failure(let error):
-            return .custom(view: AnyView(Text(error.localizedDescription)))
+            return .custom(view: ErrorText(message: error.localizedDescription))
         }
     }
 }

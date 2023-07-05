@@ -19,9 +19,9 @@ extension DataViewState {
         return nil
     }
     
-    var customView: AnyView? {
+    func customView<V>(type: V.Type) -> V? {
         if case .custom(let view) = self {
-            return view
+            return view as? V
         }
         
         return nil

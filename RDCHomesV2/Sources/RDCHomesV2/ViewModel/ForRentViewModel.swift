@@ -35,7 +35,7 @@ private extension RentalSectionsDataState {
                             neighborhoodViewModelResolver: (UUID) -> NeighborhoodViewModel) -> DataViewState<ListingDetail.ForRentView> {
         switch self {
         case .pending:
-            return .custom(view: AnyView(ProgressView()))
+            return .custom(view: ProgressIndicator())
         case .success(let sectionIds):
             return .loaded(dataView: ListingDetail.ForRentView(sections: sectionIds.compactMap { section in
                 switch section.sectionId {

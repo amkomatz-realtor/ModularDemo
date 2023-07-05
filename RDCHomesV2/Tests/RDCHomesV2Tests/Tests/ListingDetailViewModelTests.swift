@@ -20,7 +20,7 @@ final class ListingDetailViewModelTests: XCTestCase {
     
     func testItShowsCustomProgressViewWhenDataIsPending() {
         whenCreatingViewModelWith(dataState: .pending)
-        XCTAssertNotNil(sut.latestValue.customView)
+        XCTAssertNotNil(sut.latestValue.customView(type: ProgressIndicator.self))
     }
     
     func testItShowsCacheViewWhenReceivingCacheData() {
@@ -56,12 +56,12 @@ final class ListingDetailViewModelTests: XCTestCase {
     
     func testItShowsCustomViewForOffMarket() {
         whenCreatingViewModelWithListingStatus(.offMarket)
-        XCTAssertNotNil(sut.latestValue.customView)
+        XCTAssertNotNil(sut.latestValue.customView(type: ErrorText.self))
     }
     
     func testItShowsCustomViewForFailure() {
         whenCreatingViewModelWith(dataState: .failure(NSError(domain: "unit test", code: -1)))
-        XCTAssertNotNil(sut.latestValue.customView)
+        XCTAssertNotNil(sut.latestValue.customView(type: ErrorText.self))
     }
 
     private func whenCreatingViewModelWith(listingId: UUID, resolver: HomesV2Resolving) {
@@ -70,12 +70,11 @@ final class ListingDetailViewModelTests: XCTestCase {
     
     private func whenCreatingViewModelWith(dataState: DetailDataState) {
         sut = ListingDetailViewModel(Just(dataState).eraseToAnyPublisher(),
-                                     neighborhoodViewModel: stubNeighborhoodViewModel(),
-                                     forRentViewModel: stubForRentViewModel())
+                                     resolver: StubHomesResolver())
     }
     
     private func whenCreatingViewModelWithListingStatus(_ status: DetailListingModel.Status) {
-        let rentalListingModel = DetailListingModel(
+        let detailListingModel = DetailListingModel(
             id: .init(),
             address: "fake listing detail address",
             price: 200000,
@@ -86,9 +85,8 @@ final class ListingDetailViewModelTests: XCTestCase {
             sqft: 1500
         )
         
-        sut = ListingDetailViewModel(Just(.detail(rentalListingModel)).eraseToAnyPublisher(),
-                                     neighborhoodViewModel: stubNeighborhoodViewModel(),
-                                     forRentViewModel: stubForRentViewModel())
+        sut = ListingDetailViewModel(Just(.detail(detailListingModel)).eraseToAnyPublisher(),
+                                     resolver: StubHomesResolver())
     }
     
     private func stubNeighborhoodViewModel() -> NeighborhoodViewModel {
@@ -97,6 +95,17 @@ final class ListingDetailViewModelTests: XCTestCase {
     }
     
     private func stubForRentViewModel() -> ForRentViewModel {
-        ForRentViewModel(publisher: Just(.empty).eraseToAnyPublisher())
+        let detailListingModel = DetailListingModel(
+            id: .init(),
+            address: "fake listing detail address",
+            price: 200000,
+            thumbnail: URL(string: "https://fakeurl.com")!,
+            status: .forRent,
+            beds: 3,
+            baths: 3,
+            sqft: 1500
+        )
+        
+        return ForRentViewModel(detailListingModel: detailListingModel, resolver: StubHomesResolver())
     }
 }
