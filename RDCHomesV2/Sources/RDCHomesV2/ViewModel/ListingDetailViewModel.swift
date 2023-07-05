@@ -10,18 +10,18 @@ public final class ListingDetailViewModel: StatefulLiveData<ListingDetail> {
         let neighborhoodViewModel = NeighborhoodViewModel(forListingId: id, resolver: resolver)
         self.init(homesRepository.getListingDetail(id: id),
                   neighborhoodViewModel: neighborhoodViewModel,
-                  forRentViewModel: .init(publisher: Just(.empty).eraseToAnyPublisher()))
+                  resolver: resolver)
     }
     
     init(_ publisher: AnyPublisher<DetailDataState, Never>,
          neighborhoodViewModel: NeighborhoodViewModel,
-         forRentViewModel: ForRentViewModel
+         resolver: HomesV2Resolving
     ) {
         
         super.init(publisher: publisher
             .map { dataState in
                 dataState.mapToDataViewState(neighborhoodViewModel: neighborhoodViewModel,
-                                             forRentViewModel: forRentViewModel)
+                                             forRentViewModelResolver: { ForRentViewModel(detailListingModel: $0, resolver: resolver) })
             }
             .eraseToAnyPublisher()
         )
@@ -30,7 +30,7 @@ public final class ListingDetailViewModel: StatefulLiveData<ListingDetail> {
 
 extension DetailDataState {
     func mapToDataViewState(neighborhoodViewModel: NeighborhoodViewModel,
-                            forRentViewModel: ForRentViewModel) -> DataViewState<ListingDetail> {
+                            forRentViewModelResolver: (DetailListingModel) -> ForRentViewModel) -> DataViewState<ListingDetail> {
         switch self {
         case .pending:
             return .custom(view: AnyView(ProgressView()))
@@ -46,7 +46,7 @@ extension DetailDataState {
             switch listingModel.status {
                 
             case .forRent:
-                return .loaded(dataView: .forRent(forRentViewModel))
+                return .loaded(dataView: .forRent(forRentViewModelResolver(listingModel)))
                 
             case .forSale:
                 return .loaded(dataView: .forSale(ListingDetail.ForSaleView(
