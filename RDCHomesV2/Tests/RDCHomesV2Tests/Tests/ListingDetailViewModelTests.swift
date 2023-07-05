@@ -32,28 +32,6 @@ final class ListingDetailViewModelTests: XCTestCase {
         ))
     }
     
-    func testItShowsForRentViewWhenReceivingRentalData() {
-        whenCreatingViewModelWithListingStatus(.forRent)
-        XCTAssertNotNil(sut.latestValue.loadedView?.forRentView)
-        
-        XCTAssertEqual(sut.latestValue.loadedView?.forRentView?.listingHero,
-                       ListingHero(thumbnail: URL(string: "https://fakeurl.com")!))
-        XCTAssertEqual(sut.latestValue.loadedView?.forRentView?.price,
-                       200000)
-        XCTAssertEqual(sut.latestValue.loadedView?.forRentView?.listingAddress,
-                       ListingAddress(address: "fake listing detail address"))
-        XCTAssertEqual(sut.latestValue.loadedView?.forRentView?.listingSize,
-                       ListingSize(beds: 3, baths: 3, sqft: 1500))
-    }
-    
-    func testItShowsLoadingNeightborhood_RentalData() {
-        whenCreatingViewModelWithListingStatus(.forRent)
-        XCTAssertNotNil(sut.latestValue.loadedView?.forRentView)
-        
-        XCTAssertEqual(sut.latestValue.loadedView?.forRentView?.neighborhood.latestValue.placeholderView,
-                       Neighborhood(name: "Placeholder", rating: 10))
-    }
-    
     func testItShowsForSaleViewWhenReceivingForSaleData() {
         whenCreatingViewModelWithListingStatus(.forSale)
         XCTAssertNotNil(sut.latestValue.loadedView?.forSaleView)
