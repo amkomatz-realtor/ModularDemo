@@ -29,6 +29,7 @@ extension ListingDetail.ForRentSection: View {
                     address
                 }
             }
+            .padding([.leading, .trailing])
             
         case .listingSize(let listingSize, _):
             VStack(alignment: .leading) {
@@ -36,12 +37,14 @@ extension ListingDetail.ForRentSection: View {
                 Spacer()
                     .frame(height: 2)
             }
+            .padding([.leading, .trailing])
             
         case .neighborhood(let neighborhood, _):
             VStack(alignment: .leading) {
                 neighborhood.dataView()
                 Spacer()
             }
+            .padding([.leading, .trailing])
         }
     }
 }

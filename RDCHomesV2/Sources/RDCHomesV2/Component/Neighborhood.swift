@@ -1,7 +1,7 @@
 import SwiftUI
 import RDCCore
 
-public struct Neighborhood: View, HashIdentifiable {
+public struct Neighborhood: HashIdentifiable {
     let name: String
     let rating: String
     
@@ -12,7 +12,9 @@ public struct Neighborhood: View, HashIdentifiable {
         formatter.maximumFractionDigits = 1
         self.rating = "\(formatter.string(from: rating as NSNumber)!)/10"
     }
-    
+}
+
+extension Neighborhood: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Neighborhood")

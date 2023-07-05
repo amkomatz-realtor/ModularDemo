@@ -1,11 +1,13 @@
 import SwiftUI
 import RDCCore
 
-struct ListingSize: View, HashIdentifiable {
+struct ListingSize: HashIdentifiable {
     let beds: Int
     let baths: Int
     let sqft: Int
-    
+}
+
+extension ListingSize: View {
     var body: some View {
         (
             Text("\(beds)").fontWeight(.heavy)

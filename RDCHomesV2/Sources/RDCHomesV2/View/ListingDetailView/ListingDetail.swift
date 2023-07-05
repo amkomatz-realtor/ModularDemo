@@ -34,7 +34,7 @@ extension ListingDetail: View {
 struct ListingDetail_Previews: PreviewProvider {
     static var previews: some View {
         ListingDetail.previewCache()
-            .previewDisplayName(".cache")
+            .previewDisplayName(".minimal")
         
         ListingDetail.previewRental()
             .previewDisplayName(".rental")
@@ -50,7 +50,7 @@ extension ListingDetail {
     }
     
     static func previewRental() -> Self {
-        .forRent(.loaded(.previewRentalListingDetail()))
+        .forRent(.loaded(.previewAllSections()))
     }
     
     static func previewNonRental() -> Self {

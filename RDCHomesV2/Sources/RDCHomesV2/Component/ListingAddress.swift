@@ -1,9 +1,11 @@
 import SwiftUI
 import RDCCore
 
-struct ListingAddress: View, HashIdentifiable {
+struct ListingAddress: HashIdentifiable {
     let address: String
-    
+}
+
+extension ListingAddress: View {
     var body: some View {
         Text(address)
             .font(.caption)

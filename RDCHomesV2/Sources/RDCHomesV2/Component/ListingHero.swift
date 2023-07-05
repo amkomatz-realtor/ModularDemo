@@ -1,9 +1,11 @@
 import SwiftUI
 import RDCCore
 
-struct ListingHero: View, HashIdentifiable {
+struct ListingHero: HashIdentifiable {
     let thumbnail: URL
-    
+}
+
+extension ListingHero: View {
     var body: some View {
         AsyncImage(
             url: thumbnail,
