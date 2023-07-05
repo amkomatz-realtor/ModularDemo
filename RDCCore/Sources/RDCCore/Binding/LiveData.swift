@@ -8,7 +8,7 @@ import Combine
 /// Subclass this class to create the view model for your SwiftUI DataView
 open class LiveData<T>: ObservableObject, HashIdentifiable {
     
-    @Published private(set) var latestValue: T
+    @Published public private(set) var latestValue: T
     
     private let uuid: UniqueHash
     
