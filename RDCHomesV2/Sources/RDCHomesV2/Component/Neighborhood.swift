@@ -1,6 +1,7 @@
 import SwiftUI
+import RDCCore
 
-public struct Neighborhood: View {
+public struct Neighborhood: View, HashIdentifiable {
     let name: String
     let rating: String
     

@@ -30,7 +30,7 @@ extension NeighborhoodDataState {
         case .success(let neigborhoodModel):
             return .loaded(dataView: Neighborhood(name: neigborhoodModel.name, rating: neigborhoodModel.rating))
         case .failure:
-            return .custom(view: AnyView(EmptyView()))
+            return .empty
         }
     }
 }
