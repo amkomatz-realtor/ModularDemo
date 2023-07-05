@@ -33,11 +33,11 @@ final class NeighborhoodViewModelTests: XCTestCase {
         XCTAssertTrue(sut.latestValue.isEmpty)
     }
     
-    private func whenCreatingViewModelWith(dataState: NeighborhoodDataState) {
-        sut = NeighborhoodViewModel(Just(dataState).eraseToAnyPublisher())
-    }
-    
     private func whenCreatingViewModelWith(listingId: UUID, resolver: HomesV2Resolving) {
         sut = NeighborhoodViewModel(forListingId: listingId, resolver: resolver)
+    }
+    
+    private func whenCreatingViewModelWith(dataState: NeighborhoodDataState) {
+        sut = NeighborhoodViewModel(Just(dataState).eraseToAnyPublisher())
     }
 }

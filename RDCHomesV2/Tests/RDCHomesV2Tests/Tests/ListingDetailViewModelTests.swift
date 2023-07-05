@@ -1,9 +1,22 @@
 import XCTest
 import Combine
+import RDCBusiness
 @testable import RDCHomesV2
 
 final class ListingDetailViewModelTests: XCTestCase {
     private var sut: ListingDetailViewModel!
+    
+    // MARK: - Resolving
+    
+    func testItInjectsListingDetailStreamForListingId() {
+        let homesResolver = StubHomesResolver()
+        let listingId = UUID()
+        
+        whenCreatingViewModelWith(listingId: listingId, resolver: homesResolver)
+        XCTAssertEqual(homesResolver.stubNetworkManager.verifiedUrl, "https://api.realtor.com/listings/\(listingId)")
+    }
+    
+    // MARK: - Data Rendering
     
     func testItShowsCustomProgressViewWhenDataIsPending() {
         whenCreatingViewModelWith(dataState: .pending)
@@ -18,11 +31,88 @@ final class ListingDetailViewModelTests: XCTestCase {
             listingAddress: ListingAddress(address: "fake address"))
         ))
     }
+    
+    func testItShowsForRentViewWhenReceivingRentalData() {
+        whenCreatingViewModelWithListingStatus(.forRent)
+        XCTAssertNotNil(sut.latestValue.loadedView?.forRentView)
+        
+        XCTAssertEqual(sut.latestValue.loadedView?.forRentView?.listingHero,
+                       ListingHero(thumbnail: URL(string: "https://fakeurl.com")!))
+        XCTAssertEqual(sut.latestValue.loadedView?.forRentView?.price,
+                       200000)
+        XCTAssertEqual(sut.latestValue.loadedView?.forRentView?.listingAddress,
+                       ListingAddress(address: "fake listing detail address"))
+        XCTAssertEqual(sut.latestValue.loadedView?.forRentView?.listingSize,
+                       ListingSize(beds: 3, baths: 3, sqft: 1500))
+    }
+    
+    func testItShowsLoadingNeightborhood_RentalData() {
+        whenCreatingViewModelWithListingStatus(.forRent)
+        XCTAssertNotNil(sut.latestValue.loadedView?.forRentView)
+        
+        XCTAssertEqual(sut.latestValue.loadedView?.forRentView?.neighborhood.latestValue.placeholderView,
+                       Neighborhood(name: "Placeholder", rating: 10))
+    }
+    
+    func testItShowsForSaleViewWhenReceivingForSaleData() {
+        whenCreatingViewModelWithListingStatus(.forSale)
+        XCTAssertNotNil(sut.latestValue.loadedView?.forSaleView)
+        
+        XCTAssertEqual(sut.latestValue.loadedView?.forSaleView?.listingHero,
+                       ListingHero(thumbnail: URL(string: "https://fakeurl.com")!))
+        XCTAssertEqual(sut.latestValue.loadedView?.forSaleView?.price,
+                       200000)
+        XCTAssertEqual(sut.latestValue.loadedView?.forSaleView?.listingAddress,
+                       ListingAddress(address: "fake listing detail address"))
+        XCTAssertEqual(sut.latestValue.loadedView?.forSaleView?.listingSize,
+                       ListingSize(beds: 3, baths: 3, sqft: 1500))
+    }
+    
+    func testItShowsLoadingNeightborhood_NonRentalData() {
+        whenCreatingViewModelWithListingStatus(.forSale)
+        XCTAssertNotNil(sut.latestValue.loadedView?.forSaleView)
+        
+        XCTAssertEqual(sut.latestValue.loadedView?.forSaleView?.neighborhood.latestValue.placeholderView,
+                       Neighborhood(name: "Placeholder", rating: 10))
+    }
+    
+    func testItShowsCustomViewForOffMarket() {
+        whenCreatingViewModelWithListingStatus(.offMarket)
+        XCTAssertNotNil(sut.latestValue.customView)
+    }
+    
+    func testItShowsCustomViewForFailure() {
+        whenCreatingViewModelWith(dataState: .failure(NSError(domain: "unit test", code: -1)))
+        XCTAssertNotNil(sut.latestValue.customView)
+    }
 
+    private func whenCreatingViewModelWith(listingId: UUID, resolver: HomesV2Resolving) {
+        sut = ListingDetailViewModel(forListingId: listingId, resolver: resolver)
+    }
+    
     private func whenCreatingViewModelWith(dataState: DetailDataState) {
-        // We already test this black box and there is no need to repeat the process here, so stubbing it.
-        let stubNeighborhoodViewModel = NeighborhoodViewModel(forListingId: UUID(), resolver: StubHomesResolver())
         sut = ListingDetailViewModel(Just(dataState).eraseToAnyPublisher(),
-                                     neighborhoodViewModel: stubNeighborhoodViewModel)
+                                     neighborhoodViewModel: stubNeighborhoodViewModel())
+    }
+    
+    private func whenCreatingViewModelWithListingStatus(_ status: DetailListingModel.Status) {
+        let rentalListingModel = DetailListingModel(
+            id: .init(),
+            address: "fake listing detail address",
+            price: 200000,
+            thumbnail: URL(string: "https://fakeurl.com")!,
+            status: status,
+            beds: 3,
+            baths: 3,
+            sqft: 1500
+        )
+        
+        sut = ListingDetailViewModel(Just(.detail(rentalListingModel)).eraseToAnyPublisher(),
+                                     neighborhoodViewModel: stubNeighborhoodViewModel())
+    }
+    
+    private func stubNeighborhoodViewModel() -> NeighborhoodViewModel {
+        // We already test this black box and there is no need to repeat the process here, so stubbing it.
+        NeighborhoodViewModel(forListingId: UUID(), resolver: StubHomesResolver())
     }
 }
