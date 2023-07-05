@@ -3,19 +3,19 @@ import RDCCore
 
 extension ListingDetail {
     enum ForRentSection: HashIdentifiable {
-        case listingHero(ListingHero)
-        case listingStatus(text: String, price: String, address: ListingAddress)
-        case listingSize(ListingSize)
-        case neighborhood(StatefulLiveData<Neighborhood>)
+        case listingHero(ListingHero, uniqueHash: UniqueHash)
+        case listingStatus(text: String, price: String, address: ListingAddress, uniqueHash: UniqueHash)
+        case listingSize(ListingSize, uniqueHash: UniqueHash)
+        case neighborhood(StatefulLiveData<Neighborhood>, uniqueHash: UniqueHash)
     }
 }
 
 extension ListingDetail.ForRentSection: View {
     var body: some View {
         switch self {
-        case .listingHero(let listingHero):
+        case .listingHero(let listingHero, _):
             listingHero
-        case let .listingStatus(text, price, address):
+        case let .listingStatus(text, price, address, _):
             VStack(alignment: .leading, spacing: 8) {
                 Text(text)
                     .font(.caption)
@@ -30,14 +30,14 @@ extension ListingDetail.ForRentSection: View {
                 }
             }
             
-        case .listingSize(let listingSize):
+        case .listingSize(let listingSize, _):
             VStack(alignment: .leading) {
                 listingSize
                 Spacer()
                     .frame(height: 2)
             }
             
-        case .neighborhood(let neighborhood):
+        case .neighborhood(let neighborhood, _):
             VStack(alignment: .leading) {
                 neighborhood.dataView()
                 Spacer()
@@ -65,19 +65,19 @@ struct ListingDetail_ForRentSection_Previews: PreviewProvider {
 
 extension ListingDetail.ForRentSection {
     static func previewListingHero() -> Self {
-        .listingHero(.previewListingHero())
+        .listingHero(.previewListingHero(), uniqueHash: .hashableUUID)
     }
     
     static func previewListingStatus() -> Self {
-        .listingStatus(text: "For Rent", price: 140000.toCurrency(), address: .previewListingAddress())
+        .listingStatus(text: "For Rent", price: 140000.toCurrency(), address: .previewListingAddress(), uniqueHash: .hashableUUID)
     }
     
     static func previewListingSize() -> Self {
-        .listingSize(.previewListingSize())
+        .listingSize(.previewListingSize(), uniqueHash: .hashableUUID)
     }
     
     static func previewNeighborhood() -> Self {
-        .neighborhood(.loaded(.previewNeighborhood()))
+        .neighborhood(.loaded(.previewNeighborhood()), uniqueHash: .hashableUUID)
     }
 }
 #endif

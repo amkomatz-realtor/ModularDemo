@@ -17,6 +17,8 @@ class NetworkManager: NetworkManaging {
             response = detailJson[id]!
         } else if let id = url.matches(of: "^https://api.realtor.com/listings/([a-zA-Z0-9\\-]*)/neighborhood$").get(1)?.lowercased() {
             response = neighborhoodJson[id]!
+        } else if url == "https://api.realtor.com/ldpSections/rental" {
+            response = rentalSectionsJson
         } else {
             fatalError("URL not mocked")
         }
@@ -170,3 +172,20 @@ private let neighborhoodJson = [
         }
     """.data(using: .utf8)!,
 ]
+
+private let rentalSectionsJson = """
+[
+    {
+        "componentId": "listingHero"
+    },
+    {
+        "componentId": "listingSize"
+    },
+    {
+        "componentId": "listingStatus"
+    },
+    {
+        "componentId": "neighborhood"
+    },
+]
+""".data(using: .utf8)!

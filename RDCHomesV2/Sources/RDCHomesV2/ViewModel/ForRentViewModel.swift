@@ -37,17 +37,17 @@ private extension RentalSectionsDataState {
         case .pending:
             return .custom(view: AnyView(ProgressView()))
         case .success(let sectionIds):
-            return .loaded(dataView: ListingDetail.ForRentView(sections: sectionIds.compactMap { id in
-                switch id {
-                case "listingHero":
-                    return .listingHero(ListingHero(thumbnail: listingModel.thumbnail))
-                case "listingStatus":
-                    return .listingStatus(text: "For rent", price: listingModel.price.toCurrency(), address: ListingAddress(address: listingModel.address))
-                case "listingSize":
-                    return .listingSize(ListingSize(beds: listingModel.beds, baths: listingModel.baths, sqft: listingModel.sqft))
-                case "neighborhood":
-                    return .neighborhood(neighborhoodViewModelResolver(listingModel.id))
-                default:
+            return .loaded(dataView: ListingDetail.ForRentView(sections: sectionIds.compactMap { section in
+                switch section.sectionId {
+                case .listingHero:
+                    return .listingHero(ListingHero(thumbnail: listingModel.thumbnail), uniqueHash: .hashableUUID)
+                case .listingStatus:
+                    return .listingStatus(text: "For rent", price: listingModel.price.toCurrency(), address: ListingAddress(address: listingModel.address), uniqueHash: .hashableUUID)
+                case .listingSize:
+                    return .listingSize(ListingSize(beds: listingModel.beds, baths: listingModel.baths, sqft: listingModel.sqft), uniqueHash: .hashableUUID)
+                case .neighborhood:
+                    return .neighborhood(neighborhoodViewModelResolver(listingModel.id), uniqueHash: .hashableUUID)
+                case .unknown:
                     return nil
                 }
             }))

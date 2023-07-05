@@ -18,8 +18,8 @@ enum NeighborhoodDataState {
 
 enum RentalSectionsDataState {
     case pending
-    case success([String])
-    case failure
+    case success([RentalSectionModel])
+    case failure(Error)
 }
 
 class HomesRepository {
@@ -72,11 +72,13 @@ class HomesRepository {
         let publisher: CurrentValueSubject<RentalSectionsDataState, Never> = .init(.pending)
         
         Task {
-            await publisher.updateValue(.success([
-                "listingHero",
-                "neighborhood",
-                "listingStatus"
-            ]))
+            do {
+                let rentalSectionModels = try await networkManager.get([RentalSectionModel].self, from: "https://api.realtor.com/ldpSections/rental")
+                await publisher.updateValue(.success(rentalSectionModels))
+            }
+            catch {
+                await publisher.updateValue(.failure(error))
+            }
         }
         
         return publisher.eraseToAnyPublisher()
