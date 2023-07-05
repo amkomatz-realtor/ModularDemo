@@ -2,7 +2,6 @@ import Combine
 import Foundation
 import RDCCore
 import RDCBusiness
-import SwiftUI
 
 public final class NeighborhoodViewModel: StatefulLiveData<Neighborhood> {
     

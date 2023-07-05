@@ -2,21 +2,23 @@ import Combine
 import Foundation
 import RDCCore
 import RDCBusiness
-import SwiftUI
 
 public final class ListingDetailViewModel: StatefulLiveData<ListingDetail> {
-    public convenience init(forListingId id: UUID, resolver: HomesV2Resolving) {
+    public convenience init(forListingId id: UUID, resolver: HomesV2Resolving, router: HomesRouter) {
         let homesRepository = HomesRepository(resolver: resolver)
         self.init(homesRepository.getListingDetail(id: id),
-                  resolver: resolver)
+                  resolver: resolver,
+                  router: router)
     }
     
     init(_ publisher: AnyPublisher<DetailDataState, Never>,
-         resolver: HomesV2Resolving) {
+         resolver: HomesV2Resolving,
+         router: HomesRouter) {
         
         super.init(publisher: publisher
             .map { dataState in
                 dataState.mapToDataViewState(
+                    router: router,
                     neighborhoodViewModelResolver: { NeighborhoodViewModel(forListingId: $0, resolver: resolver) },
                     forRentViewModelResolver: { ForRentViewModel(detailListingModel: $0, resolver: resolver) }
                 )
@@ -27,7 +29,8 @@ public final class ListingDetailViewModel: StatefulLiveData<ListingDetail> {
 }
 
 private extension DetailDataState {
-    func mapToDataViewState(neighborhoodViewModelResolver: (UUID) -> NeighborhoodViewModel,
+    func mapToDataViewState(router: HomesRouter,
+                            neighborhoodViewModelResolver: (UUID) -> NeighborhoodViewModel,
                             forRentViewModelResolver: (DetailListingModel) -> ForRentViewModel) -> DataViewState<ListingDetail> {
         switch self {
         case .pending:

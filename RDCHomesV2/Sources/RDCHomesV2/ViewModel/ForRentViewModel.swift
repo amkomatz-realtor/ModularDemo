@@ -2,7 +2,6 @@ import Foundation
 import RDCCore
 import RDCBusiness
 import Combine
-import SwiftUI
 
 final class ForRentViewModel: StatefulLiveData<ListingDetail.ForRentView> {
     
