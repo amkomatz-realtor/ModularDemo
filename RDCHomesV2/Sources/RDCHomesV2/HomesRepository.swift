@@ -16,6 +16,12 @@ enum NeighborhoodDataState {
     case failure(Error)
 }
 
+enum RentalSectionsDataState {
+    case pending
+    case success([String])
+    case failure
+}
+
 class HomesRepository {
     private let networkManager: NetworkManaging
     private let globalStore: GlobalStore
@@ -58,6 +64,12 @@ class HomesRepository {
                 await publisher.updateValue(.failure(error))
             }
         }
+        
+        return publisher.eraseToAnyPublisher()
+    }
+    
+    func getRentalSections() -> AnyPublisher<RentalSectionsDataState, Never> {
+        let publisher: CurrentValueSubject<RentalSectionsDataState, Never> = .init(.pending)
         
         return publisher.eraseToAnyPublisher()
     }
