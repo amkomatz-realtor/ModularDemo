@@ -1,10 +1,10 @@
 import SwiftUI
 
 struct ListingAdditionalDetailView: View {
-    @StateObject private var viewModel: ListingAdditionalDetailViewModel
+    @StateObject private var viewModel: ViewModel
     
     init(id: UUID, resolver: HomesResolving) {
-        _viewModel = StateObject(wrappedValue: ListingAdditionalDetailViewModel(id: id, resolver: resolver))
+        _viewModel = StateObject(wrappedValue: ViewModel(id: id, resolver: resolver))
     }
     
     var body: some View {

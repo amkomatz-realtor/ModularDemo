@@ -19,7 +19,7 @@ public struct ListingDetailView: View {
                 switch viewModel.state {
                 case .initializing, .loading:
                     ProgressView()
-                        .progressViewStyle(.circular)    
+                        .progressViewStyle(.circular)
                 case .loadingWithCache(let cache):
                     CacheView(cache)
                 case .successForSale(let detail):

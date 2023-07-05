@@ -2,6 +2,7 @@ import SwiftUI
 import RDCBusiness
 import RDCSearch
 import RDCHomes
+import RDCHomesV2
 import RDCFeed
 import RDCCore
 
@@ -19,7 +20,12 @@ class AppRouter: HostRouter, NavigationState, ObservableObject {
         
         register(SearchRouter(resolver: resolver))
         register(FeedRouter(resolver: resolver))
-        register(HomesRouter(resolver: resolver))
+        
+        if isV2Enabled {
+            register(RDCHomesV2.HomesRouter(resolver: resolver))
+        } else {
+            register(RDCHomes.HomesRouter(resolver: resolver))
+        }
     }
     
     func register(_ router: any ModuleRouter) {
