@@ -8,6 +8,8 @@ public extension ListingDetail {
         let listingAddress: ListingAddress
         let listingSize: ListingSize
         let neighborhood: StatefulLiveData<Neighborhood>
+        let seeMoreLink: ListingLink
+        let seeSimilarHomesLink: ListingLink
     }
 }
 
@@ -30,13 +32,18 @@ extension ListingDetail.ForSaleView: View {
                 }
                 
                 listingSize
-                
                 Spacer()
                     .frame(height: 2)
                 
                 neighborhood.dataView()
-                
                 Spacer()
+                    .frame(height: 2)
+                
+                seeMoreLink
+                Spacer()
+                    .frame(height: 2)
+                
+                seeSimilarHomesLink
                 
                 HStack { Spacer() }
             }
@@ -60,7 +67,10 @@ extension ListingDetail.ForSaleView {
               price: 389999,
               listingAddress: .previewListingAddress(),
               listingSize: .previewListingSize(),
-              neighborhood: .loaded(.previewNeighborhood()))
+              neighborhood: .loaded(.previewNeighborhood()),
+              seeMoreLink: .previewListingLink(),
+              seeSimilarHomesLink: .previewListingLink()
+        )
     }
 }
 #endif

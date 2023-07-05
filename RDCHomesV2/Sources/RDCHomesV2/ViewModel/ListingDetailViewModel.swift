@@ -52,7 +52,9 @@ private extension DetailDataState {
                     price: listingModel.price,
                     listingAddress: ListingAddress(address: listingModel.address),
                     listingSize: ListingSize(beds: listingModel.beds, baths: listingModel.baths, sqft: listingModel.sqft),
-                    neighborhood: neighborhoodViewModelResolver(listingModel.id)
+                    neighborhood: neighborhoodViewModelResolver(listingModel.id),
+                    seeMoreLink: .previewListingLink(),
+                    seeSimilarHomesLink: .previewListingLink()
                 )))
                 
             case .offMarket:
