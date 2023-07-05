@@ -4,7 +4,7 @@ import RDCCore
 struct NeighborhoodView: View {
     @StateObject private var viewModel: ViewModel
     
-    init(detail: DetailListingModel, resolver: HomesResolving) {
+    init(_ detail: DetailListingModel, resolver: HomesResolving) {
         _viewModel = StateObject(wrappedValue: ViewModel(detail: detail, resolver: resolver))
     }
     
@@ -30,7 +30,7 @@ struct NeighborhoodView_Previews: PreviewProvider {
     static var previews: some View {
         VStack(alignment: .leading) {
             NeighborhoodView(
-                detail: previewForSaleListing,
+                previewForSaleListing,
                 resolver: PreviewHomesResolver()
             )
             
