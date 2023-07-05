@@ -16,7 +16,7 @@ extension ListingDetail.ForRentSection: View {
         case .listingHero(let listingHero):
             listingHero
         case let .listingStatus(text, price, address):
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 8) {
                 Text(text)
                     .font(.caption)
                     .foregroundColor(.gray)

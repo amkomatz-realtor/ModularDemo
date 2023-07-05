@@ -71,6 +71,14 @@ class HomesRepository {
     func getRentalSections() -> AnyPublisher<RentalSectionsDataState, Never> {
         let publisher: CurrentValueSubject<RentalSectionsDataState, Never> = .init(.pending)
         
+        Task {
+            await publisher.updateValue(.success([
+                "listingHero",
+                "neighborhood",
+                "listingStatus"
+            ]))
+        }
+        
         return publisher.eraseToAnyPublisher()
     }
 }
