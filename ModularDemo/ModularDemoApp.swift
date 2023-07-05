@@ -1,7 +1,4 @@
 import SwiftUI
-import RDCCore
-import RDCSearch
-import RDCFeed
 
 @main
 struct ModularDemoApp: App {
@@ -9,21 +6,7 @@ struct ModularDemoApp: App {
     
     var body: some Scene {
         WindowGroup {
-            TabView {
-                NavigationView {
-                    FeedView(resolver: resolver)
-                }
-                .tabItem {
-                    Image(systemName: "house.fill")
-                }
-                
-                NavigationView {
-                    SearchResultsView(resolver: resolver)
-                }
-                .tabItem {
-                    Image(systemName: "magnifyingglass")
-                }
-            }
+            AppView(resolver: resolver)
         }
     }
 }

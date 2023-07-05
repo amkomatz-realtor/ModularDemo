@@ -25,6 +25,7 @@
 		3194AEA22A4B8C4300B90244 /* SpaceWeatherOverviewVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3194AEA12A4B8C4300B90244 /* SpaceWeatherOverviewVM.swift */; };
 		3194AEA42A4B8D2A00B90244 /* SpaceWeatherOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3194AEA32A4B8D2A00B90244 /* SpaceWeatherOverviewView.swift */; };
 		31D33B142A540B3E0014E8FD /* RDCHomesV2 in Frameworks */ = {isa = PBXBuildFile; productRef = 31D33B132A540B3E0014E8FD /* RDCHomesV2 */; };
+		574EA0552A3C0553001AB395 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574EA0542A3C0553001AB395 /* AppView.swift */; };
 		5752837829F82A0F00BEC08C /* ModularDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5752837729F82A0F00BEC08C /* ModularDemoApp.swift */; };
 		5752837C29F82A1000BEC08C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5752837B29F82A1000BEC08C /* Assets.xcassets */; };
 		5752837F29F82A1000BEC08C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5752837E29F82A1000BEC08C /* Preview Assets.xcassets */; };
@@ -38,7 +39,7 @@
 		57A2230129F8457D00BBC616 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A2230029F8457D00BBC616 /* NetworkManager.swift */; };
 		57A2230529F84B2300BBC616 /* RDCBusiness in Frameworks */ = {isa = PBXBuildFile; productRef = 57A2230429F84B2300BBC616 /* RDCBusiness */; };
 		57A2230729F84B2600BBC616 /* RDCHomes in Frameworks */ = {isa = PBXBuildFile; productRef = 57A2230629F84B2600BBC616 /* RDCHomes */; };
-		57A2230929F84E1400BBC616 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A2230829F84E1400BBC616 /* Router.swift */; };
+		57A2230929F84E1400BBC616 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A2230829F84E1400BBC616 /* AppRouter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		3194AE9F2A4B819300B90244 /* WeatherResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherResponse.swift; sourceTree = "<group>"; };
 		3194AEA12A4B8C4300B90244 /* SpaceWeatherOverviewVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceWeatherOverviewVM.swift; sourceTree = "<group>"; };
 		3194AEA32A4B8D2A00B90244 /* SpaceWeatherOverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceWeatherOverviewView.swift; sourceTree = "<group>"; };
+		574EA0542A3C0553001AB395 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		5752837429F82A0F00BEC08C /* ModularDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ModularDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5752837729F82A0F00BEC08C /* ModularDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModularDemoApp.swift; sourceTree = "<group>"; };
 		5752837B29F82A1000BEC08C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -87,7 +89,7 @@
 		5752839429F82A1000BEC08C /* ModularDemoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModularDemoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		57A222FC29F8455600BBC616 /* AppResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppResolver.swift; sourceTree = "<group>"; };
 		57A2230029F8457D00BBC616 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		57A2230829F84E1400BBC616 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		57A2230829F84E1400BBC616 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,9 +197,11 @@
 			children = (
 				3194AE6E2A4B7F9200B90244 /* Doc Sources */,
 				57A2230829F84E1400BBC616 /* Router.swift */,
+				57A2230829F84E1400BBC616 /* AppRouter.swift */,
 				57A2230029F8457D00BBC616 /* NetworkManager.swift */,
 				57A222FC29F8455600BBC616 /* AppResolver.swift */,
 				5752837729F82A0F00BEC08C /* ModularDemoApp.swift */,
+				574EA0542A3C0553001AB395 /* AppView.swift */,
 				5752837B29F82A1000BEC08C /* Assets.xcassets */,
 				5752837D29F82A1000BEC08C /* Preview Content */,
 			);
@@ -395,6 +399,8 @@
 				3194AE982A4B810600B90244 /* Int+Array.swift in Sources */,
 				3194AE9E2A4B816100B90244 /* WeatherReportViewVM.swift in Sources */,
 				57A2230929F84E1400BBC616 /* Router.swift in Sources */,
+				574EA0552A3C0553001AB395 /* AppView.swift in Sources */,
+				57A2230929F84E1400BBC616 /* AppRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -560,6 +566,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -588,6 +595,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

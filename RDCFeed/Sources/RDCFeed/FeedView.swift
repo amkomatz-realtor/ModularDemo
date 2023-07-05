@@ -2,12 +2,12 @@ import SwiftUI
 import RDCCore
 
 public struct FeedView: View {
-    private let router: FeedRouting
+    private let router: HostRouter
     
     @StateObject private var viewModel: FeedViewModel
     
     public init(resolver: FeedResolving) {
-        router = resolver.feedRouter.resolve()
+        router = resolver.router.resolve()
         _viewModel = StateObject(wrappedValue: FeedViewModel(resolver: resolver))
     }
     
@@ -70,14 +70,9 @@ public struct FeedView: View {
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack(spacing: 16) {
                                     ForEach(feed.newOnRealtor) { listing in
-                                        NavigationLink(
-                                            destination: {
-                                                router.getDestination(forListingId: listing.id)
-                                            },
-                                            label: {
-                                                FeedListingCard(listing, displayOption: .daysOnRealtor)
-                                            }
-                                        )
+                                        FeedListingCard(listing, displayOption: .daysOnRealtor).onTapGesture {
+                                            router.route("listing_\(listing.id)")
+                                        }
                                     }
                                 }
                                 .padding()
@@ -93,14 +88,9 @@ public struct FeedView: View {
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack(spacing: 16) {
                                     ForEach(feed.openHouse) { listing in
-                                        NavigationLink(
-                                            destination: {
-                                                router.getDestination(forListingId: listing.id)
-                                            },
-                                            label: {
-                                                FeedListingCard(listing, displayOption: .openHouseDate)
-                                            }
-                                        )
+                                        FeedListingCard(listing, displayOption: .openHouseDate).onTapGesture {
+                                            router.route("listing_\(listing.id)")
+                                        }
                                     }
                                 }
                                 .padding()

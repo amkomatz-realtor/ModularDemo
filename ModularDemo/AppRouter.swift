@@ -3,7 +3,6 @@ import RDCBusiness
 import RDCSearch
 import RDCHomes
 import RDCFeed
-import RDCHomesV2
 import RDCCore
 
 class AppRouter: HostRouter, NavigationState, ObservableObject {
@@ -12,8 +11,6 @@ class AppRouter: HostRouter, NavigationState, ObservableObject {
     
     private let resolver: AppResolver
     private var childRouters: [any ModuleRouter] = []
-    
-    private let isV2Enabled: Bool = false
     
     init(resolver: AppResolver) {
         self.resolver = resolver

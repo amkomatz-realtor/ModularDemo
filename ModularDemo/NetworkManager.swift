@@ -15,7 +15,7 @@ class NetworkManager: NetworkManaging {
             response = listingsJson
         } else if url == "https://api.realtor.com/feed" {
             response = feedJson
-        } else if let id = url.wholeMatch(of: /^(https:\/\/api.realtor.com\/listings\/([a-zA-Z0-9\\-]*))$/)?.output.2.lowercased() {
+        } else if let id = url.matches(of: "^https://api.realtor.com/listings/(.*)$").get(1)?.lowercased() {
             response = detailJson[id]!
         } else if let id = url.wholeMatch(of: /^(https:\/\/api.realtor.com\/listings\/([a-zA-Z0-9\\-]*)\/neighborhood)$/)?.output.2.lowercased() {
             response = neighborhoodJson[id]!
