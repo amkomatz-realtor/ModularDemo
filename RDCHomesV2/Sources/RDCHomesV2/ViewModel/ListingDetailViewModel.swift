@@ -41,7 +41,7 @@ private extension DetailDataState {
             switch listingModel.status {
                 
             case .forRent:
-                return .loaded(dataView: .sdui(ForRentViewModel(detailListingModel: listingModel, resolver: resolver)))
+                return .loaded(dataView: .variant(ForRentViewModel(detailListingModel: listingModel, resolver: resolver)))
                 
             case .forSale:
                 return .loaded(dataView: .forSale(ListingDetail.ForSale(
@@ -59,7 +59,7 @@ private extension DetailDataState {
                 )))
                 
             case .offMarket:
-                return .loaded(dataView: .sdui(OffMarketViewModel(detailListingModel: listingModel, resolver: resolver)))
+                return .loaded(dataView: .variant(OffMarketViewModel(detailListingModel: listingModel, resolver: resolver)))
             }
             
         case .failure(let error):

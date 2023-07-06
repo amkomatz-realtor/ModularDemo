@@ -3,7 +3,7 @@ import RDCCore
 import RDCBusiness
 import Combine
 
-final class ForRentViewModel: StatefulLiveData<ListingDetail.SDUI> {
+final class ForRentViewModel: StatefulLiveData<ListingDetail.Variant> {
     
     public convenience init(detailListingModel: DetailListingModel, resolver: IHomesV2Resolver) {
         let homesRepository = HomesRepository(resolver: resolver)
@@ -31,13 +31,13 @@ final class ForRentViewModel: StatefulLiveData<ListingDetail.SDUI> {
 
 private extension ListingSectionsDataState {
     func mapToDataViewState(listingModel: DetailListingModel,
-                            resolver: IHomesV2Resolver) -> DataViewState<ListingDetail.SDUI> {
+                            resolver: IHomesV2Resolver) -> DataViewState<ListingDetail.Variant> {
         switch self {
         case .pending:
             return .custom(dataView: ProgressIndicator())
             
         case .success(let sections):
-            return .loaded(dataView: ListingDetail.SDUI(sections: sections.compactMap { section in
+            return .loaded(dataView: ListingDetail.Variant(sections: sections.compactMap { section in
                 switch section.sectionId {
                 case .listingHero:
                     return .listingHero(ListingHero(thumbnail: listingModel.thumbnail), uniqueHash: .hashableUUID)

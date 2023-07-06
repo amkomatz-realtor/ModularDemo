@@ -2,12 +2,12 @@ import SwiftUI
 import RDCCore
 
 public extension ListingDetail {
-    struct SDUI: IHashIdentifiable {
+    struct Variant: IHashIdentifiable {
         let sections: [Section]
     }
 }
 
-extension ListingDetail.SDUI: View {
+extension ListingDetail.Variant: View {
     public var body: some View {
         VStack(alignment: .leading) {
             VStack(alignment: .leading, spacing: 12) {
@@ -24,17 +24,17 @@ extension ListingDetail.SDUI: View {
 }
 
 #if targetEnvironment(simulator)
-struct ListingDetail_SDUI_Previews: PreviewProvider {
+struct ListingDetail_Variant_Previews: PreviewProvider {
     static var previews: some View {
-        ListingDetail.SDUI.previewAllSections()
+        ListingDetail.Variant.previewAllSections()
             .previewDisplayName(".all sections")
         
-        ListingDetail.SDUI.previewSomeSections()
+        ListingDetail.Variant.previewSomeSections()
             .previewDisplayName(".some sections")
     }
 }
 
-extension ListingDetail.SDUI {
+extension ListingDetail.Variant {
     static func previewAllSections() -> Self {
         .init(sections: [
             .listingHero(.previewListingHero(), uniqueHash: .hashableUUID),

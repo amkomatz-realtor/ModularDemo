@@ -4,7 +4,7 @@ import RDCBusiness
 
 public enum ListingDetail: IHashIdentifiable {
     case placeholder(Placeholder)
-    case sdui(StatefulLiveData<SDUI>)
+    case variant(StatefulLiveData<Variant>)
     case forSale(ForSale)
     case failure
 }
@@ -16,7 +16,7 @@ extension ListingDetail: View {
                 switch self {
                 case .placeholder(let cacheListingDetail):
                     cacheListingDetail
-                case .sdui(let rentalListingDetail):
+                case .variant(let rentalListingDetail):
                     rentalListingDetail.dataView()
                 case .forSale(let nonRentalListingDetail):
                     nonRentalListingDetail
@@ -50,7 +50,7 @@ extension ListingDetail {
     }
     
     static func previewRental() -> Self {
-        .sdui(.loaded(.previewAllSections()))
+        .variant(.loaded(.previewAllSections()))
     }
     
     static func previewNonRental() -> Self {

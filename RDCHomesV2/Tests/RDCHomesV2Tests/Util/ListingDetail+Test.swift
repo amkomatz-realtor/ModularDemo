@@ -10,12 +10,20 @@ extension ListingDetail {
         return nil
     }
     
-    var sduiView: SDUI? {
-        if case .sdui(let dynamicView) = self {
-            return dynamicView.latestValue.loadedView
+    var variantView: Variant? {
+        if case .variant(let variant) = self {
+            return variant.latestValue.loadedView
         }
         
         return nil
+    }
+    
+    func isVariantByViewModel<VM>(type: VM.Type) -> Bool {
+        if case .variant(let variant) = self {
+            return variant is VM
+        }
+        
+        return false
     }
     
     var forSaleView: ForSale? {
