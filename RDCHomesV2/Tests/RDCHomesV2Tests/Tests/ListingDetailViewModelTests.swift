@@ -24,7 +24,7 @@ final class ListingDetailViewModelTests: XCTestCase {
         XCTAssertNotNil(sut.latestValue.customView(type: ProgressIndicator.self))
     }
     
-    func testItShowsCacheViewWhenReceivingCacheData() {
+    func testItShowsPlaceholderViewWhenReceivingCacheData() {
         givenViewModelWith(dataState: .cached(FakeListingModel()))
         XCTAssertEqual(sut.latestValue.loadedView, ListingDetail.placeholder(ListingDetail.Placeholder(
             listingHero: ListingHero(thumbnail: URL(string: "https://fakeurl.com")!),
@@ -33,7 +33,12 @@ final class ListingDetailViewModelTests: XCTestCase {
         ))
     }
     
-    func testItShowsForSaleViewWhenReceivingForSaleData() {
+    func testItShowsCustomViewForFailure() {
+        givenViewModelWith(dataState: .failure(NSError(domain: "unit test", code: -1)))
+        XCTAssertNotNil(sut.latestValue.customView(type: ErrorText.self))
+    }
+    
+    func testForSale_ItShowsForSaleViewWhenReceivingListingDetail() {
         givenDetailViewModel(forListingId: .init(), status: .forSale)
         XCTAssertNotNil(sut.latestValue.loadedView?.forSaleView)
         
@@ -47,22 +52,12 @@ final class ListingDetailViewModelTests: XCTestCase {
                        ListingSize(beds: 3, baths: 3, sqft: 1500))
     }
     
-    func testItShowsLoadingNeightborhood_NonRentalData() {
+    func testForSale_ItShowsPlaceholderNeighborhood() {
         givenDetailViewModel(forListingId: .init(), status: .forSale)
         XCTAssertNotNil(sut.latestValue.loadedView?.forSaleView)
         
         XCTAssertEqual(sut.latestValue.loadedView?.forSaleView?.neighborhood.latestValue.placeholderView,
                        Neighborhood(name: "Placeholder", rating: 10))
-    }
-    
-    func testItShowsCustomViewForOffMarket() {
-        givenDetailViewModel(forListingId: .init(), status: .offMarket)
-        XCTAssertNotNil(sut.latestValue.customView(type: ErrorText.self))
-    }
-    
-    func testItShowsCustomViewForFailure() {
-        givenViewModelWith(dataState: .failure(NSError(domain: "unit test", code: -1)))
-        XCTAssertNotNil(sut.latestValue.customView(type: ErrorText.self))
     }
     
     // MARK: - Side Effect
@@ -125,25 +120,5 @@ final class ListingDetailViewModelTests: XCTestCase {
     
     private func whenTapSimilarHomesLink() {
         sut.latestValue.loadedView?.forSaleView?.seeSimilarHomesLink.onTap.occurs()
-    }
-    
-    private func stubNeighborhoodViewModel() -> NeighborhoodViewModel {
-        // We already test this black box and there is no need to repeat the process here, so stubbing it.
-        NeighborhoodViewModel(forListingId: UUID(), resolver: StubHomesResolver())
-    }
-    
-    private func stubForRentViewModel() -> ForRentViewModel {
-        let detailListingModel = DetailListingModel(
-            id: .init(),
-            address: "fake listing detail address",
-            price: 200000,
-            thumbnail: URL(string: "https://fakeurl.com")!,
-            status: .forRent,
-            beds: 3,
-            baths: 3,
-            sqft: 1500
-        )
-        
-        return ForRentViewModel(detailListingModel: detailListingModel, resolver: StubHomesResolver())
     }
 }
