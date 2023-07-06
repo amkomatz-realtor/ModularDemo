@@ -31,7 +31,7 @@ private extension DetailDataState {
             return .custom(dataView: ProgressIndicator())
             
         case .cached(let listingModel):
-            return .loaded(dataView: .cached(ListingDetail.CacheView(
+            return .loaded(dataView: .placeholder(ListingDetail.Placeholder(
                 listingHero: ListingHero(thumbnail: listingModel.thumbnail),
                 price: listingModel.price,
                 listingAddress: ListingAddress(address: listingModel.address)
@@ -41,7 +41,7 @@ private extension DetailDataState {
             switch listingModel.status {
                 
             case .forRent:
-                return .loaded(dataView: .forRent(ForRentViewModel(detailListingModel: listingModel, resolver: resolver)))
+                return .loaded(dataView: .sdui(ForRentViewModel(detailListingModel: listingModel, resolver: resolver)))
                 
             case .forSale:
                 return .loaded(dataView: .forSale(ListingDetail.ForSale(

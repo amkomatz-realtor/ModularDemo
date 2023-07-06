@@ -10,9 +10,9 @@ extension ListingDetail.Section {
         return nil
     }
     
-    var listingStatus: (text: String, price: String, address: ListingAddress)? {
-        if case let .listingStatus(text, price, address, _) = self {
-            return (text, price, address)
+    var listingStatus: ListingStatus? {
+        if case let .listingStatus(listingStatus, _) = self {
+            return listingStatus
         }
         
         return nil

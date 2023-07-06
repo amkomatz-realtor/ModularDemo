@@ -3,7 +3,7 @@ import RDCCore
 import RDCBusiness
 import Combine
 
-final class ForRentViewModel: StatefulLiveData<ListingDetail.ForRent> {
+final class ForRentViewModel: StatefulLiveData<ListingDetail.SDUI> {
     
     public convenience init(detailListingModel: DetailListingModel, resolver: HomesV2Resolving) {
         let homesRepository = HomesRepository(resolver: resolver)
@@ -31,17 +31,25 @@ final class ForRentViewModel: StatefulLiveData<ListingDetail.ForRent> {
 
 private extension RentalSectionsDataState {
     func mapToDataViewState(listingModel: DetailListingModel,
-                            resolver: HomesV2Resolving) -> DataViewState<ListingDetail.ForRent> {
+                            resolver: HomesV2Resolving) -> DataViewState<ListingDetail.SDUI> {
         switch self {
         case .pending:
             return .custom(dataView: ProgressIndicator())
+            
         case .success(let sectionIds):
-            return .loaded(dataView: ListingDetail.ForRent(sections: sectionIds.compactMap { section in
+            return .loaded(dataView: ListingDetail.SDUI(sections: sectionIds.compactMap { section in
                 switch section.sectionId {
                 case .listingHero:
                     return .listingHero(ListingHero(thumbnail: listingModel.thumbnail), uniqueHash: .hashableUUID)
                 case .listingStatus:
-                    return .listingStatus(text: "For rent", price: listingModel.price.toCurrency(), address: ListingAddress(address: listingModel.address), uniqueHash: .hashableUUID)
+                    return .listingStatus(
+                        ListingStatus(
+                            status: "For rent",
+                            price: listingModel.price.toCurrency(),
+                            address: ListingAddress(address: listingModel.address)
+                        ),
+                        uniqueHash: .hashableUUID
+                    )
                 case .listingSize:
                     return .listingSize(ListingSize(beds: listingModel.beds, baths: listingModel.baths, sqft: listingModel.sqft), uniqueHash: .hashableUUID)
                 case .neighborhood:

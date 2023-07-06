@@ -4,7 +4,7 @@ import RDCCore
 extension ListingDetail {
     enum Section: HashIdentifiable {
         case listingHero(ListingHero, uniqueHash: UniqueHash)
-        case listingStatus(text: String, price: String, address: ListingAddress, uniqueHash: UniqueHash)
+        case listingStatus(ListingStatus, uniqueHash: UniqueHash)
         case listingSize(ListingSize, uniqueHash: UniqueHash)
         case neighborhood(StatefulLiveData<Neighborhood>, uniqueHash: UniqueHash)
     }
@@ -16,35 +16,16 @@ extension ListingDetail.Section: View {
         case .listingHero(let listingHero, _):
             listingHero
             
-        case let .listingStatus(text, price, address, _):
-            VStack(alignment: .leading, spacing: 8) {
-                Text(text)
-                    .font(.caption)
-                    .foregroundColor(.gray)
-                
-                VStack(alignment: .leading) {
-                    Text(price)
-                        .font(.title2)
-                        .foregroundColor(.black)
-                    
-                    address
-                }
-            }
+        case .listingStatus(let listingStatus, _):
+            listingStatus
             .padding([.leading, .trailing])
             
         case .listingSize(let listingSize, _):
-            VStack(alignment: .leading) {
-                listingSize
-                Spacer()
-                    .frame(height: 2)
-            }
+            listingSize
             .padding([.leading, .trailing])
             
         case .neighborhood(let neighborhood, _):
-            VStack(alignment: .leading) {
-                neighborhood.dataView()
-                Spacer()
-            }
+            neighborhood.dataView()
             .padding([.leading, .trailing])
         }
     }
@@ -73,7 +54,7 @@ extension ListingDetail.Section {
     }
     
     static func previewListingStatus() -> Self {
-        .listingStatus(text: "For Rent", price: 140000.toCurrency(), address: .previewListingAddress(), uniqueHash: .hashableUUID)
+        .listingStatus(.previewListingStatus(), uniqueHash: .hashableUUID)
     }
     
     static func previewListingSize() -> Self {

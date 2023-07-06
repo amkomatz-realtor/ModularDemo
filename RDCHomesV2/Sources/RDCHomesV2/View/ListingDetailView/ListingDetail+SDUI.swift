@@ -2,39 +2,43 @@ import SwiftUI
 import RDCCore
 
 public extension ListingDetail {
-    struct ForRent: HashIdentifiable {
+    struct SDUI: HashIdentifiable {
         let sections: [Section]
     }
 }
 
-extension ListingDetail.ForRent: View {
+extension ListingDetail.SDUI: View {
     public var body: some View {
         VStack(alignment: .leading) {
-            VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: 12) {
                 ForEach(sections) { section in
                     section
+                    Spacer()
+                        .frame(height: 2)
                 }
+                
+                Spacer()
             }
         }
     }
 }
 
 #if targetEnvironment(simulator)
-struct ListingDetail_ForRent_Previews: PreviewProvider {
+struct ListingDetail_SDUI_Previews: PreviewProvider {
     static var previews: some View {
-        ListingDetail.ForRent.previewAllSections()
+        ListingDetail.SDUI.previewAllSections()
             .previewDisplayName(".all sections")
         
-        ListingDetail.ForRent.previewSomeSections()
+        ListingDetail.SDUI.previewSomeSections()
             .previewDisplayName(".some sections")
     }
 }
 
-extension ListingDetail.ForRent {
+extension ListingDetail.SDUI {
     static func previewAllSections() -> Self {
         .init(sections: [
             .listingHero(.previewListingHero(), uniqueHash: .hashableUUID),
-            .listingStatus(text: "For rent", price: 140000.toCurrency(), address: .previewListingAddress(), uniqueHash: .hashableUUID),
+            .listingStatus(.previewListingStatus(), uniqueHash: .hashableUUID),
             .listingSize(.previewListingSize(), uniqueHash: .hashableUUID),
             .neighborhood(.loaded(.previewNeighborhood()), uniqueHash: .hashableUUID)
         ])
@@ -43,7 +47,7 @@ extension ListingDetail.ForRent {
     static func previewSomeSections() -> Self {
         .init(sections: [
             .listingHero(.previewListingHero(), uniqueHash: .hashableUUID),
-            .listingStatus(text: "For rent", price: 140000.toCurrency(), address: .previewListingAddress(), uniqueHash: .hashableUUID),
+            .listingStatus(.previewListingStatus(), uniqueHash: .hashableUUID),
         ])
     }
 }

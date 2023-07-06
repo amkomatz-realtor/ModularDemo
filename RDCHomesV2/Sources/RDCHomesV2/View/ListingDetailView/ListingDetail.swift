@@ -3,8 +3,8 @@ import RDCCore
 import RDCBusiness
 
 public enum ListingDetail: HashIdentifiable {
-    case cached(CacheView)
-    case forRent(StatefulLiveData<ForRent>)
+    case placeholder(Placeholder)
+    case sdui(StatefulLiveData<SDUI>)
     case forSale(ForSale)
     case failure
 }
@@ -14,9 +14,9 @@ extension ListingDetail: View {
         ScrollView {
             ZStack {
                 switch self {
-                case .cached(let cacheListingDetail):
+                case .placeholder(let cacheListingDetail):
                     cacheListingDetail
-                case .forRent(let rentalListingDetail):
+                case .sdui(let rentalListingDetail):
                     rentalListingDetail.dataView()
                 case .forSale(let nonRentalListingDetail):
                     nonRentalListingDetail
@@ -46,11 +46,11 @@ struct ListingDetail_Previews: PreviewProvider {
 
 extension ListingDetail {
     static func previewCache() -> Self {
-        .cached(.previewCacheListingDetail())
+        .placeholder(.previewCacheListingDetail())
     }
     
     static func previewRental() -> Self {
-        .forRent(.loaded(.previewAllSections()))
+        .sdui(.loaded(.previewAllSections()))
     }
     
     static func previewNonRental() -> Self {

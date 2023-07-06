@@ -26,7 +26,7 @@ final class ListingDetailViewModelTests: XCTestCase {
     
     func testItShowsCacheViewWhenReceivingCacheData() {
         givenViewModelWith(dataState: .cached(FakeListingModel()))
-        XCTAssertEqual(sut.latestValue.loadedView, ListingDetail.cached(ListingDetail.CacheView(
+        XCTAssertEqual(sut.latestValue.loadedView, ListingDetail.placeholder(ListingDetail.Placeholder(
             listingHero: ListingHero(thumbnail: URL(string: "https://fakeurl.com")!),
             price: 140000,
             listingAddress: ListingAddress(address: "fake address"))

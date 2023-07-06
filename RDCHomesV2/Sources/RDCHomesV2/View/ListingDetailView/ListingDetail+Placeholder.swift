@@ -2,14 +2,14 @@ import SwiftUI
 import RDCCore
 
 public extension ListingDetail {
-    struct CacheView: HashIdentifiable {
+    struct Placeholder: HashIdentifiable {
         let listingHero: ListingHero
         let price: Double
         let listingAddress: ListingAddress
     }
 }
 
-extension ListingDetail.CacheView: View {
+extension ListingDetail.Placeholder: View {
     
     public var body: some View {
         VStack(alignment: .leading) {
@@ -49,14 +49,14 @@ extension ListingDetail.CacheView: View {
 }
 
 #if targetEnvironment(simulator)
-struct ListingDetail_CacheView_Previews: PreviewProvider {
+struct ListingDetail_Placeholder_Previews: PreviewProvider {
     static var previews: some View {
-        ListingDetail.CacheView.previewCacheListingDetail()
+        ListingDetail.Placeholder.previewCacheListingDetail()
             .previewDisplayName(".cache listing detail")
     }
 }
 
-extension ListingDetail.CacheView {
+extension ListingDetail.Placeholder {
     static func previewCacheListingDetail() -> Self {
         .init(listingHero: .previewListingHero(),
               price: 140000,

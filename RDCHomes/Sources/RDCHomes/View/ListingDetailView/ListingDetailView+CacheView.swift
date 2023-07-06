@@ -55,7 +55,7 @@ extension ListingDetailView {
 #if targetEnvironment(simulator)
 struct CacheView_Previews: PreviewProvider {
     static var previews: some View {
-        ListingDetailView.CacheView(previewForSaleListing)
+        ListingDetailView.Placeholder(previewForSaleListing)
             .edgesIgnoringSafeArea(.top)
     }
 }
