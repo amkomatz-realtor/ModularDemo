@@ -269,43 +269,19 @@ private let sduiLevel3Json = [
         ]
     """.data(using: .utf8)!,
     "f3412fa4-e12a-4899-ae1a-0b85c47e46f8": """
-        [
-            {
-                "type": "listing_hero",
-                "content": {
-                    "url": "https://ap.rdcpix.com/56c49b1d345453ab9a9712b2f99f3c80l-m3373608447od-w480_h360_x2.webp"
-                }
-            }
-        ]
+        {
+        }
     """.data(using: .utf8)!,
     "935324b4-0e0f-49c4-9361-469cfeea67e4": """
-        [
-            {
-                "type": "listing_hero",
-                "content": {
-                    "url": "https://ap.rdcpix.com/56c49b1d345453ab9a9712b2f99f3c80l-m3373608447od-w480_h360_x2.webp"
-                }
-            }
-        ]
+        {
+        }
     """.data(using: .utf8)!,
     "c08c3e50-818f-4899-8b66-f8ee2381173e": """
-        [
-            {
-                "type": "listing_hero",
-                "content": {
-                    "url": "https://ap.rdcpix.com/56c49b1d345453ab9a9712b2f99f3c80l-m3373608447od-w480_h360_x2.webp"
-                }
-            }
-        ]
+        {
+        }
     """.data(using: .utf8)!,
     "c08c3e50-828f-4895-8b64-f8ee2381273e": """
-        [
-            {
-                "type": "listing_hero",
-                "content": {
-                    "url": "https://ap.rdcpix.com/56c49b1d345453ab9a9712b2f99f3c80l-m3373608447od-w480_h360_x2.webp"
-                }
-            }
-        ]
+        {
+        }
     """.data(using: .utf8)!,
 ]

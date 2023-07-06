@@ -48,6 +48,20 @@ private extension SDUIListingSectionsDataState {
                         uniqueHash: .hashableUUID
                     )
             
+                case .listingSize(let listingSize):
+                    return .listingSize(
+                        ListingSize(beds: listingSize.content.beds,
+                                    baths: listingSize.content.baths,
+                                    sqft: listingSize.content.sqrt),
+                        uniqueHash: .hashableUUID
+                    )
+                    
+                case .listingNeighborhood(let listingNeighborhood):
+                    return .neighborhood(.loaded(
+                        Neighborhood(name: listingNeighborhood.content.name,
+                                     rating: listingNeighborhood.content.rating)),
+                        uniqueHash: .hashableUUID)
+                    
                 case .unknown:
                     return nil
                 }
