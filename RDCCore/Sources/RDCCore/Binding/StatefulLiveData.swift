@@ -9,10 +9,10 @@ public enum DataViewState<T: View> {
     case empty
     
     /// Skeleton from view
-    case placeholder(view: T)
+    case placeholder(dataView: T)
     
     /// Custom loading view, or error handling
-    case custom(view: any HashIdentifiableView)
+    case custom(dataView: any HashIdentifiableView)
     
     /// View is loaded with data
     case loaded(dataView: T)
@@ -23,10 +23,10 @@ extension DataViewState: View {
         switch self {
         case .empty:
             EmptyView()
-        case .placeholder(let view):
-            view.redacted(reason: .placeholder)
-        case .custom(let view):
-            AnyView(view)
+        case .placeholder(let dataView):
+            dataView.redacted(reason: .placeholder)
+        case .custom(let dataView):
+            AnyView(dataView)
         case .loaded(let dataView):
             dataView
         }
@@ -47,11 +47,11 @@ open class StatefulLiveData<T: View>: LiveData<DataViewState<T>> {
     }
     
     public static func placeholder<T>(_ value: T) -> StatefulLiveData<T> {
-        .init(publisher: Just(.placeholder(view: value)).eraseToAnyPublisher())
+        .init(publisher: Just(.placeholder(dataView: value)).eraseToAnyPublisher())
     }
     
     public static func custom<T, V: HashIdentifiableView>(_ value: V) -> StatefulLiveData<T> {
-        .init(publisher: Just(.custom(view: value)).eraseToAnyPublisher())
+        .init(publisher: Just(.custom(dataView: value)).eraseToAnyPublisher())
     }
     
     public static func loaded<T>(_ value: T) -> StatefulLiveData<T> {

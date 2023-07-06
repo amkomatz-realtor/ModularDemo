@@ -2,7 +2,7 @@ import SwiftUI
 import RDCCore
 
 extension ListingDetail {
-    enum ForRentSection: HashIdentifiable {
+    enum Section: HashIdentifiable {
         case listingHero(ListingHero, uniqueHash: UniqueHash)
         case listingStatus(text: String, price: String, address: ListingAddress, uniqueHash: UniqueHash)
         case listingSize(ListingSize, uniqueHash: UniqueHash)
@@ -10,7 +10,7 @@ extension ListingDetail {
     }
 }
 
-extension ListingDetail.ForRentSection: View {
+extension ListingDetail.Section: View {
     var body: some View {
         switch self {
         case .listingHero(let listingHero, _):
@@ -53,21 +53,21 @@ extension ListingDetail.ForRentSection: View {
 #if targetEnvironment(simulator)
 struct ListingDetail_ForRentSection_Previews: PreviewProvider {
     static var previews: some View {
-        ListingDetail.ForRentSection.previewListingHero()
+        ListingDetail.Section.previewListingHero()
             .previewDisplayName(".listing hero")
         
-        ListingDetail.ForRentSection.previewListingStatus()
+        ListingDetail.Section.previewListingStatus()
             .previewDisplayName(".listing status")
         
-        ListingDetail.ForRentSection.previewListingSize()
+        ListingDetail.Section.previewListingSize()
             .previewDisplayName(".listing size")
         
-        ListingDetail.ForRentSection.previewNeighborhood()
+        ListingDetail.Section.previewNeighborhood()
             .previewDisplayName(".neighborhood")
     }
 }
 
-extension ListingDetail.ForRentSection {
+extension ListingDetail.Section {
     static func previewListingHero() -> Self {
         .listingHero(.previewListingHero(), uniqueHash: .hashableUUID)
     }

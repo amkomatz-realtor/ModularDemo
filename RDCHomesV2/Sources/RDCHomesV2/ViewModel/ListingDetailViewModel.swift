@@ -28,7 +28,7 @@ private extension DetailDataState {
         
         switch self {
         case .pending:
-            return .custom(view: ProgressIndicator())
+            return .custom(dataView: ProgressIndicator())
             
         case .cached(let listingModel):
             return .loaded(dataView: .cached(ListingDetail.CacheView(
@@ -59,11 +59,11 @@ private extension DetailDataState {
                 )))
                 
             case .offMarket:
-                return .custom(view: ErrorText(message: "Not implemented"))
+                return .custom(dataView: ErrorText(message: "Not implemented"))
             }
             
         case .failure(let error):
-            return .custom(view: ErrorText(message: error.localizedDescription))
+            return .custom(dataView: ErrorText(message: error.localizedDescription))
         }
     }
 }

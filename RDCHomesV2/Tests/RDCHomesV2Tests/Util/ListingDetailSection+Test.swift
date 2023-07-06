@@ -1,7 +1,7 @@
 import Foundation
 @testable import RDCHomesV2
 
-extension ListingDetail.ForRentSection {
+extension ListingDetail.Section {
     var listingHero: ListingHero? {
         if case let .listingHero(listingHero, _) = self {
             return listingHero
