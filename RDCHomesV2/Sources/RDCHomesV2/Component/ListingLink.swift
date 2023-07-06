@@ -3,13 +3,13 @@ import SwiftUI
 
 struct ListingLink: HashIdentifiable {
     let displayText: String
-    let sideEffect: ActionSideEffect
+    let onTap: ActionSideEffect
 }
 
 extension ListingLink: View {
     var body: some View {
         Button(displayText) {
-            sideEffect.occurs()
+            onTap.occurs()
         }
     }
 }
@@ -24,7 +24,7 @@ struct ListingLink_Previews: PreviewProvider {
 
 extension ListingLink {
     static func previewListingLink() -> Self {
-        .init(displayText: "Link to some place", sideEffect: .noSideEffect())
+        .init(displayText: "Link to some place", onTap: .noSideEffect())
     }
 }
 #endif

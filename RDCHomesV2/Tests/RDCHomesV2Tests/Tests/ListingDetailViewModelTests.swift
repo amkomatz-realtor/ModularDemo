@@ -1,6 +1,7 @@
 import XCTest
 import Combine
 import RDCBusiness
+import RDCCore
 @testable import RDCHomesV2
 
 final class ListingDetailViewModelTests: XCTestCase {
@@ -12,19 +13,19 @@ final class ListingDetailViewModelTests: XCTestCase {
         let homesResolver = StubHomesResolver()
         let listingId = UUID()
         
-        whenCreatingViewModelWith(listingId: listingId, resolver: homesResolver)
+        givenViewModelWith(listingId: listingId, resolver: homesResolver)
         XCTAssertEqual(homesResolver.stubNetworkManager.verifiedUrl, "https://api.realtor.com/listings/\(listingId)")
     }
     
     // MARK: - Data Rendering
     
     func testItShowsCustomProgressViewWhenDataIsPending() {
-        whenCreatingViewModelWith(dataState: .pending)
+        givenViewModelWith(dataState: .pending)
         XCTAssertNotNil(sut.latestValue.customView(type: ProgressIndicator.self))
     }
     
     func testItShowsCacheViewWhenReceivingCacheData() {
-        whenCreatingViewModelWith(dataState: .cached(FakeListingModel()))
+        givenViewModelWith(dataState: .cached(FakeListingModel()))
         XCTAssertEqual(sut.latestValue.loadedView, ListingDetail.cached(ListingDetail.CacheView(
             listingHero: ListingHero(thumbnail: URL(string: "https://fakeurl.com")!),
             price: 140000,
@@ -33,7 +34,7 @@ final class ListingDetailViewModelTests: XCTestCase {
     }
     
     func testItShowsForSaleViewWhenReceivingForSaleData() {
-        whenCreatingViewModelWithListingStatus(.forSale)
+        givenDetailViewModel(forListingId: .init(), status: .forSale)
         XCTAssertNotNil(sut.latestValue.loadedView?.forSaleView)
         
         XCTAssertEqual(sut.latestValue.loadedView?.forSaleView?.listingHero,
@@ -47,7 +48,7 @@ final class ListingDetailViewModelTests: XCTestCase {
     }
     
     func testItShowsLoadingNeightborhood_NonRentalData() {
-        whenCreatingViewModelWithListingStatus(.forSale)
+        givenDetailViewModel(forListingId: .init(), status: .forSale)
         XCTAssertNotNil(sut.latestValue.loadedView?.forSaleView)
         
         XCTAssertEqual(sut.latestValue.loadedView?.forSaleView?.neighborhood.latestValue.placeholderView,
@@ -55,27 +56,56 @@ final class ListingDetailViewModelTests: XCTestCase {
     }
     
     func testItShowsCustomViewForOffMarket() {
-        whenCreatingViewModelWithListingStatus(.offMarket)
+        givenDetailViewModel(forListingId: .init(), status: .offMarket)
         XCTAssertNotNil(sut.latestValue.customView(type: ErrorText.self))
     }
     
     func testItShowsCustomViewForFailure() {
-        whenCreatingViewModelWith(dataState: .failure(NSError(domain: "unit test", code: -1)))
+        givenViewModelWith(dataState: .failure(NSError(domain: "unit test", code: -1)))
         XCTAssertNotNil(sut.latestValue.customView(type: ErrorText.self))
     }
+    
+    // MARK: - Side Effect
+    
+    func testItRoutesToAdditionalDetails() {
+        let listingId = UUID()
+        let stubResolver = StubHomesResolver()
 
-    private func whenCreatingViewModelWith(listingId: UUID, resolver: HomesV2Resolving) {
+        givenDetailViewModel(forListingId: listingId, status: .forSale, resolver: stubResolver)
+        
+        XCTAssertNotNil(sut.latestValue.loadedView?.forSaleView)
+        
+        whenTapSeeMoreLink()
+        
+        XCTAssertEqual(stubResolver.stubHostRouter.verifiedDestination, "listing-additional-details_\(listingId)")
+    }
+    
+    func testItRoutesToSearch() {
+        let stubResolver = StubHomesResolver()
+
+        givenDetailViewModel(forListingId: .init(), status: .forSale, resolver: stubResolver)
+        
+        XCTAssertNotNil(sut.latestValue.loadedView?.forSaleView)
+        
+        whenTapSimilarHomesLink()
+        
+        XCTAssertEqual(stubResolver.stubHostRouter.verifiedDestination, "search")
+    }
+    
+    // MARK: - Test Helper
+    
+    private func givenViewModelWith(listingId: UUID, resolver: HomesV2Resolving) {
         sut = ListingDetailViewModel(forListingId: listingId, resolver: resolver)
     }
     
-    private func whenCreatingViewModelWith(dataState: DetailDataState) {
+    private func givenViewModelWith(dataState: DetailDataState) {
         sut = ListingDetailViewModel(Just(dataState).eraseToAnyPublisher(),
                                      resolver: StubHomesResolver())
     }
     
-    private func whenCreatingViewModelWithListingStatus(_ status: DetailListingModel.Status) {
+    private func givenDetailViewModel(forListingId id: UUID, status: DetailListingModel.Status, resolver: StubHomesResolver = StubHomesResolver()) {
         let detailListingModel = DetailListingModel(
-            id: .init(),
+            id: id,
             address: "fake listing detail address",
             price: 200000,
             thumbnail: URL(string: "https://fakeurl.com")!,
@@ -86,7 +116,15 @@ final class ListingDetailViewModelTests: XCTestCase {
         )
         
         sut = ListingDetailViewModel(Just(.detail(detailListingModel)).eraseToAnyPublisher(),
-                                     resolver: StubHomesResolver())
+                                     resolver: resolver)
+    }
+    
+    private func whenTapSeeMoreLink() {
+        sut.latestValue.loadedView?.forSaleView?.seeMoreLink.onTap.occurs()
+    }
+    
+    private func whenTapSimilarHomesLink() {
+        sut.latestValue.loadedView?.forSaleView?.seeSimilarHomesLink.onTap.occurs()
     }
     
     private func stubNeighborhoodViewModel() -> NeighborhoodViewModel {

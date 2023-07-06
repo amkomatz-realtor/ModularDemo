@@ -50,10 +50,10 @@ private extension DetailDataState {
                     listingAddress: ListingAddress(address: listingModel.address),
                     listingSize: ListingSize(beds: listingModel.beds, baths: listingModel.baths, sqft: listingModel.sqft),
                     neighborhood: NeighborhoodViewModel(forListingId: listingModel.id, resolver: resolver),
-                    seeMoreLink: ListingLink(displayText: "See more details", sideEffect: .onTap {
+                    seeMoreLink: ListingLink(displayText: "See more details", onTap: .onTap {
                         router.route("listing-additional-details_\(listingModel.id)")
                     }),
-                    seeSimilarHomesLink: ListingLink(displayText: "See similar homes", sideEffect: .onTap {
+                    seeSimilarHomesLink: ListingLink(displayText: "See similar homes", onTap: .onTap {
                         router.route("search")
                     })
                 )))
