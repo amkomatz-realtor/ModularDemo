@@ -17,6 +17,8 @@ class NetworkManager: INetworkManager {
             response = detailJson[id]!
         } else if let id = url.matches(of: "^https://api.realtor.com/listings/([a-zA-Z0-9\\-]*)/neighborhood$").get(1)?.lowercased() {
             response = neighborhoodJson[id]!
+        } else if let id = url.matches(of: "^https://api.realtor.com/listings/([a-zA-Z0-9\\-]*)/sections$").get(1)?.lowercased() {
+            response = sduiLevel3Json[id]!
         } else if url == "https://api.realtor.com/ldpSections/for_rent" {
             response = rentalSectionsJson
         } else if url == "https://api.realtor.com/ldpSections/off_market" {
@@ -231,3 +233,79 @@ private let offMarketSectionsJson = """
     },
 ]
 """.data(using: .utf8)!
+
+private let sduiLevel3Json = [
+    "f7ff90eb-fece-4f3c-a10d-8abbb68f1e1d": """
+        [
+            {
+                "type": "listing_hero",
+                "content": {
+                    "url": "https://ap.rdcpix.com/56c49b1d345453ab9a9712b2f99f3c80l-m3373608447od-w480_h360_x2.webp"
+                }
+            },
+            {
+                "type": "listing_details",
+                "content": {
+                    "status": "for_sale",
+                    "price": 389999,
+                    "address": "11226 Reflection Point Dr, Fishers, IN 46037"
+                }
+            },
+            {
+                "type": "listing_size",
+                "content": {
+                    "beds": 3,
+                    "baths": 2,
+                    "sqft": 3000
+                }
+            },
+            {
+                "type": "listing_neighborhood",
+                "content": {
+                    "name": "Downtown",
+                    "rating": 8
+                }
+            }
+        ]
+    """.data(using: .utf8)!,
+    "f3412fa4-e12a-4899-ae1a-0b85c47e46f8": """
+        [
+            {
+                "type": "listing_hero",
+                "content": {
+                    "url": "https://ap.rdcpix.com/56c49b1d345453ab9a9712b2f99f3c80l-m3373608447od-w480_h360_x2.webp"
+                }
+            }
+        ]
+    """.data(using: .utf8)!,
+    "935324b4-0e0f-49c4-9361-469cfeea67e4": """
+        [
+            {
+                "type": "listing_hero",
+                "content": {
+                    "url": "https://ap.rdcpix.com/56c49b1d345453ab9a9712b2f99f3c80l-m3373608447od-w480_h360_x2.webp"
+                }
+            }
+        ]
+    """.data(using: .utf8)!,
+    "c08c3e50-818f-4899-8b66-f8ee2381173e": """
+        [
+            {
+                "type": "listing_hero",
+                "content": {
+                    "url": "https://ap.rdcpix.com/56c49b1d345453ab9a9712b2f99f3c80l-m3373608447od-w480_h360_x2.webp"
+                }
+            }
+        ]
+    """.data(using: .utf8)!,
+    "c08c3e50-828f-4895-8b64-f8ee2381273e": """
+        [
+            {
+                "type": "listing_hero",
+                "content": {
+                    "url": "https://ap.rdcpix.com/56c49b1d345453ab9a9712b2f99f3c80l-m3373608447od-w480_h360_x2.webp"
+                }
+            }
+        ]
+    """.data(using: .utf8)!,
+]
