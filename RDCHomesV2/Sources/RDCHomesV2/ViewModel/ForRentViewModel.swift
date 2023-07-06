@@ -21,7 +21,7 @@ final class ForRentViewModel: StatefulLiveData<ListingDetail.ForRentView> {
             .map { dataState in
                 dataState.mapToDataViewState(
                     listingModel: detailListingModel,
-                    neighborhoodViewModelResolver: { NeighborhoodViewModel(forListingId: $0, resolver: resolver) }
+                    resolver: resolver
                 )
             }
             .eraseToAnyPublisher()
@@ -31,7 +31,7 @@ final class ForRentViewModel: StatefulLiveData<ListingDetail.ForRentView> {
 
 private extension RentalSectionsDataState {
     func mapToDataViewState(listingModel: DetailListingModel,
-                            neighborhoodViewModelResolver: (UUID) -> NeighborhoodViewModel) -> DataViewState<ListingDetail.ForRentView> {
+                            resolver: HomesV2Resolving) -> DataViewState<ListingDetail.ForRentView> {
         switch self {
         case .pending:
             return .custom(view: ProgressIndicator())
@@ -45,7 +45,7 @@ private extension RentalSectionsDataState {
                 case .listingSize:
                     return .listingSize(ListingSize(beds: listingModel.beds, baths: listingModel.baths, sqft: listingModel.sqft), uniqueHash: .hashableUUID)
                 case .neighborhood:
-                    return .neighborhood(neighborhoodViewModelResolver(listingModel.id), uniqueHash: .hashableUUID)
+                    return .neighborhood(NeighborhoodViewModel(forListingId: listingModel.id, resolver: resolver), uniqueHash: .hashableUUID)
                 case .unknown:
                     return nil
                 }
