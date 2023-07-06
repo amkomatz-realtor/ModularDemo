@@ -15,6 +15,7 @@ extension ListingDetail.ForRentSection: View {
         switch self {
         case .listingHero(let listingHero, _):
             listingHero
+            
         case let .listingStatus(text, price, address, _):
             VStack(alignment: .leading, spacing: 8) {
                 Text(text)

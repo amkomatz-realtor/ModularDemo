@@ -44,7 +44,7 @@ private extension DetailDataState {
                 return .loaded(dataView: .forRent(ForRentViewModel(detailListingModel: listingModel, resolver: resolver)))
                 
             case .forSale:
-                return .loaded(dataView: .forSale(ListingDetail.ForSaleView(
+                return .loaded(dataView: .forSale(ListingDetail.ForSale(
                     listingHero: ListingHero(thumbnail: listingModel.thumbnail),
                     price: listingModel.price,
                     listingAddress: ListingAddress(address: listingModel.address),

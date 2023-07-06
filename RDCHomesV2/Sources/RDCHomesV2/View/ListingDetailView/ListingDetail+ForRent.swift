@@ -2,12 +2,12 @@ import SwiftUI
 import RDCCore
 
 public extension ListingDetail {
-    struct ForRentView: HashIdentifiable {
+    struct ForRent: HashIdentifiable {
         let sections: [ForRentSection]
     }
 }
 
-extension ListingDetail.ForRentView: View {
+extension ListingDetail.ForRent: View {
     public var body: some View {
         VStack(alignment: .leading) {
             VStack(alignment: .leading, spacing: 16) {
@@ -20,17 +20,17 @@ extension ListingDetail.ForRentView: View {
 }
 
 #if targetEnvironment(simulator)
-struct ListingDetail_ForRentView_Previews: PreviewProvider {
+struct ListingDetail_ForRent_Previews: PreviewProvider {
     static var previews: some View {
-        ListingDetail.ForRentView.previewAllSections()
+        ListingDetail.ForRent.previewAllSections()
             .previewDisplayName(".all sections")
         
-        ListingDetail.ForRentView.previewSomeSections()
+        ListingDetail.ForRent.previewSomeSections()
             .previewDisplayName(".some sections")
     }
 }
 
-extension ListingDetail.ForRentView {
+extension ListingDetail.ForRent {
     static func previewAllSections() -> Self {
         .init(sections: [
             .listingHero(.previewListingHero(), uniqueHash: .hashableUUID),

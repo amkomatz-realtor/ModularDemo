@@ -58,7 +58,7 @@ extension ListingDetailView {
 #if targetEnvironment(simulator)
 struct ForSaleView_Previews: PreviewProvider {
     static var previews: some View {
-        ListingDetailView.ForSaleView(
+        ListingDetailView.ForSale(
             previewForSaleListing,
             resolver: PreviewHomesResolver()
         )

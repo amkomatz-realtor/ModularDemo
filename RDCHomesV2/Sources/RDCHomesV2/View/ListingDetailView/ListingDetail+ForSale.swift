@@ -2,7 +2,7 @@ import SwiftUI
 import RDCCore
 
 public extension ListingDetail {
-    struct ForSaleView: HashIdentifiable {
+    struct ForSale: HashIdentifiable {
         let listingHero: ListingHero
         let price: Double
         let listingAddress: ListingAddress
@@ -13,7 +13,7 @@ public extension ListingDetail {
     }
 }
 
-extension ListingDetail.ForSaleView: View {
+extension ListingDetail.ForSale: View {
     public var body: some View {
         VStack(alignment: .leading) {
             listingHero
@@ -56,12 +56,12 @@ extension ListingDetail.ForSaleView: View {
 #if targetEnvironment(simulator)
 struct ListingDetail_ForSaleView_Previews: PreviewProvider {
     static var previews: some View {
-        ListingDetail.ForSaleView.previewNonRentalListingDetail()
+        ListingDetail.ForSale.previewNonRentalListingDetail()
             .previewDisplayName(".for sale listing detail")
     }
 }
 
-extension ListingDetail.ForSaleView {
+extension ListingDetail.ForSale {
     static func previewNonRentalListingDetail() -> Self {
         .init(listingHero: .previewListingHero(),
               price: 389999,

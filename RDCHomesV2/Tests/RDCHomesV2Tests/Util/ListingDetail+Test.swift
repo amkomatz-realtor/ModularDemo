@@ -10,7 +10,7 @@ extension ListingDetail {
         return nil
     }
     
-    var forRentView: ForRentView? {
+    var forRentView: ForRent? {
         if case .forRent(let forRentView) = self {
             return forRentView.latestValue.loadedView
         }
@@ -18,7 +18,7 @@ extension ListingDetail {
         return nil
     }
     
-    var forSaleView: ForSaleView? {
+    var forSaleView: ForSale? {
         if case .forSale(let forSaleView) = self {
             return forSaleView
         }

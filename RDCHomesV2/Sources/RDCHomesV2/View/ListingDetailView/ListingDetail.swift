@@ -4,8 +4,8 @@ import RDCBusiness
 
 public enum ListingDetail: HashIdentifiable {
     case cached(CacheView)
-    case forRent(StatefulLiveData<ForRentView>)
-    case forSale(ForSaleView)
+    case forRent(StatefulLiveData<ForRent>)
+    case forSale(ForSale)
     case failure
 }
 
