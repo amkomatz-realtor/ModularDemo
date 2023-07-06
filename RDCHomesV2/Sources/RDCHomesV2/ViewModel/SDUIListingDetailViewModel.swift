@@ -34,33 +34,8 @@ private extension SDUIListingSectionsDataState {
         case .success(let sections):
             return .loaded(dataView: .sdui(variant: ListingDetail.Variant(sections: sections.compactMap { section in
                 switch section {
-                case .listingHero(let listingHero):
-                    guard let url = URL(string: listingHero.content.url) else { return nil }
-                    return .listingHero(ListingHero(thumbnail: url), uniqueHash: .hashableUUID)
-                    
-                case .listingDetails(let listingDetails):
-                    return .listingStatus(
-                        ListingStatus(
-                            status: listingDetails.content.status,
-                            price: listingDetails.content.price.toCurrency(),
-                            address: ListingAddress(address: listingDetails.content.address)
-                        ),
-                        uniqueHash: .hashableUUID
-                    )
-            
-                case .listingSize(let listingSize):
-                    return .listingSize(
-                        ListingSize(beds: listingSize.content.beds,
-                                    baths: listingSize.content.baths,
-                                    sqft: listingSize.content.sqrt),
-                        uniqueHash: .hashableUUID
-                    )
-                    
-                case .listingNeighborhood(let listingNeighborhood):
-                    return .neighborhood(.loaded(
-                        Neighborhood(name: listingNeighborhood.content.name,
-                                     rating: listingNeighborhood.content.rating)),
-                        uniqueHash: .hashableUUID)
+                case .general(let section):
+                    return section
                     
                 case .unknown:
                     return nil
