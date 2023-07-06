@@ -52,12 +52,21 @@ final class ListingDetailViewModelTests: XCTestCase {
                        ListingSize(beds: 3, baths: 3, sqft: 1500))
     }
     
-    func testForSale_ItShowsPlaceholderNeighborhood() {
+    func testForSale_ItUsesNeighborhoodViewModelToLoadAdditionalInfo() {
         givenDetailViewModel(forListingId: .init(), status: .forSale)
         XCTAssertNotNil(sut.latestValue.loadedView?.forSaleView)
         
-        XCTAssertEqual(sut.latestValue.loadedView?.forSaleView?.neighborhood.latestValue.placeholderView,
-                       Neighborhood(name: "Placeholder", rating: 10))
+        XCTAssertEqual(sut.latestValue.loadedView?.forSaleView?.neighborhood is NeighborhoodViewModel, true)
+    }
+    
+    func testForRent_ItUsesForRentViewModelVariant() {
+        givenDetailViewModel(forListingId: .init(), status: .forRent)
+        XCTAssertEqual(sut.latestValue.loadedView?.isVariantByViewModel(type: ForRentViewModel.self), true)
+    }
+    
+    func testOffMarket_ItUsesOffMarketViewModelVariant() {
+        givenDetailViewModel(forListingId: .init(), status: .offMarket)
+        XCTAssertEqual(sut.latestValue.loadedView?.isVariantByViewModel(type: OffMarketViewModel.self), true)
     }
     
     // MARK: - Side Effect
@@ -69,6 +78,7 @@ final class ListingDetailViewModelTests: XCTestCase {
         givenDetailViewModel(forListingId: listingId, status: .forSale, resolver: stubResolver)
         
         XCTAssertNotNil(sut.latestValue.loadedView?.forSaleView)
+        XCTAssertEqual(sut.latestValue.loadedView?.forSaleView?.seeMoreLink.displayText, "See more details")
         
         whenTapSeeMoreLink()
         
@@ -81,6 +91,7 @@ final class ListingDetailViewModelTests: XCTestCase {
         givenDetailViewModel(forListingId: .init(), status: .forSale, resolver: stubResolver)
         
         XCTAssertNotNil(sut.latestValue.loadedView?.forSaleView)
+        XCTAssertEqual(sut.latestValue.loadedView?.forSaleView?.seeSimilarHomesLink.displayText, "See similar homes")
         
         whenTapSimilarHomesLink()
         
