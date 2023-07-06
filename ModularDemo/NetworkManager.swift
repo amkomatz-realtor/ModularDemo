@@ -72,6 +72,14 @@ private let feedJson = """
             "price": 400000,
             "thumbnail": "https://ap.rdcpix.com/dfab3557407d053078f3038c4943ea7fl-m2019589893od-w1024_h768_x2.webp",
             "daysOnRealtor": 5
+        },
+        {
+            "id": "c08c3e50-828f-4895-8b64-f8ee2381273e",
+            "address": "1 Infinity Loop, Mountain View, CA 95189",
+            "price": 1527990,
+            "thumbnail": "https://nh.rdcpix.com/4f40f967f5bafe68c5bee30acb6a5f13e-f3925967158od-w480_h360_x2.webp",
+            "daysOnRealtor": 1000,
+            "openHouseDate": 1686283080
         }
     ],
     "openHouse": [
@@ -132,6 +140,18 @@ private let detailJson = [
             "sqft": 2600
         }
     """.data(using: .utf8)!,
+    "c08c3e50-828f-4895-8b64-f8ee2381273e": """
+        {
+            "id": "c08c3e50-828f-4895-8b64-f8ee2381273e",
+            "address": "1 Infinity Loop, Mountain View, CA 95189",
+            "price": 527990,
+            "thumbnail": "https://nh.rdcpix.com/4f40f967f5bafe68c5bee30acb6a5f13e-f3925967158od-w480_h360_x2.webp",
+            "status": "off_market",
+            "beds": 100,
+            "baths": 50,
+            "sqft": 300000
+        }
+    """.data(using: .utf8)!,
     "c08c3e50-818f-4899-8b66-f8ee2381173e": """
         {
             "id": "c08c3e50-818f-4899-8b66-f8ee2381173e",
@@ -169,6 +189,12 @@ private let neighborhoodJson = [
         {
             "name": "Downtown",
             "rating": 8
+        }
+    """.data(using: .utf8)!,
+    "c08c3e50-828f-4895-8b64-f8ee2381273e": """
+        {
+            "name": "Uptown",
+            "rating": 10
         }
     """.data(using: .utf8)!,
 ]

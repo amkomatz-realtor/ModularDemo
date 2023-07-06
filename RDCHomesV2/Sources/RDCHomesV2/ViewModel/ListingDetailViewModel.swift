@@ -59,7 +59,7 @@ private extension DetailDataState {
                 )))
                 
             case .offMarket:
-                return .custom(dataView: ErrorText(message: "Not implemented"))
+                return .loaded(dataView: .sdui(OffMarketViewModel(detailListingModel: listingModel, resolver: resolver)))
             }
             
         case .failure(let error):

@@ -36,8 +36,8 @@ private extension RentalSectionsDataState {
         case .pending:
             return .custom(dataView: ProgressIndicator())
             
-        case .success(let sectionIds):
-            return .loaded(dataView: ListingDetail.SDUI(sections: sectionIds.compactMap { section in
+        case .success(let sections):
+            return .loaded(dataView: ListingDetail.SDUI(sections: sections.compactMap { section in
                 switch section.sectionId {
                 case .listingHero:
                     return .listingHero(ListingHero(thumbnail: listingModel.thumbnail), uniqueHash: .hashableUUID)
