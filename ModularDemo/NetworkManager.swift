@@ -3,7 +3,7 @@ import RDCCore
 import RDCSearch
 import RDCBusiness
 
-class NetworkManager: INetworkManaging {
+class NetworkManager: INetworkManager {
     func get<T>(_ type: T.Type, from url: String) async throws -> T where T: Decodable {
         try await Task.sleep(nanoseconds: 1_000_000_000)
         

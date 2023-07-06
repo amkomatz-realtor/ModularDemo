@@ -22,7 +22,7 @@ enum ListingSectionsDataState {
 }
 
 class HomesRepository {
-    private let networkManager: INetworkManaging
+    private let networkManager: INetworkManager
     private let globalStore: GlobalStore
     
     init(resolver: IHomesV2Resolver) {

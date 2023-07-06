@@ -17,7 +17,7 @@ let previewForSaleListing: DetailListingModel = DetailListingModel(
 
 let previewNeighborhood: NeighborhoodModel = NeighborhoodModel(name: "Downtown", rating: 8)
 
-class PreviewNetworkManager: INetworkManaging {
+class PreviewNetworkManager: INetworkManager {
     func get<T>(_ type: T.Type, from url: String) async throws -> T where T : Decodable {
         if T.self == DetailListingModel.self {
             return previewForSaleListing as! T
@@ -50,7 +50,7 @@ struct PreviewHomesResolver: IHomesResolver {
         PreviewRouter()
     }
     
-    let networkManager: any IResolver<INetworkManaging> = SingletonResolver {
+    let networkManager: any IResolver<INetworkManager> = SingletonResolver {
         PreviewNetworkManager()
     }
     

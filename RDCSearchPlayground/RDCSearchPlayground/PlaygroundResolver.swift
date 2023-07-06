@@ -1,12 +1,12 @@
 import RDCCore
 import RDCSearch
 
-public class PlaygroundResolver: ICoreResolver, SearchResolving {
-    public func resolveNetworkManaging() -> INetworkManaging {
+public class PlaygroundResolver: ICoreResolver, ISearchResolver {
+    public func resolveNetworkManaging() -> INetworkManager {
         PlaygroundNetworkManager()
     }
     
-    public func resolveSearchRouting() -> SearchRouting {
+    public func resolveSearchRouting() -> ISearchRouter {
         PlaygroundRouter()
     }
 }

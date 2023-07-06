@@ -2,10 +2,10 @@ import RDCCore
 import RDCBusiness
 
 class SearchRepository {
-    private let networkManager: INetworkManaging
+    private let networkManager: INetworkManager
     private let globalStore: GlobalStore
     
-    init(resolver: SearchResolving) {
+    init(resolver: ISearchResolver) {
         networkManager = resolver.networkManager.resolve()
         globalStore = resolver.globalStore.resolve()
     }

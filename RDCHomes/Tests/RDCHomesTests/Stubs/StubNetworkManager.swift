@@ -3,7 +3,7 @@ import RDCCore
 import RDCBusiness
 @testable import RDCHomes
 
-class StubNetworkManager: INetworkManaging {
+class StubNetworkManager: INetworkManager {
     var delay: TimeInterval = 0
     
     var stubDetailListing: Result<DetailListingModel, Error> = .success(DetailListingModel(
