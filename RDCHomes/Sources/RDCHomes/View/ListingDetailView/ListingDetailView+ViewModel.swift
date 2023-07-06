@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 import RDCCore
 import RDCBusiness
 
@@ -10,35 +11,32 @@ extension ListingDetailView {
         
         @Published private(set) var state: State = .initializing
         
+        private var cancellable: AnyCancellable?
+        
         public init(id listingId: UUID, resolver: IHomesResolver) {
             self.listingId = listingId
             homesRepository = HomesRepository(resolver: resolver)
             self.resolver = resolver
+            
+            cancellable = homesRepository.getListingDetail(id: listingId)
+                .receive(on: DispatchQueue.main)
+                .sink(receiveValue: onDataStateChange)
         }
         
-        @MainActor
-        func activate() async {
-            if case .loading = state { return }
-            if case .loadingWithCache = state { return }
-            if case .successForSale = state { return }
-            if case .successForRent = state { return }
-            
-            state = .loading
-            
-            if let cache = try? resolver.globalStore.resolve().require(id: listingId) {
+        private func onDataStateChange(_ dataState: DataStateWithCache<any IListingModel, DetailListingModel>) {
+            switch dataState {
+            case .loading:
+                state = .loading
+            case .cache(let cache):
                 state = .loadingWithCache(cache)
-            }
-            
-            do {
-                let detail = try await homesRepository.getListingDetail(id: listingId)
-                
-                switch detail.status {
+            case .success(let listing):
+                switch listing.status {
                 case .forSale, .offMarket:
-                    state = .successForSale(detail)
+                    state = .successForSale(listing)
                 case .forRent:
-                    state = .successForRent(detail)
+                    state = .successForRent(listing)
                 }
-            } catch {
+            case .failure(let error):
                 state = .failure(error.localizedDescription)
             }
         }

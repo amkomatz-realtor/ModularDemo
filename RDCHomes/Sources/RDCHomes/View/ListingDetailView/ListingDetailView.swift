@@ -33,8 +33,5 @@ public struct ListingDetailView: View {
             .frame(maxWidth: .infinity)
         }
         .edgesIgnoringSafeArea(.top)
-        .task {
-            await viewModel.activate()
-        }
     }
 }
