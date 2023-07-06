@@ -3,9 +3,9 @@ import SwiftUI
 extension ListingDetailView {
     struct ForRentView: View {
         private let detail: DetailListingModel
-        private let resolver: HomesResolving
+        private let resolver: IHomesResolver
         
-        init(_ detail: DetailListingModel, resolver: HomesResolving) {
+        init(_ detail: DetailListingModel, resolver: IHomesResolver) {
             self.detail = detail
             self.resolver = resolver
         }

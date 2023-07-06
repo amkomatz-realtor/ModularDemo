@@ -4,7 +4,7 @@ import RDCCore
 struct NeighborhoodView: View {
     @StateObject private var viewModel: ViewModel
     
-    init(_ detail: DetailListingModel, resolver: HomesResolving) {
+    init(_ detail: DetailListingModel, resolver: IHomesResolver) {
         _viewModel = StateObject(wrappedValue: ViewModel(detail: detail, resolver: resolver))
     }
     

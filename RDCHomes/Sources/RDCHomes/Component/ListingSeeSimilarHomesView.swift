@@ -5,7 +5,7 @@ import RDCBusiness
 struct ListingSeeSimilarHomesView: View {
     private let router: HostRouter
     
-    init(resolver: HomesResolving) {
+    init(resolver: IHomesResolver) {
         router = resolver.router.resolve()
     }
     

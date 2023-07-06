@@ -5,9 +5,9 @@ extension ListingDetailView {
     struct ForSaleView: View {
         private let detail: DetailListingModel
         private let router: HostRouter
-        private let resolver: HomesResolving
+        private let resolver: IHomesResolver
         
-        init(_ detail: DetailListingModel, resolver: HomesResolving) {
+        init(_ detail: DetailListingModel, resolver: IHomesResolver) {
             self.detail = detail
             router = resolver.router.resolve()
             self.resolver = resolver

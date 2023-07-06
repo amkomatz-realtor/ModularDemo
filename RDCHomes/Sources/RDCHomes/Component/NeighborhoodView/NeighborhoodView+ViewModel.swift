@@ -5,11 +5,11 @@ extension NeighborhoodView {
     class ViewModel: ObservableObject {
         private let detail: DetailListingModel
         private let homesRepository: HomesRepository
-        private let resolver: HomesResolving
+        private let resolver: IHomesResolver
         
         @Published private(set) var neighborhoodDetailState: ViewState<NeighborhoodModel> = .initializing
         
-        init(detail: DetailListingModel, resolver: HomesResolving) {
+        init(detail: DetailListingModel, resolver: IHomesResolver) {
             self.detail = detail
             homesRepository = HomesRepository(resolver: resolver)
             self.resolver = resolver

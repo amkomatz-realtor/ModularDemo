@@ -45,7 +45,7 @@ class PreviewRouter: HostRouter {
     func onDismiss(_ index: Int) {}
 }
 
-struct PreviewHomesResolver: HomesResolving {
+struct PreviewHomesResolver: IHomesResolver {
     let router: any IResolver<HostRouter> = SingletonResolver {
         PreviewRouter()
     }

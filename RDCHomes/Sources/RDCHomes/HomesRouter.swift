@@ -2,9 +2,9 @@ import SwiftUI
 import RDCCore
 
 public class HomesRouter: IModuleRouter {
-    private let resolver: HomesResolving
+    private let resolver: IHomesResolver
     
-    public init(resolver: HomesResolving) {
+    public init(resolver: IHomesResolver) {
         self.resolver = resolver
     }
     

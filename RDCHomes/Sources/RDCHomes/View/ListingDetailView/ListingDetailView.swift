@@ -3,11 +3,11 @@ import RDCCore
 import RDCBusiness
 
 public struct ListingDetailView: View {
-    private let resolver: HomesResolving
+    private let resolver: IHomesResolver
     
     @StateObject private var viewModel: ViewModel
     
-    public init(id listingId: UUID, resolver: HomesResolving) {
+    public init(id listingId: UUID, resolver: IHomesResolver) {
         self.resolver = resolver
         
         _viewModel = StateObject(wrappedValue: ViewModel(id: listingId, resolver: resolver))

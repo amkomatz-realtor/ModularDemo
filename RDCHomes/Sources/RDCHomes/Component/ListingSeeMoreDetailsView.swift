@@ -6,7 +6,7 @@ struct ListingSeeMoreDetailsView: View {
     private let listing: any IListingModel
     private let router: HostRouter
     
-    init(_ listing: any IListingModel, resolver: HomesResolving) {
+    init(_ listing: any IListingModel, resolver: IHomesResolver) {
         self.listing = listing
         router = resolver.router.resolve()
     }

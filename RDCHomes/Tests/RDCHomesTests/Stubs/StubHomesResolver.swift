@@ -2,7 +2,7 @@ import RDCCore
 import RDCBusiness
 import RDCHomes
 
-class StubHomesResolver: HomesResolving {
+class StubHomesResolver: IHomesResolver {
     let router: any IResolver<HostRouter> = SingletonResolver {
         StubRouter()
     }

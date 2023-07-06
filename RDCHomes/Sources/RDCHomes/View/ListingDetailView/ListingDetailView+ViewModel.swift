@@ -6,11 +6,11 @@ extension ListingDetailView {
     class ViewModel: ObservableObject {
         private let listingId: UUID
         private let homesRepository: HomesRepository
-        private let resolver: HomesResolving
+        private let resolver: IHomesResolver
         
         @Published private(set) var state: State = .initializing
         
-        public init(id listingId: UUID, resolver: HomesResolving) {
+        public init(id listingId: UUID, resolver: IHomesResolver) {
             self.listingId = listingId
             homesRepository = HomesRepository(resolver: resolver)
             self.resolver = resolver

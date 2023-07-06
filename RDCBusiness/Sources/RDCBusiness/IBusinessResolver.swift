@@ -1,5 +1,5 @@
 import RDCCore
 
-public protocol BusinessResolving {
+public protocol IBusinessResolver {
     var globalStore: any IResolver<GlobalStore> { get }
 }

@@ -8,7 +8,7 @@ extension ListingAdditionalDetailView {
         
         let id: UUID
         
-        init(id: UUID, resolver: HomesResolving) {
+        init(id: UUID, resolver: IHomesResolver) {
             homesRepository = HomesRepository(resolver: resolver)
             
             self.id = id
