@@ -22,9 +22,9 @@ class AppRouter: HostRouter, NavigationState, ObservableObject {
         register(FeedRouter(resolver: resolver))
         
         if isV2Enabled {
-            register(RDCHomesV2.HomesRouter(resolver: resolver))
+            register(HomesV2Router(resolver: resolver))
         } else {
-            register(RDCHomes.HomesRouter(resolver: resolver))
+            register(HomesRouter(resolver: resolver))
         }
     }
     

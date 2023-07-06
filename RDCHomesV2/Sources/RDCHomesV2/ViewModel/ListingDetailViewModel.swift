@@ -4,16 +4,16 @@ import RDCCore
 import RDCBusiness
 
 public final class ListingDetailViewModel: StatefulLiveData<ListingDetail> {
-    public convenience init(forListingId id: UUID, resolver: HomesV2Resolving, router: HomesRouter) {
+    public convenience init(forListingId id: UUID, resolver: HomesV2Resolving) {
         let homesRepository = HomesRepository(resolver: resolver)
         self.init(homesRepository.getListingDetail(id: id),
-                  resolver: resolver,
-                  router: router)
+                  router: resolver.router.resolve(),
+                  resolver: resolver)
     }
     
     init(_ publisher: AnyPublisher<DetailDataState, Never>,
-         resolver: HomesV2Resolving,
-         router: HomesRouter) {
+         router: HostRouter,
+         resolver: HomesV2Resolving) {
         
         super.init(publisher: publisher
             .map { dataState in
@@ -29,7 +29,7 @@ public final class ListingDetailViewModel: StatefulLiveData<ListingDetail> {
 }
 
 private extension DetailDataState {
-    func mapToDataViewState(router: HomesRouter,
+    func mapToDataViewState(router: HostRouter,
                             neighborhoodViewModelResolver: (UUID) -> NeighborhoodViewModel,
                             forRentViewModelResolver: (DetailListingModel) -> ForRentViewModel) -> DataViewState<ListingDetail> {
         switch self {
@@ -56,8 +56,12 @@ private extension DetailDataState {
                     listingAddress: ListingAddress(address: listingModel.address),
                     listingSize: ListingSize(beds: listingModel.beds, baths: listingModel.baths, sqft: listingModel.sqft),
                     neighborhood: neighborhoodViewModelResolver(listingModel.id),
-                    seeMoreLink: .previewListingLink(),
-                    seeSimilarHomesLink: .previewListingLink()
+                    seeMoreLink: ListingLink(displayText: "See more details", sideEffect: .onTap {
+                        router.route("listing-additional-details_\(listingModel.id)")
+                    }),
+                    seeSimilarHomesLink: ListingLink(displayText: "See similar homes", sideEffect: .onTap {
+                        router.route("search")
+                    })
                 )))
                 
             case .offMarket:
