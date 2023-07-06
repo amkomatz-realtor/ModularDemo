@@ -16,9 +16,9 @@ enum NeighborhoodDataState {
     case failure(Error)
 }
 
-enum RentalSectionsDataState {
+enum ListingSectionsDataState {
     case pending
-    case success([RentalSectionModel])
+    case success([ListingSectionModel])
 }
 
 class HomesRepository {
@@ -67,18 +67,18 @@ class HomesRepository {
         return publisher.eraseToAnyPublisher()
     }
     
-    func getRentalSections() -> AnyPublisher<RentalSectionsDataState, Never> {
-        let publisher: CurrentValueSubject<RentalSectionsDataState, Never> = .init(.pending)
+    func getSections(status: DetailListingModel.Status) -> AnyPublisher<ListingSectionsDataState, Never> {
+        let publisher: CurrentValueSubject<ListingSectionsDataState, Never> = .init(.pending)
         
         Task {
             do {
-                let rentalSectionModels = try await networkManager.get([RentalSectionModel].self, from: "https://api.realtor.com/ldpSections/rental")
+                let rentalSectionModels = try await networkManager.get([ListingSectionModel].self, from: "https://api.realtor.com/ldpSections/\(status.rawValue)")
                 await publisher.updateValue(.success(rentalSectionModels))
             }
             catch {
                 // in case of failure, displaying all sections.
-                await publisher.updateValue(.success(RentalSectionId.allCases.map {
-                    RentalSectionModel(componentId: $0.rawValue)
+                await publisher.updateValue(.success(ListingSectionId.allCases.map {
+                    ListingSectionModel(componentId: $0.rawValue)
                 }))
             }
         }

@@ -8,12 +8,12 @@ final class ForRentViewModel: StatefulLiveData<ListingDetail.SDUI> {
     public convenience init(detailListingModel: DetailListingModel, resolver: IHomesV2Resolver) {
         let homesRepository = HomesRepository(resolver: resolver)
         
-        self.init(homesRepository.getRentalSections(),
+        self.init(homesRepository.getSections(status: .forRent),
                   detailListingModel: detailListingModel,
                   resolver: resolver)
     }
     
-    init(_ publisher: AnyPublisher<RentalSectionsDataState, Never>,
+    init(_ publisher: AnyPublisher<ListingSectionsDataState, Never>,
          detailListingModel: DetailListingModel,
          resolver: IHomesV2Resolver) {
         
@@ -29,7 +29,7 @@ final class ForRentViewModel: StatefulLiveData<ListingDetail.SDUI> {
     }
 }
 
-private extension RentalSectionsDataState {
+private extension ListingSectionsDataState {
     func mapToDataViewState(listingModel: DetailListingModel,
                             resolver: IHomesV2Resolver) -> DataViewState<ListingDetail.SDUI> {
         switch self {
