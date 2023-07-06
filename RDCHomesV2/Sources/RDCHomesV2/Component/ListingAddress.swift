@@ -1,7 +1,7 @@
 import SwiftUI
 import RDCCore
 
-struct ListingAddress: HashIdentifiable {
+struct ListingAddress: IHashIdentifiable {
     let address: String
 }
 

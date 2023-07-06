@@ -1,7 +1,7 @@
 import Foundation
 import RDCBusiness
 
-struct FakeListingModel: ListingModel {
+struct FakeListingModel: IListingModel {
     var id: UUID = .init()
     var address = "fake address"
     var price = Double(140000)

@@ -5,7 +5,7 @@ import Combine
 
 final class ForRentViewModel: StatefulLiveData<ListingDetail.SDUI> {
     
-    public convenience init(detailListingModel: DetailListingModel, resolver: HomesV2Resolving) {
+    public convenience init(detailListingModel: DetailListingModel, resolver: IHomesV2Resolver) {
         let homesRepository = HomesRepository(resolver: resolver)
         
         self.init(homesRepository.getRentalSections(),
@@ -15,7 +15,7 @@ final class ForRentViewModel: StatefulLiveData<ListingDetail.SDUI> {
     
     init(_ publisher: AnyPublisher<RentalSectionsDataState, Never>,
          detailListingModel: DetailListingModel,
-         resolver: HomesV2Resolving) {
+         resolver: IHomesV2Resolver) {
         
         super.init(publisher: publisher
             .map { dataState in
@@ -31,7 +31,7 @@ final class ForRentViewModel: StatefulLiveData<ListingDetail.SDUI> {
 
 private extension RentalSectionsDataState {
     func mapToDataViewState(listingModel: DetailListingModel,
-                            resolver: HomesV2Resolving) -> DataViewState<ListingDetail.SDUI> {
+                            resolver: IHomesV2Resolver) -> DataViewState<ListingDetail.SDUI> {
         switch self {
         case .pending:
             return .custom(dataView: ProgressIndicator())

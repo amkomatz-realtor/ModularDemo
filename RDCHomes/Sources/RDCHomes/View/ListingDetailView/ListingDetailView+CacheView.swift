@@ -3,9 +3,9 @@ import RDCBusiness
 
 extension ListingDetailView {
     struct CacheView: View {
-        private let cache: any ListingModel
+        private let cache: any IListingModel
         
-        init(_ cache: any ListingModel) {
+        init(_ cache: any IListingModel) {
             self.cache = cache
         }
         
@@ -55,7 +55,7 @@ extension ListingDetailView {
 #if targetEnvironment(simulator)
 struct CacheView_Previews: PreviewProvider {
     static var previews: some View {
-        ListingDetailView.Placeholder(previewForSaleListing)
+        ListingDetailView.CacheView(previewForSaleListing)
             .edgesIgnoringSafeArea(.top)
     }
 }

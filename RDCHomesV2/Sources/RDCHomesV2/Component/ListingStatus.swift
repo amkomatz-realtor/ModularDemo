@@ -1,7 +1,7 @@
 import SwiftUI
 import RDCCore
 
-struct ListingStatus: HashIdentifiable {
+struct ListingStatus: IHashIdentifiable {
     let status: String
     let price: String
     let address: ListingAddress

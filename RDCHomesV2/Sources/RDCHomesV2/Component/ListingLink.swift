@@ -1,7 +1,7 @@
 import RDCCore
 import SwiftUI
 
-struct ListingLink: HashIdentifiable {
+struct ListingLink: IHashIdentifiable {
     let displayText: String
     let onTap: ActionSideEffect
 }

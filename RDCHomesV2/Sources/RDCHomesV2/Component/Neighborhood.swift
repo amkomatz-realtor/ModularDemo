@@ -1,7 +1,7 @@
 import SwiftUI
 import RDCCore
 
-public struct Neighborhood: HashIdentifiable {
+public struct Neighborhood: IHashIdentifiable {
     let name: String
     let rating: String
     

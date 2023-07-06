@@ -2,7 +2,7 @@ import SwiftUI
 import RDCCore
 
 public extension ListingDetail {
-    struct SDUI: HashIdentifiable {
+    struct SDUI: IHashIdentifiable {
         let sections: [Section]
     }
 }

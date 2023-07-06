@@ -49,7 +49,7 @@ extension ListingDetailView.ViewModel {
     enum State {
         case initializing
         case loading
-        case loadingWithCache(any ListingModel)
+        case loadingWithCache(any IListingModel)
         
         case successForSale(DetailListingModel)
         case successForRent(DetailListingModel)

@@ -2,7 +2,7 @@ import RDCCore
 import RDCBusiness
 
 class FeedRepository {
-    private let networkManager: NetworkManaging
+    private let networkManager: INetworkManaging
     private let globalStore: GlobalStore
     
     init(resolver: FeedResolving) {

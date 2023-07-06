@@ -2,7 +2,7 @@ import Foundation
 import RDCCore
 import SwiftUI
 
-struct ProgressIndicator: HashIdentifiable {}
+struct ProgressIndicator: IHashIdentifiable {}
 
 extension ProgressIndicator: View {
     var body: some View {

@@ -1,6 +1,6 @@
 import RDCCore
 import RDCBusiness
 
-public protocol HomesResolving: CoreResolving, BusinessResolving {
+public protocol HomesResolving: ICoreResolver, BusinessResolving {
     
 }

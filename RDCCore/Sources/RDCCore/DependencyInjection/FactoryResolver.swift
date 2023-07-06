@@ -1,4 +1,4 @@
-public class FactoryResolver<T>: Resolver {
+public class FactoryResolver<T>: IResolver {
     private let create: () -> T
     
     public init(create: @escaping () -> T) {

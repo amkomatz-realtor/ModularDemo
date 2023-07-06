@@ -2,7 +2,7 @@ import SwiftUI
 import RDCCore
 import RDCBusiness
 
-public enum ListingDetail: HashIdentifiable {
+public enum ListingDetail: IHashIdentifiable {
     case placeholder(Placeholder)
     case sdui(StatefulLiveData<SDUI>)
     case forSale(ForSale)

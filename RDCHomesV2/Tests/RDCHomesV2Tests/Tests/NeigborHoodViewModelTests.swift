@@ -33,7 +33,7 @@ final class NeighborhoodViewModelTests: XCTestCase {
         XCTAssertTrue(sut.latestValue.isEmpty)
     }
     
-    private func givenViewModelWith(listingId: UUID, resolver: HomesV2Resolving) {
+    private func givenViewModelWith(listingId: UUID, resolver: IHomesV2Resolver) {
         sut = NeighborhoodViewModel(forListingId: listingId, resolver: resolver)
     }
     

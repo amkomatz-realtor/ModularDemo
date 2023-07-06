@@ -3,16 +3,16 @@ import RDCBusiness
 import RDCHomes
 
 class StubHomesResolver: HomesResolving {
-    let router: any Resolver<HostRouter> = SingletonResolver {
+    let router: any IResolver<HostRouter> = SingletonResolver {
         StubRouter()
     }
     
     var stubNetworkManager: StubNetworkManager = StubNetworkManager()
-    lazy var networkManager: any Resolver<NetworkManaging> = FactoryResolver { [unowned self] in
+    lazy var networkManager: any IResolver<INetworkManaging> = FactoryResolver { [unowned self] in
         stubNetworkManager
     }
     
-    let globalStore: any Resolver<GlobalStore> = FactoryResolver {
+    let globalStore: any IResolver<GlobalStore> = FactoryResolver {
         GlobalStore()
     }
 }

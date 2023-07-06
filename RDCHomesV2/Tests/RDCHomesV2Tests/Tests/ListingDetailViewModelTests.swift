@@ -94,7 +94,7 @@ final class ListingDetailViewModelTests: XCTestCase {
     
     // MARK: - Test Helper
     
-    private func givenViewModelWith(listingId: UUID, resolver: HomesV2Resolving) {
+    private func givenViewModelWith(listingId: UUID, resolver: IHomesV2Resolver) {
         sut = ListingDetailViewModel(forListingId: listingId, resolver: resolver)
     }
     

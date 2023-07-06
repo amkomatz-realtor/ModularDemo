@@ -1,6 +1,6 @@
 import RDCCore
 import RDCBusiness
 
-public protocol FeedResolving: CoreResolving, BusinessResolving {
-    var feedRouter: any Resolver<FeedRouting> { get }
+public protocol FeedResolving: ICoreResolver, BusinessResolving {
+    var feedRouter: any IResolver<FeedRouting> { get }
 }

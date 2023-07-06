@@ -1,4 +1,4 @@
-public protocol Resolver<T> {
+public protocol IResolver<T> {
     associatedtype T
     
     func resolve() -> T

@@ -6,7 +6,7 @@ import Combine
 
 /// A Convenient way to update SwiftUI DataView.
 /// Subclass this class to create the view model for your SwiftUI DataView
-open class LiveData<T>: ObservableObject, HashIdentifiable {
+open class LiveData<T>: ObservableObject, IHashIdentifiable {
     
     @Published public private(set) var latestValue: T
     

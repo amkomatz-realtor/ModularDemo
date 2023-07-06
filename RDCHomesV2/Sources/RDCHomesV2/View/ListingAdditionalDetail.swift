@@ -1,7 +1,7 @@
 import RDCCore
 import SwiftUI
 
-struct ListingAdditionalDetail: HashIdentifiable {
+struct ListingAdditionalDetail: IHashIdentifiable {
     let text: String
 }
 

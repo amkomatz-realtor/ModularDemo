@@ -5,7 +5,7 @@ import Combine
 
 enum DetailDataState {
     case pending
-    case cached(any ListingModel)
+    case cached(any IListingModel)
     case detail(DetailListingModel)
     case failure(Error)
 }
@@ -22,10 +22,10 @@ enum RentalSectionsDataState {
 }
 
 class HomesRepository {
-    private let networkManager: NetworkManaging
+    private let networkManager: INetworkManaging
     private let globalStore: GlobalStore
     
-    init(resolver: HomesV2Resolving) {
+    init(resolver: IHomesV2Resolver) {
         networkManager = resolver.networkManager.resolve()
         globalStore = resolver.globalStore.resolve()
     }

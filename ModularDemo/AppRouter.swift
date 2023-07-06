@@ -6,12 +6,12 @@ import RDCHomesV2
 import RDCFeed
 import RDCCore
 
-class AppRouter: HostRouter, NavigationState, ObservableObject {
+class AppRouter: HostRouter, INavigationState, ObservableObject {
     @Published private(set) var path: [String] = []
     @Published var tabIndex: Int = 0
     
     private let resolver: AppResolver
-    private var childRouters: [any ModuleRouter] = []
+    private var childRouters: [any IModuleRouter] = []
     
     private let isV2Enabled: Bool = false
     
@@ -28,7 +28,7 @@ class AppRouter: HostRouter, NavigationState, ObservableObject {
         }
     }
     
-    func register(_ router: any ModuleRouter) {
+    func register(_ router: any IModuleRouter) {
         childRouters.append(router)
     }
     

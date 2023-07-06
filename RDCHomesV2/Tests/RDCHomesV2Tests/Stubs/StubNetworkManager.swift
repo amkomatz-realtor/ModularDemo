@@ -2,7 +2,7 @@ import Foundation
 import RDCCore
 import RDCBusiness
 
-class StubNetworkManager: NetworkManaging {
+class StubNetworkManager: INetworkManaging {
     var mockValue: Any?
     var verifiedUrl: String?
     

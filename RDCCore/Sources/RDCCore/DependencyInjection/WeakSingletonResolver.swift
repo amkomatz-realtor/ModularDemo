@@ -1,4 +1,4 @@
-public class WeakSingletonResolver<T>: Resolver where T: AnyObject {
+public class WeakSingletonResolver<T>: IResolver where T: AnyObject {
     private let create: () -> T
     private weak var value: T?
     

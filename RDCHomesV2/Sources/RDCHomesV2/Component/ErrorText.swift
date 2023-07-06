@@ -2,7 +2,7 @@ import Foundation
 import RDCCore
 import SwiftUI
 
-struct ErrorText: HashIdentifiable {
+struct ErrorText: IHashIdentifiable {
     let message: String
 }
 

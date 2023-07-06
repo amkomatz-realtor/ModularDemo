@@ -4,14 +4,14 @@ import RDCCore
 import RDCBusiness
 
 public final class ListingDetailViewModel: StatefulLiveData<ListingDetail> {
-    public convenience init(forListingId id: UUID, resolver: HomesV2Resolving) {
+    public convenience init(forListingId id: UUID, resolver: IHomesV2Resolver) {
         let homesRepository = HomesRepository(resolver: resolver)
         self.init(homesRepository.getListingDetail(id: id),
                   resolver: resolver)
     }
     
     init(_ publisher: AnyPublisher<DetailDataState, Never>,
-         resolver: HomesV2Resolving) {
+         resolver: IHomesV2Resolver) {
         
         super.init(publisher: publisher
             .map { dataState in
@@ -23,7 +23,7 @@ public final class ListingDetailViewModel: StatefulLiveData<ListingDetail> {
 }
 
 private extension DetailDataState {
-    func mapToDataViewState(resolver: HomesV2Resolving) -> DataViewState<ListingDetail> {
+    func mapToDataViewState(resolver: IHomesV2Resolver) -> DataViewState<ListingDetail> {
         let router = resolver.router.resolve()
         
         switch self {

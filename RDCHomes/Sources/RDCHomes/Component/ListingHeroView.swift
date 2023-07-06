@@ -2,9 +2,9 @@ import SwiftUI
 import RDCBusiness
 
 struct ListingHeroView: View {
-    private let listing: any ListingModel
+    private let listing: any IListingModel
     
-    init(_ listing: any ListingModel) {
+    init(_ listing: any IListingModel) {
         self.listing = listing
     }
     

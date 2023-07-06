@@ -1,4 +1,4 @@
-public class SingletonResolver<T>: Resolver {
+public class SingletonResolver<T>: IResolver {
     private let create: () -> T
     private var value: T?
     

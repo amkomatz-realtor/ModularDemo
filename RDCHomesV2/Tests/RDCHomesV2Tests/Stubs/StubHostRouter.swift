@@ -3,7 +3,7 @@ import RDCCore
 import SwiftUI
 
 final class StubHostRouter: HostRouter {
-    func register(_ router: ModuleRouter) {}
+    func register(_ router: IModuleRouter) {}
     
     var verifiedDestination: String?
     func route(_ destination: String) {

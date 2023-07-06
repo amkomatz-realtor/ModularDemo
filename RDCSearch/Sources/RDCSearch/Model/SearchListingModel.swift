@@ -1,7 +1,7 @@
 import Foundation
 import RDCBusiness
 
-public struct SearchListingModel: ListingModel, Decodable {
+public struct SearchListingModel: IListingModel, Decodable {
     public let id: UUID
     public let address: String
     public let price: Double

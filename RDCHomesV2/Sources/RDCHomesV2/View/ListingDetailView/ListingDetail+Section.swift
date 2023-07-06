@@ -2,7 +2,7 @@ import SwiftUI
 import RDCCore
 
 extension ListingDetail {
-    enum Section: HashIdentifiable {
+    enum Section: IHashIdentifiable {
         case listingHero(ListingHero, uniqueHash: UniqueHash)
         case listingStatus(ListingStatus, uniqueHash: UniqueHash)
         case listingSize(ListingSize, uniqueHash: UniqueHash)

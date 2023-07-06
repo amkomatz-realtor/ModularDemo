@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 import Combine
 
-public typealias HashIdentifiableView = View & HashIdentifiable
+public typealias HashIdentifiableView = View & IHashIdentifiable
 
 public enum DataViewState<T: View> {
     /// Hidden

@@ -4,7 +4,7 @@ import Foundation
 
 /// A convenient way to route side effect out of SwiftUI View
 /// And let the view model handle it.
-public struct SideEffect<T>: HashIdentifiable {
+public struct SideEffect<T>: IHashIdentifiable {
     
     private let action: (T) -> Void
     private let uuid: UniqueHash

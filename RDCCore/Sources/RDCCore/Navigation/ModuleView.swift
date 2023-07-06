@@ -4,7 +4,7 @@ public struct ModuleView<Content>: View where Content: View {
     private let content: () -> Content
     private let router: HostRouter
     
-    public init(resolver: CoreResolving, @ViewBuilder content: @escaping () -> Content) {
+    public init(resolver: ICoreResolver, @ViewBuilder content: @escaping () -> Content) {
         router = resolver.router.resolve()
         self.content = content
     }

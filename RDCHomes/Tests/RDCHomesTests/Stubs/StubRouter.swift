@@ -4,7 +4,7 @@ import RDCCore
 class StubRouter: HostRouter {
     var path: [String] = []
     
-    func register(_ router: ModuleRouter) {}
+    func register(_ router: IModuleRouter) {}
     
     func route(_ destination: String) {}
     

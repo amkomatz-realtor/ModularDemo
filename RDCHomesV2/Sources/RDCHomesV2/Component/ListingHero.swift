@@ -1,7 +1,7 @@
 import SwiftUI
 import RDCCore
 
-struct ListingHero: HashIdentifiable {
+struct ListingHero: IHashIdentifiable {
     let thumbnail: URL
 }
 

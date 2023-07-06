@@ -2,18 +2,18 @@ import RDCCore
 import RDCBusiness
 import RDCHomesV2
 
-final class StubHomesResolver: HomesV2Resolving {
+final class StubHomesResolver: IHomesV2Resolver {
     var stubHostRouter = StubHostRouter()
-    lazy var router: any Resolver<HostRouter> = FactoryResolver { [unowned self] in
+    lazy var router: any IResolver<HostRouter> = FactoryResolver { [unowned self] in
         stubHostRouter
     }
     
     var stubNetworkManager: StubNetworkManager = StubNetworkManager()
-    lazy var networkManager: any Resolver<NetworkManaging> = FactoryResolver { [unowned self] in
+    lazy var networkManager: any IResolver<INetworkManaging> = FactoryResolver { [unowned self] in
         stubNetworkManager
     }
     
-    let globalStore: any Resolver<GlobalStore> = FactoryResolver {
+    let globalStore: any IResolver<GlobalStore> = FactoryResolver {
         GlobalStore()
     }
 }

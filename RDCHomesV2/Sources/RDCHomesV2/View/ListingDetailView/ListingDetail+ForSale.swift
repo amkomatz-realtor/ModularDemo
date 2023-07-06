@@ -2,7 +2,7 @@ import SwiftUI
 import RDCCore
 
 public extension ListingDetail {
-    struct ForSale: HashIdentifiable {
+    struct ForSale: IHashIdentifiable {
         let listingHero: ListingHero
         let price: Double
         let listingAddress: ListingAddress

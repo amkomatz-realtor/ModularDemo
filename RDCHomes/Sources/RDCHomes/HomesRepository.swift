@@ -3,9 +3,9 @@ import RDCCore
 import RDCBusiness
 
 class HomesRepository {
-    private let networkManager: NetworkManaging
+    private let networkManager: INetworkManaging
     
-    init(resolver: CoreResolving) {
+    init(resolver: ICoreResolver) {
         networkManager = resolver.networkManager.resolve()
     }
     

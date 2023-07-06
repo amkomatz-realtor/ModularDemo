@@ -5,7 +5,7 @@ import RDCBusiness
 
 public final class NeighborhoodViewModel: StatefulLiveData<Neighborhood> {
     
-    public convenience init(forListingId id: UUID, resolver: HomesV2Resolving) {
+    public convenience init(forListingId id: UUID, resolver: IHomesV2Resolver) {
         let homesRepository = HomesRepository(resolver: resolver)
         self.init(homesRepository.getNeighborhoodDetail(forListingId: id))
     }

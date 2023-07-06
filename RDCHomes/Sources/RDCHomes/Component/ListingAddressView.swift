@@ -8,7 +8,7 @@ struct ListingAddressView: View {
         self.address = address
     }
     
-    init(listing: any ListingModel) {
+    init(listing: any IListingModel) {
         self.init(address: listing.address)
     }
     
