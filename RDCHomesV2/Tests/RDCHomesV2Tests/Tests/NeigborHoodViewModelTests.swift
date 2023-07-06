@@ -13,6 +13,7 @@ final class NeighborhoodViewModelTests: XCTestCase {
         let listingId = UUID()
         
         givenViewModelWith(listingId: listingId, resolver: homesResolver)
+        sleep(1)
         XCTAssertEqual(homesResolver.stubNetworkManager.verifiedUrl, "https://api.realtor.com/listings/\(listingId)/neighborhood")
     }
     

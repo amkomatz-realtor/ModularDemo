@@ -25,6 +25,7 @@ final class OffMarketViewModelTests: XCTestCase {
         let homesResolver = StubHomesResolver()
         
         givenViewModelWith(resolver: homesResolver)
+        sleep(1)
         XCTAssertEqual(homesResolver.stubNetworkManager.verifiedUrl, "https://api.realtor.com/ldpSections/off_market")
     }
     
@@ -45,17 +46,17 @@ final class OffMarketViewModelTests: XCTestCase {
             return
         }
         
-        XCTAssertEqual(sut.latestValue.loadedView?.sections[0].listingHero,
+        XCTAssertEqual(sut.latestValue.loadedView?.sections[0].latestValue.listingHero,
                        ListingHero(thumbnail: URL(string: "https://fakeurl.com")!))
         
-        XCTAssertEqual(sut.latestValue.loadedView?.sections[1].listingStatus,
+        XCTAssertEqual(sut.latestValue.loadedView?.sections[1].latestValue.listingStatus,
                        ListingStatus(
                            status: "Off market",
                            price: "$200,000",
                            address: ListingAddress(address: "fake listing detail address")
                        ))
         
-        XCTAssertEqual(sut.latestValue.loadedView?.sections[2].listingSize,
+        XCTAssertEqual(sut.latestValue.loadedView?.sections[2].latestValue.listingSize,
                        ListingSize(
                            beds: 3,
                            baths: 3,
@@ -74,14 +75,14 @@ final class OffMarketViewModelTests: XCTestCase {
             return
         }
         
-        XCTAssertEqual(sut.latestValue.loadedView?.sections[0].listingSize,
+        XCTAssertEqual(sut.latestValue.loadedView?.sections[0].latestValue.listingSize,
                        ListingSize(
                            beds: 3,
                            baths: 3,
                            sqft: 1500
                        ))
         
-        XCTAssertEqual(sut.latestValue.loadedView?.sections[1].listingStatus,
+        XCTAssertEqual(sut.latestValue.loadedView?.sections[1].latestValue.listingStatus,
                        ListingStatus(
                            status: "Off market",
                            price: "$200,000",
@@ -101,10 +102,10 @@ final class OffMarketViewModelTests: XCTestCase {
             return
         }
         
-        XCTAssertEqual(sut.latestValue.loadedView?.sections[0].listingHero,
+        XCTAssertEqual(sut.latestValue.loadedView?.sections[0].latestValue.listingHero,
                        ListingHero(thumbnail: URL(string: "https://fakeurl.com")!))
         
-        XCTAssertEqual(sut.latestValue.loadedView?.sections[1].listingStatus,
+        XCTAssertEqual(sut.latestValue.loadedView?.sections[1].latestValue.listingStatus,
                        ListingStatus(
                            status: "Off market",
                            price: "$200,000",

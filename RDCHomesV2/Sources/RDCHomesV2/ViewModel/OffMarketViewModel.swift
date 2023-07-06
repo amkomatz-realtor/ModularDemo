@@ -40,18 +40,23 @@ private extension ListingSectionsDataState {
             return .loaded(dataView: ListingDetail.Variant(sections: sections.compactMap { section in
                 switch section.sectionId {
                 case .listingHero:
-                    return .listingHero(ListingHero(thumbnail: listingModel.thumbnail), uniqueHash: .hashableUUID)
+                    return .constant(.listingHero(ListingHero(thumbnail: listingModel.thumbnail), uniqueHash: .hashableUUID))
                 case .listingStatus:
-                    return .listingStatus(
+                    return .constant(.listingStatus(
                         ListingStatus(
                             status: "Off market",
                             price: listingModel.price.toCurrency(),
                             address: ListingAddress(address: listingModel.address)
                         ),
                         uniqueHash: .hashableUUID
-                    )
+                    ))
                 case .listingSize:
-                    return .listingSize(ListingSize(beds: listingModel.beds, baths: listingModel.baths, sqft: listingModel.sqft), uniqueHash: .hashableUUID)
+                    return .constant(.listingSize(
+                        ListingSize(beds: listingModel.beds,
+                                    baths: listingModel.baths,
+                                    sqft: listingModel.sqft),
+                        uniqueHash: .hashableUUID
+                    ))
                 case .neighborhood:
                     return nil // off-market does not support neighborhood section
                 case .unknown:
