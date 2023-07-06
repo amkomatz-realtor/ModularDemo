@@ -50,9 +50,6 @@ private extension RentalSectionsDataState {
                     return nil
                 }
             }))
-        case .failure:
-            return .loaded(dataView: ListingDetail.ForRentView(sections: []))
         }
-        
     }
 }

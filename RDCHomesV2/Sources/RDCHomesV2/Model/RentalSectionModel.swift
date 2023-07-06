@@ -7,7 +7,7 @@ struct RentalSectionModel: Equatable, Decodable {
     }
 }
 
-enum RentalSectionId: String {
+enum RentalSectionId: String, CaseIterable {
     case unknown
     case listingHero
     case listingStatus

@@ -19,7 +19,6 @@ enum NeighborhoodDataState {
 enum RentalSectionsDataState {
     case pending
     case success([RentalSectionModel])
-    case failure(Error)
 }
 
 class HomesRepository {
@@ -77,7 +76,10 @@ class HomesRepository {
                 await publisher.updateValue(.success(rentalSectionModels))
             }
             catch {
-                await publisher.updateValue(.failure(error))
+                // in case of failure, displaying all sections.
+                await publisher.updateValue(.success(RentalSectionId.allCases.map {
+                    RentalSectionModel(componentId: $0.rawValue)
+                }))
             }
         }
         
