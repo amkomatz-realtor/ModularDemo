@@ -1,5 +1,5 @@
-import RDCCore
 import SwiftUI
+import RDCCore
 
 struct ListingLink: IHashIdentifiable {
     let displayText: String

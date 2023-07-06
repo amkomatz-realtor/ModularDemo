@@ -1,6 +1,5 @@
 import SwiftUI
 import RDCCore
-import RDCBusiness
 
 public enum ListingDetail: IHashIdentifiable {
     case placeholder(Placeholder)
