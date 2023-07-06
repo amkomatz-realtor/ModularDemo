@@ -67,7 +67,7 @@ public struct LazyView<Content: View>: View {
 /// This definition should never change.
 private struct ObservableLiveData<V: View>: View {
     
-    @ObservedObject var liveData: LiveData<V>
+    @StateObject var liveData: LiveData<V>
     
     var body: some View {
         liveData.latestValue
