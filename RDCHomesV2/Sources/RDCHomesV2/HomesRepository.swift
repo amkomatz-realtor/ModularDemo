@@ -86,9 +86,3 @@ class HomesRepository {
         return publisher.eraseToAnyPublisher()
     }
 }
-
-private extension CurrentValueSubject where Failure == Never {
-    @MainActor func updateValue(_ value: Output) {
-        self.value = value
-    }
-}

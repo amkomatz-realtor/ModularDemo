@@ -73,3 +73,10 @@ private struct ObservableLiveData<V: View>: View {
         liveData.latestValue
     }
 }
+
+/// Use this to publish value on main thread as needed
+public extension CurrentValueSubject where Failure == Never {
+    @MainActor func updateValue(_ value: Output) {
+        self.value = value
+    }
+}
