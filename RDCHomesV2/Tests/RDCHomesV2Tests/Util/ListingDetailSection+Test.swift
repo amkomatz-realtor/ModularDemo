@@ -26,11 +26,11 @@ extension ListingDetail.Section {
         return nil
     }
     
-    var neighborhood: Neighborhood? {
+    func isUsingNeighborhoodViewModel<VM>(type: VM.Type) -> Bool {
         if case let .neighborhood(neighborhood, _) = self {
-            return neighborhood.latestValue.loadedView
+            return neighborhood is VM
         }
         
-        return nil
+        return false
     }
 }

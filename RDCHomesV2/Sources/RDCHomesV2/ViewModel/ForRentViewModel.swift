@@ -41,6 +41,7 @@ private extension ListingSectionsDataState {
                 switch section.sectionId {
                 case .listingHero:
                     return .listingHero(ListingHero(thumbnail: listingModel.thumbnail), uniqueHash: .hashableUUID)
+                
                 case .listingStatus:
                     return .listingStatus(
                         ListingStatus(
@@ -50,10 +51,19 @@ private extension ListingSectionsDataState {
                         ),
                         uniqueHash: .hashableUUID
                     )
+                    
                 case .listingSize:
-                    return .listingSize(ListingSize(beds: listingModel.beds, baths: listingModel.baths, sqft: listingModel.sqft), uniqueHash: .hashableUUID)
+                    return .listingSize(
+                        ListingSize(
+                            beds: listingModel.beds,
+                            baths: listingModel.baths,
+                            sqft: listingModel.sqft
+                        ),
+                        uniqueHash: .hashableUUID)
+                    
                 case .neighborhood:
                     return .neighborhood(NeighborhoodViewModel(forListingId: listingModel.id, resolver: resolver), uniqueHash: .hashableUUID)
+                    
                 case .unknown:
                     return nil
                 }
