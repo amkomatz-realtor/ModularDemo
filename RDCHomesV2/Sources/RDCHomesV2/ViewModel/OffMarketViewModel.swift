@@ -53,7 +53,7 @@ private extension ListingSectionsDataState {
                 case .listingSize:
                     return .listingSize(ListingSize(beds: listingModel.beds, baths: listingModel.baths, sqft: listingModel.sqft), uniqueHash: .hashableUUID)
                 case .neighborhood:
-                    return .neighborhood(NeighborhoodViewModel(forListingId: listingModel.id, resolver: resolver), uniqueHash: .hashableUUID)
+                    return nil // off-market does not support neighborhood section
                 case .unknown:
                     return nil
                 }
