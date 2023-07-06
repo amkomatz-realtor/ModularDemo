@@ -7,7 +7,7 @@ class FeedViewModel: ObservableObject {
     
     @Published private(set) var feedState: ViewState<FeedModel> = .initializing
     
-    init(resolver: FeedResolving) {
+    init(resolver: IFeedResolver) {
         feedRepository = FeedRepository(resolver: resolver)
     }
     

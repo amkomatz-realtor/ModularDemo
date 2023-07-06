@@ -5,7 +5,7 @@ class FeedRepository {
     private let networkManager: INetworkManager
     private let globalStore: GlobalStore
     
-    init(resolver: FeedResolving) {
+    init(resolver: IFeedResolver) {
         networkManager = resolver.networkManager.resolve()
         globalStore = resolver.globalStore.resolve()
     }
