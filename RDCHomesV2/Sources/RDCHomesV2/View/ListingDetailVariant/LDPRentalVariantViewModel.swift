@@ -3,12 +3,12 @@ import RDCCore
 import RDCBusiness
 import Combine
 
-final class OffMarketViewModel: StatefulLiveData<ListingDetail.Variant> {
+final class LDPRentalVariantViewModel: StatefulLiveData<ListingDetail.Variant> {
     
     public convenience init(detailListingModel: DetailListingModel, resolver: IHomesV2Resolver) {
         let homesRepository = HomesRepository(resolver: resolver)
         
-        self.init(homesRepository.getSections(status: .offMarket),
+        self.init(homesRepository.getSections(status: .forRent),
                   detailListingModel: detailListingModel,
                   resolver: resolver)
     }
@@ -41,24 +41,33 @@ private extension ListingSectionsDataState {
                 switch section.sectionId {
                 case .listingHero:
                     return .constant(.listingHero(ListingHero(thumbnail: listingModel.thumbnail), uniqueHash: .hashableUUID))
+                
                 case .listingStatus:
                     return .constant(.listingStatus(
                         ListingStatus(
-                            status: "Off market",
+                            status: "For rent",
                             price: listingModel.price.toCurrency(),
                             address: ListingAddress(address: listingModel.address)
                         ),
                         uniqueHash: .hashableUUID
                     ))
+                    
                 case .listingSize:
                     return .constant(.listingSize(
-                        ListingSize(beds: listingModel.beds,
-                                    baths: listingModel.baths,
-                                    sqft: listingModel.sqft),
+                        ListingSize(
+                            beds: listingModel.beds,
+                            baths: listingModel.baths,
+                            sqft: listingModel.sqft
+                        ),
                         uniqueHash: .hashableUUID
                     ))
+                    
                 case .neighborhood:
-                    return nil // off-market does not support neighborhood section
+                    return .constant(.neighborhood(
+                        NeighborhoodViewModel(forListingId: listingModel.id, resolver: resolver),
+                        uniqueHash: .hashableUUID
+                    ))
+                    
                 case .unknown:
                     return nil
                 }

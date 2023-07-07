@@ -17,7 +17,7 @@ final class ForRentViewModelTests: XCTestCase {
         sqft: 1500
     )
     
-    var sut: ForRentViewModel!
+    var sut: LDPRentalVariantViewModel!
 
     // MARK: - Resolving
     
@@ -119,10 +119,10 @@ final class ForRentViewModelTests: XCTestCase {
     // MARK: - Test Helper
     
     private func givenViewModelWith(resolver: IHomesV2Resolver) {
-        sut = ForRentViewModel(detailListingModel: detailListingModel, resolver: resolver)
+        sut = LDPRentalVariantViewModel(detailListingModel: detailListingModel, resolver: resolver)
     }
     
     private func givenViewModelWith(dataState: ListingSectionsDataState) {
-        sut = ForRentViewModel(Just(dataState).eraseToAnyPublisher(), detailListingModel: detailListingModel, resolver: StubHomesResolver())
+        sut = LDPRentalVariantViewModel(Just(dataState).eraseToAnyPublisher(), detailListingModel: detailListingModel, resolver: StubHomesResolver())
     }
 }

@@ -17,7 +17,7 @@ final class OffMarketViewModelTests: XCTestCase {
         sqft: 1500
     )
     
-    var sut: OffMarketViewModel!
+    var sut: LDPOffMarketVariantViewModel!
 
     // MARK: - Resolving
     
@@ -116,10 +116,10 @@ final class OffMarketViewModelTests: XCTestCase {
     // MARK: - Test Helper
     
     private func givenViewModelWith(resolver: IHomesV2Resolver) {
-        sut = OffMarketViewModel(detailListingModel: detailListingModel, resolver: resolver)
+        sut = LDPOffMarketVariantViewModel(detailListingModel: detailListingModel, resolver: resolver)
     }
     
     private func givenViewModelWith(dataState: ListingSectionsDataState) {
-        sut = OffMarketViewModel(Just(dataState).eraseToAnyPublisher(), detailListingModel: detailListingModel, resolver: StubHomesResolver())
+        sut = LDPOffMarketVariantViewModel(Just(dataState).eraseToAnyPublisher(), detailListingModel: detailListingModel, resolver: StubHomesResolver())
     }
 }

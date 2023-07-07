@@ -31,17 +31,13 @@ private extension DetailDataState {
             return .custom(dataView: ProgressIndicator())
             
         case .cached(let listingModel):
-            return .loaded(dataView: .placeholder(ListingDetail.Placeholder(
-                listingHero: ListingHero(thumbnail: listingModel.thumbnail),
-                price: listingModel.price,
-                listingAddress: ListingAddress(address: listingModel.address)
-            )))
+            return .loaded(dataView: .placeholder(LDPPlaceHolderViewModel(listingModel: listingModel).latestValue))
             
         case .detail(let listingModel):
             switch listingModel.status {
                 
             case .forRent:
-                return .loaded(dataView: .variant(ForRentViewModel(detailListingModel: listingModel, resolver: resolver)))
+                return .loaded(dataView: .variant(LDPRentalVariantViewModel(detailListingModel: listingModel, resolver: resolver)))
                 
             case .forSale:
                 return .loaded(dataView: .forSale(ListingDetail.ForSale(
@@ -59,7 +55,7 @@ private extension DetailDataState {
                 )))
                 
             case .offMarket:
-                return .loaded(dataView: .variant(OffMarketViewModel(detailListingModel: listingModel, resolver: resolver)))
+                return .loaded(dataView: .variant(LDPOffMarketVariantViewModel(detailListingModel: listingModel, resolver: resolver)))
             }
             
         case .failure(let error):

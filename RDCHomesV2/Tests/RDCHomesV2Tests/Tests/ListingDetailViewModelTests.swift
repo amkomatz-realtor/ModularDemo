@@ -62,12 +62,12 @@ final class ListingDetailViewModelTests: XCTestCase {
     
     func testForRent_ItUsesForRentViewModelVariant() {
         givenDetailViewModel(forListingId: .init(), status: .forRent)
-        XCTAssertEqual(sut.latestValue.loadedView?.isVariantByViewModel(type: ForRentViewModel.self), true)
+        XCTAssertEqual(sut.latestValue.loadedView?.isVariantByViewModel(type: LDPRentalVariantViewModel.self), true)
     }
     
     func testOffMarket_ItUsesOffMarketViewModelVariant() {
         givenDetailViewModel(forListingId: .init(), status: .offMarket)
-        XCTAssertEqual(sut.latestValue.loadedView?.isVariantByViewModel(type: OffMarketViewModel.self), true)
+        XCTAssertEqual(sut.latestValue.loadedView?.isVariantByViewModel(type: LDPOffMarketVariantViewModel.self), true)
     }
     
     // MARK: - Side Effect
