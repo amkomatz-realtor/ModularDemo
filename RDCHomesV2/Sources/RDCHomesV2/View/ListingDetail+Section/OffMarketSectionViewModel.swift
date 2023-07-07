@@ -1,7 +1,7 @@
 import Foundation
 import RDCCore
 
-final class RentalListingDetailSectionViewModel: LiveData<ListingDetail.Section> {
+final class OffMarketSectionViewModel: LiveData<ListingDetail.Section> {
     
     public init(section: ListingDetail.Section, resolver: IHomesV2Resolver) {
         // Use the `resolver to reassign the viewModel for each section as needed
@@ -26,18 +26,19 @@ final class RentalListingDetailSectionViewModel: LiveData<ListingDetail.Section>
                 uniqueHash: .hashableUUID
             ))
         case .neighborhood:
-            super.init(.neighborhood(
-                NeighborhoodViewModel(forListingId: listingModel.id, resolver: resolver),
-                uniqueHash: .hashableUUID
-            ))
+            // off-market does not support neighborhood section
+            return nil
+            
         case .seeMoreDetails:
             super.init(.seeMoreLink(
-                SeeMoreLinkViewModel(listingModel: listingModel, resolver: resolver).latestValue,
+                SeeMoreLinkViewModel(link: "search", resolver: resolver).latestValue,
                 uniqueHash: .hashableUUID
             ))
+        
         case .unknown:
             // backward compatibility for unknown id
             return nil
+        
         }
     }
 }

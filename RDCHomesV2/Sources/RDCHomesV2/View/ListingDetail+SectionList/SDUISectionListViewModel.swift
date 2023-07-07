@@ -8,13 +8,13 @@ final class SDUISectionListViewModel: LiveData<ListingDetail.SectionList> {
             .compactMap { section in
                 switch section {
                 case .general(let section):
-                    return GeneralListingDetailSectionViewModel(section: section, resolver: resolver)
+                    return GeneralSectionViewModel(section: section, resolver: resolver)
                     
                 case .forSale(let section):
-                    return ForSaleListingDetailSectionViewModel(section: section, resolver: resolver)
+                    return ForSaleSectionViewModel(section: section, resolver: resolver)
                     
                 case .rental(let section):
-                    return RentalListingDetailSectionViewModel(section: section, resolver: resolver)
+                    return RentalSectionViewModel(section: section, resolver: resolver)
                     
                 case .unknown:
                     return nil

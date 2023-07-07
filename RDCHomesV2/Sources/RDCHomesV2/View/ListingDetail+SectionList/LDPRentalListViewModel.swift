@@ -39,7 +39,7 @@ private extension ListingSectionsDataState {
         case .success(let sections):
             return .loaded(ListingDetail.SectionList(sections: sections
                 .compactMap { section in
-                    RentalListingDetailSectionViewModel(listingModel: listingModel, sectionModel: section, resolver: resolver)
+                    RentalSectionViewModel(listingModel: listingModel, sectionModel: section, resolver: resolver)
                 }
             ))
         }
