@@ -7,4 +7,38 @@ final class RentalListingDetailSectionViewModel: LiveData<ListingDetail.Section>
         // Use the `resolver to reassign the viewModel for each section as needed
         super.init(section)
     }
+    
+    public init?(listingModel: DetailListingModel, sectionModel: ListingSectionModel, resolver: IHomesV2Resolver) {
+        switch sectionModel.sectionId {
+        case .listingHero:
+            super.init(.listingHero(
+                ListingHeroViewModel(listingModel: listingModel, resolver: resolver).latestValue,
+                uniqueHash: .hashableUUID)
+            )
+        case .listingStatus:
+            super.init(.listingStatus(
+                ListingStatus(
+                    status: "For rent",
+                    price: listingModel.price.toCurrency(),
+                    address: ListingAddress(address: listingModel.address)
+                ),
+                uniqueHash: .hashableUUID
+            ))
+        case .listingSize:
+            super.init(.listingSize(
+                ListingSize(beds: listingModel.beds,
+                            baths: listingModel.baths,
+                            sqft: listingModel.sqft),
+                uniqueHash: .hashableUUID
+            ))
+        case .neighborhood:
+            super.init(.neighborhood(
+                NeighborhoodViewModel(forListingId: listingModel.id, resolver: resolver),
+                uniqueHash: .hashableUUID
+            ))
+        case .unknown:
+            // backward compatibility for unknown id
+            return nil
+        }
+    }
 }

@@ -2,9 +2,16 @@ import SwiftUI
 import RDCCore
 
 public enum ListingDetail: IHashIdentifiable {
+    /// Skeleton view
     case placeholder(Placeholder)
+    
+    /// SDUI Lv2
     case variant(StatefulLiveData<Variant>)
+    
+    /// Static For-sale LDP
     case forSale(ForSale)
+    
+    /// Error page
     case failure
 }
 

@@ -37,41 +37,11 @@ private extension ListingSectionsDataState {
             return .custom(dataView: ProgressIndicator())
             
         case .success(let sections):
-            return .loaded(dataView: ListingDetail.Variant(sections: sections.compactMap { section in
-                switch section.sectionId {
-                case .listingHero:
-                    return .constant(.listingHero(ListingHero(thumbnail: listingModel.thumbnail), uniqueHash: .hashableUUID))
-                
-                case .listingStatus:
-                    return .constant(.listingStatus(
-                        ListingStatus(
-                            status: "For rent",
-                            price: listingModel.price.toCurrency(),
-                            address: ListingAddress(address: listingModel.address)
-                        ),
-                        uniqueHash: .hashableUUID
-                    ))
-                    
-                case .listingSize:
-                    return .constant(.listingSize(
-                        ListingSize(
-                            beds: listingModel.beds,
-                            baths: listingModel.baths,
-                            sqft: listingModel.sqft
-                        ),
-                        uniqueHash: .hashableUUID
-                    ))
-                    
-                case .neighborhood:
-                    return .constant(.neighborhood(
-                        NeighborhoodViewModel(forListingId: listingModel.id, resolver: resolver),
-                        uniqueHash: .hashableUUID
-                    ))
-                    
-                case .unknown:
-                    return nil
+            return .loaded(dataView: ListingDetail.Variant(sections: sections
+                .compactMap { section in
+                    RentalListingDetailSectionViewModel(listingModel: listingModel, sectionModel: section, resolver: resolver)
                 }
-            }))
+            ))
         }
     }
 }
