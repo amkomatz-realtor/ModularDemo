@@ -28,9 +28,17 @@ final class OffMarketListingDetailSectionViewModel: LiveData<ListingDetail.Secti
         case .neighborhood:
             // off-market does not support neighborhood section
             return nil
+            
+        case .seeMoreDetails:
+            super.init(.seeMoreLink(
+                SeeMoreLinkViewModel(link: "search", resolver: resolver).latestValue,
+                uniqueHash: .hashableUUID
+            ))
+        
         case .unknown:
             // backward compatibility for unknown id
             return nil
+        
         }
     }
 }

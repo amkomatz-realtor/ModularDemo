@@ -217,6 +217,9 @@ private let rentalSectionsJson = """
     {
         "componentId": "neighborhood"
     },
+    {
+        "componentId": "seeMoreDetails"
+    },
 ]
 """.data(using: .utf8)!
 
@@ -230,6 +233,9 @@ private let offMarketSectionsJson = """
     },
     {
         "componentId": "listingStatus"
+    },
+    {
+        "componentId": "seeMoreDetails"
     },
 ]
 """.data(using: .utf8)!

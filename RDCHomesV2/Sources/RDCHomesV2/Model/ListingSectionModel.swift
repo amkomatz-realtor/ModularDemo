@@ -13,4 +13,5 @@ enum ListingSectionId: String, CaseIterable {
     case listingStatus
     case listingSize
     case neighborhood
+    case seeMoreDetails
 }

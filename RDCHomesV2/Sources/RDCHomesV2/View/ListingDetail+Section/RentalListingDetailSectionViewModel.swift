@@ -30,6 +30,11 @@ final class RentalListingDetailSectionViewModel: LiveData<ListingDetail.Section>
                 NeighborhoodViewModel(forListingId: listingModel.id, resolver: resolver),
                 uniqueHash: .hashableUUID
             ))
+        case .seeMoreDetails:
+            super.init(.seeMoreLink(
+                SeeMoreLinkViewModel(listingModel: listingModel, resolver: resolver).latestValue,
+                uniqueHash: .hashableUUID
+            ))
         case .unknown:
             // backward compatibility for unknown id
             return nil

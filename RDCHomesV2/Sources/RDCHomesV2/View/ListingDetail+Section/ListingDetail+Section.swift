@@ -7,6 +7,7 @@ extension ListingDetail {
         case listingStatus(ListingStatus, uniqueHash: UniqueHash)
         case listingSize(ListingSize, uniqueHash: UniqueHash)
         case neighborhood(StatefulLiveData<Neighborhood>, uniqueHash: UniqueHash)
+        case seeMoreLink(ListingLink, uniqueHash: UniqueHash)
     }
 }
 
@@ -27,6 +28,10 @@ extension ListingDetail.Section: View {
         case .neighborhood(let neighborhood, _):
             neighborhood.dataView()
             .padding([.leading, .trailing])
+            
+        case .seeMoreLink(let link, _):
+            link
+            .padding([.leading, .trailing])
         }
     }
 }
@@ -45,6 +50,9 @@ struct ListingDetail_ForRentSection_Previews: PreviewProvider {
         
         ListingDetail.Section.previewNeighborhood()
             .previewDisplayName(".neighborhood")
+        
+        ListingDetail.Section.previewSeeMoreLink()
+            .previewDisplayName(".see more")
     }
 }
 
@@ -63,6 +71,10 @@ extension ListingDetail.Section {
     
     static func previewNeighborhood() -> Self {
         .neighborhood(.loaded(.previewNeighborhood()), uniqueHash: .hashableUUID)
+    }
+    
+    static func previewSeeMoreLink() -> Self {
+        .seeMoreLink(.init(displayText: "See more details", onTap: .noSideEffect()), uniqueHash: .hashableUUID)
     }
 }
 #endif

@@ -4,11 +4,15 @@ import RDCBusiness
 
 final class SeeMoreLinkViewModel: LiveData<ListingLink> {
     
-    public init(listingModel: DetailListingModel, resolver: IHomesV2Resolver) {
+    convenience init(listingModel: DetailListingModel, resolver: IHomesV2Resolver) {
+        self.init(link: "listing-additional-details_\(listingModel.id)", resolver: resolver)
+    }
+    
+    public init(link: String, resolver: IHomesV2Resolver) {
         let router = resolver.router.resolve()
         
         super.init(ListingLink(displayText: "See more details", onTap: .onTap {
-            router.route("listing-additional-details_\(listingModel.id)")
+            router.route(link)
         }))
     }
 }
