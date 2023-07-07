@@ -3,12 +3,12 @@ import RDCCore
 import RDCBusiness
 import Combine
 
-final class LDPOffMarketVariantViewModel: StatefulLiveData<ListingDetail.SectionList> {
+final class LDPRentalListViewModel: StatefulLiveData<ListingDetail.SectionList> {
     
     public convenience init(detailListingModel: DetailListingModel, resolver: IHomesV2Resolver) {
         let homesRepository = HomesRepository(resolver: resolver)
         
-        self.init(homesRepository.getSections(status: .offMarket),
+        self.init(homesRepository.getSections(status: .forRent),
                   detailListingModel: detailListingModel,
                   resolver: resolver)
     }
@@ -39,7 +39,7 @@ private extension ListingSectionsDataState {
         case .success(let sections):
             return .loaded(ListingDetail.SectionList(sections: sections
                 .compactMap { section in
-                    OffMarketListingDetailSectionViewModel(listingModel: listingModel, sectionModel: section, resolver: resolver)
+                    RentalListingDetailSectionViewModel(listingModel: listingModel, sectionModel: section, resolver: resolver)
                 }
             ))
         }

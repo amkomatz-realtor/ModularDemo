@@ -33,7 +33,7 @@ private extension SDUIListingSectionsDataState {
             
         case .success(let sections):
             return .loaded(.sdui(
-                variant: SDUILevel3VariantViewModel(sectionModels: sections, resolver: resolver).latestValue
+                variant: SDUISectionListViewModel(sectionModels: sections, resolver: resolver).latestValue
             ))
             
         case .failure:
