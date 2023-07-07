@@ -17,7 +17,7 @@ enum DataStateWithCache<Cache, Model> {
 }
 
 class HomesRepository {
-    private let networkManager: INetworkManaging
+    private let networkManager: INetworkManager
     private let globalStore: GlobalStore
     
     init(resolver: IHomesResolver) {

@@ -6,7 +6,7 @@ public struct FeedView: View {
     
     @StateObject private var viewModel: FeedViewModel
     
-    public init(resolver: FeedResolving) {
+    public init(resolver: IFeedResolver) {
         router = resolver.router.resolve()
         _viewModel = StateObject(wrappedValue: FeedViewModel(resolver: resolver))
     }

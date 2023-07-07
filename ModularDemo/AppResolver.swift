@@ -5,8 +5,8 @@ import RDCHomes
 import RDCHomesV2
 import RDCFeed
 
-public class AppResolver: ICoreResolver, IBusinessResolver, SearchResolving, IHomesResolver, IHomesV2Resolver, FeedResolving {
-    public let networkManager: any IResolver<INetworkManaging> = SingletonResolver {
+public class AppResolver: ICoreResolver, IBusinessResolver, ISearchResolver, IHomesResolver, IHomesV2Resolver, IFeedResolver {
+    public let networkManager: any IResolver<INetworkManager> = SingletonResolver {
         NetworkManager()
     }
     
@@ -18,11 +18,11 @@ public class AppResolver: ICoreResolver, IBusinessResolver, SearchResolving, IHo
         AppRouter(resolver: self)
     }
     
-    public lazy var searchRouter: any IResolver<SearchRouting> = SingletonResolver { [unowned self] in
+    public lazy var searchRouter: any IResolver<ISearchRouter> = SingletonResolver { [unowned self] in
         fatalError()
     }
     
-    public lazy var feedRouter: any IResolver<FeedRouting> = SingletonResolver { [unowned self] in
+    public lazy var feedRouter: any IResolver<IFeedRouter> = SingletonResolver { [unowned self] in
         fatalError()
     }
 }

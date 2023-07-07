@@ -2,9 +2,9 @@ import SwiftUI
 import RDCCore
 
 public class FeedRouter: IModuleRouter {
-    private let resolver: FeedResolving
+    private let resolver: IFeedResolver
     
-    public init(resolver: FeedResolving) {
+    public init(resolver: IFeedResolver) {
         self.resolver = resolver
     }
     

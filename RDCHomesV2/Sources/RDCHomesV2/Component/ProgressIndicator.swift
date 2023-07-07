@@ -1,6 +1,5 @@
-import Foundation
-import RDCCore
 import SwiftUI
+import RDCCore
 
 struct ProgressIndicator: IHashIdentifiable {}
 

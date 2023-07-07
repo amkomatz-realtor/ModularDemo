@@ -8,7 +8,7 @@ class StubHomesResolver: IHomesResolver {
     }
     
     var stubNetworkManager: StubNetworkManager = StubNetworkManager()
-    lazy var networkManager: any IResolver<INetworkManaging> = FactoryResolver { [unowned self] in
+    lazy var networkManager: any IResolver<INetworkManager> = FactoryResolver { [unowned self] in
         stubNetworkManager
     }
     

@@ -13,7 +13,7 @@ class AppRouter: HostRouter, INavigationState, ObservableObject {
     private let resolver: AppResolver
     private var childRouters: [any IModuleRouter] = []
     
-    private let isV2Enabled: Bool = false
+    private let isV2Enabled: Bool = true
     
     init(resolver: AppResolver) {
         self.resolver = resolver

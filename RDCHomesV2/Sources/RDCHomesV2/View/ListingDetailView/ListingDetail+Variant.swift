@@ -3,7 +3,7 @@ import RDCCore
 
 public extension ListingDetail {
     struct Variant: IHashIdentifiable {
-        let sections: [Section]
+        let sections: [LiveData<Section>]
     }
 }
 
@@ -12,7 +12,7 @@ extension ListingDetail.Variant: View {
         VStack(alignment: .leading) {
             VStack(alignment: .leading, spacing: 12) {
                 ForEach(sections) { section in
-                    section
+                    section.dataView()
                     Spacer()
                         .frame(height: 2)
                 }
@@ -37,17 +37,17 @@ struct ListingDetail_Variant_Previews: PreviewProvider {
 extension ListingDetail.Variant {
     static func previewAllSections() -> Self {
         .init(sections: [
-            .listingHero(.previewListingHero(), uniqueHash: .hashableUUID),
-            .listingStatus(.previewListingStatus(), uniqueHash: .hashableUUID),
-            .listingSize(.previewListingSize(), uniqueHash: .hashableUUID),
-            .neighborhood(.loaded(.previewNeighborhood()), uniqueHash: .hashableUUID)
+            .constant(.listingHero(.previewListingHero(), uniqueHash: .hashableUUID)),
+            .constant(.listingStatus(.previewListingStatus(), uniqueHash: .hashableUUID)),
+            .constant(.listingSize(.previewListingSize(), uniqueHash: .hashableUUID)),
+            .constant(.neighborhood(.loaded(.previewNeighborhood()), uniqueHash: .hashableUUID))
         ])
     }
     
     static func previewSomeSections() -> Self {
         .init(sections: [
-            .listingHero(.previewListingHero(), uniqueHash: .hashableUUID),
-            .listingStatus(.previewListingStatus(), uniqueHash: .hashableUUID),
+            .constant(.listingHero(.previewListingHero(), uniqueHash: .hashableUUID)),
+            .constant(.listingStatus(.previewListingStatus(), uniqueHash: .hashableUUID)),
         ])
     }
 }

@@ -22,7 +22,7 @@ enum ListingSectionsDataState {
 }
 
 class HomesRepository {
-    private let networkManager: INetworkManaging
+    private let networkManager: INetworkManager
     private let globalStore: GlobalStore
     
     init(resolver: IHomesV2Resolver) {
@@ -84,11 +84,5 @@ class HomesRepository {
         }
         
         return publisher.eraseToAnyPublisher()
-    }
-}
-
-private extension CurrentValueSubject where Failure == Never {
-    @MainActor func updateValue(_ value: Output) {
-        self.value = value
     }
 }

@@ -2,9 +2,9 @@ import SwiftUI
 import RDCCore
 
 public class SearchRouter: IModuleRouter {
-    private let resolver: SearchResolving
+    private let resolver: ISearchResolver
     
-    public init(resolver: SearchResolving) {
+    public init(resolver: ISearchResolver) {
         self.resolver = resolver
     }
     

@@ -40,29 +40,33 @@ private extension ListingSectionsDataState {
             return .loaded(dataView: ListingDetail.Variant(sections: sections.compactMap { section in
                 switch section.sectionId {
                 case .listingHero:
-                    return .listingHero(ListingHero(thumbnail: listingModel.thumbnail), uniqueHash: .hashableUUID)
+                    return .constant(.listingHero(ListingHero(thumbnail: listingModel.thumbnail), uniqueHash: .hashableUUID))
                 
                 case .listingStatus:
-                    return .listingStatus(
+                    return .constant(.listingStatus(
                         ListingStatus(
                             status: "For rent",
                             price: listingModel.price.toCurrency(),
                             address: ListingAddress(address: listingModel.address)
                         ),
                         uniqueHash: .hashableUUID
-                    )
+                    ))
                     
                 case .listingSize:
-                    return .listingSize(
+                    return .constant(.listingSize(
                         ListingSize(
                             beds: listingModel.beds,
                             baths: listingModel.baths,
                             sqft: listingModel.sqft
                         ),
-                        uniqueHash: .hashableUUID)
+                        uniqueHash: .hashableUUID
+                    ))
                     
                 case .neighborhood:
-                    return .neighborhood(NeighborhoodViewModel(forListingId: listingModel.id, resolver: resolver), uniqueHash: .hashableUUID)
+                    return .constant(.neighborhood(
+                        NeighborhoodViewModel(forListingId: listingModel.id, resolver: resolver),
+                        uniqueHash: .hashableUUID
+                    ))
                     
                 case .unknown:
                     return nil

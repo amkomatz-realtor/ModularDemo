@@ -10,7 +10,7 @@ public class HomesV2Router: IModuleRouter {
     
     public func view(for destination: String, with state: INavigationState) -> AnyView? {
         if let match = destination.matches(of: "listing_(.*)").get(1), let id = UUID(uuidString: match) {
-            return AnyView(ListingDetailViewModel(forListingId: id, resolver: self.resolver).dataView())
+            return AnyView(SDUIListingDetailViewModel(forListingId: id, resolver: self.resolver).dataView())
         }
         
         if let match = destination.matches(of: "listing-additional-details_(.*)").get(1), let id = UUID(uuidString: match) {
