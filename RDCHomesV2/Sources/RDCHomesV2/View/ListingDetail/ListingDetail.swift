@@ -2,9 +2,6 @@ import SwiftUI
 import RDCCore
 
 public enum ListingDetail: IHashIdentifiable {
-    /// Skeleton view
-    case placeholder(Placeholder)
-    
     /// SDUI Lv2
     case variant(StatefulLiveData<Variant>)
     
@@ -20,8 +17,6 @@ extension ListingDetail: View {
         ScrollView {
             ZStack {
                 switch self {
-                case .placeholder(let cacheListingDetail):
-                    cacheListingDetail
                 case .variant(let rentalListingDetail):
                     rentalListingDetail.dataView()
                 case .forSale(let nonRentalListingDetail):
@@ -39,9 +34,6 @@ extension ListingDetail: View {
 #if targetEnvironment(simulator)
 struct ListingDetail_Previews: PreviewProvider {
     static var previews: some View {
-        ListingDetail.previewCache()
-            .previewDisplayName(".minimal")
-        
         ListingDetail.previewRental()
             .previewDisplayName(".rental")
         
@@ -51,10 +43,6 @@ struct ListingDetail_Previews: PreviewProvider {
 }
 
 extension ListingDetail {
-    static func previewCache() -> Self {
-        .placeholder(.previewCacheListingDetail())
-    }
-    
     static func previewRental() -> Self {
         .variant(.loaded(.previewAllSections()))
     }
