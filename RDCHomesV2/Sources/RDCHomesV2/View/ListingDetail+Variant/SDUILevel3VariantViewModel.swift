@@ -11,7 +11,7 @@ final class SDUILevel3VariantViewModel: LiveData<ListingDetail.Variant> {
                     return GeneralListingDetailSectionViewModel(section: section, resolver: resolver)
                     
                 case .forSale(let section):
-                    return GeneralListingDetailSectionViewModel(section: section, resolver: resolver)
+                    return ForSaleListingDetailSectionViewModel(section: section, resolver: resolver)
                     
                 case .rental(let section):
                     return RentalListingDetailSectionViewModel(section: section, resolver: resolver)
