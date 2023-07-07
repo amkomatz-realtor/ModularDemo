@@ -12,16 +12,12 @@ final class OffMarketListingDetailSectionViewModel: LiveData<ListingDetail.Secti
         switch sectionModel.sectionId {
         case .listingHero:
             super.init(.listingHero(
-                ListingHeroViewModel(listingModel: listingModel, resolver: resolver).latestValue,
-                uniqueHash: .hashableUUID)
-            )
+                ListingHeroViewModel(listingModel: listingModel).latestValue,
+                uniqueHash: .hashableUUID
+            ))
         case .listingStatus:
             super.init(.listingStatus(
-                ListingStatus(
-                    status: "Off market",
-                    price: listingModel.price.toCurrency(),
-                    address: ListingAddress(address: listingModel.address)
-                ),
+                ListingStatusViewModel(listingModel: listingModel).latestValue,
                 uniqueHash: .hashableUUID
             ))
         case .listingSize:

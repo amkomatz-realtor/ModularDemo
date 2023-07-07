@@ -12,23 +12,17 @@ final class RentalListingDetailSectionViewModel: LiveData<ListingDetail.Section>
         switch sectionModel.sectionId {
         case .listingHero:
             super.init(.listingHero(
-                ListingHeroViewModel(listingModel: listingModel, resolver: resolver).latestValue,
-                uniqueHash: .hashableUUID)
-            )
+                ListingHeroViewModel(listingModel: listingModel).latestValue,
+                uniqueHash: .hashableUUID
+            ))
         case .listingStatus:
             super.init(.listingStatus(
-                ListingStatus(
-                    status: "For rent",
-                    price: listingModel.price.toCurrency(),
-                    address: ListingAddress(address: listingModel.address)
-                ),
+                ListingStatusViewModel(listingModel: listingModel).latestValue,
                 uniqueHash: .hashableUUID
             ))
         case .listingSize:
             super.init(.listingSize(
-                ListingSize(beds: listingModel.beds,
-                            baths: listingModel.baths,
-                            sqft: listingModel.sqft),
+                ListingSizeViewModel(listingModel: listingModel).latestValue,
                 uniqueHash: .hashableUUID
             ))
         case .neighborhood:

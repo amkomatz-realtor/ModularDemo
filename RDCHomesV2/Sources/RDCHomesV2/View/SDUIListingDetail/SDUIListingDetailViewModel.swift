@@ -32,21 +32,9 @@ private extension SDUIListingSectionsDataState {
             return .custom(dataView: ProgressIndicator())
             
         case .success(let sections):
-            return .loaded(dataView: .sdui(variant: ListingDetail.Variant(sections: sections.compactMap { section in
-                switch section {
-                case .general(let section):
-                    return GeneralListingDetailSectionViewModel(section: section, resolver: resolver)
-                    
-                case .forSale(let section):
-                    return GeneralListingDetailSectionViewModel(section: section, resolver: resolver)
-                    
-                case .rental(let section):
-                    return RentalListingDetailSectionViewModel(section: section, resolver: resolver)
-                    
-                case .unknown:
-                    return nil
-                }
-            })))
+            return .loaded(dataView: .sdui(
+                variant: SDUILevel3VariantViewModel(sectionModels: sections, resolver: resolver).latestValue
+            ))
             
         case .failure:
             return .loaded(dataView: .listingDetail(ListingDetailViewModel(forListingId: id, resolver: resolver)))
