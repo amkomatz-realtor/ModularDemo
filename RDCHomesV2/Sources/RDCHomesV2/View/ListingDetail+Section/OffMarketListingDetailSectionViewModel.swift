@@ -22,9 +22,7 @@ final class OffMarketListingDetailSectionViewModel: LiveData<ListingDetail.Secti
             ))
         case .listingSize:
             super.init(.listingSize(
-                ListingSize(beds: listingModel.beds,
-                            baths: listingModel.baths,
-                            sqft: listingModel.sqft),
+                ListingSizeViewModel(listingModel: listingModel).latestValue,
                 uniqueHash: .hashableUUID
             ))
         case .neighborhood:
