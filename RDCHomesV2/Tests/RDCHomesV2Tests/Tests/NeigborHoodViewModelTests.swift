@@ -21,17 +21,17 @@ final class NeighborhoodViewModelTests: XCTestCase {
     
     func testItShowsPlaceHolderWhenDataPending() {
         givenViewModelWith(dataState: .pending)
-        XCTAssertEqual(sut.latestValue.placeholderView, Neighborhood(name: "Placeholder", rating: 10))
+        XCTAssertEqual(sut.dataView.placeholderView, Neighborhood(name: "Placeholder", rating: 10))
     }
 
     func testitShowsViewOnSuccessfulData() {
         givenViewModelWith(dataState: .success(.init(name: "East Newyork", rating: 8)))
-        XCTAssertEqual(sut.latestValue.loadedView, Neighborhood(name: "East Newyork", rating: 8))
+        XCTAssertEqual(sut.dataView.loadedView, Neighborhood(name: "East Newyork", rating: 8))
     }
     
     func testItShowsCustomErrorOnFailure() {
         givenViewModelWith(dataState: .failure(NSError(domain: "unit test", code: -100)))
-        XCTAssertTrue(sut.latestValue.isEmpty)
+        XCTAssertTrue(sut.dataView.isEmpty)
     }
     
     private func givenViewModelWith(listingId: UUID, resolver: IHomesV2Resolver) {

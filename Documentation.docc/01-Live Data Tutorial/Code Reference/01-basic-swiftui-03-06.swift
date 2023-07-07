@@ -38,7 +38,7 @@ struct SpaceWeatherOverviewViewModel_Previews: PreviewProvider {
         SpaceWeatherOverviewViewModel(
             earthReport: WeatherReportViewModel(responsePublisher: responsePubliser)
         )
-        .dataView()
+        .observedDataView()
     }
 }
 

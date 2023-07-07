@@ -18,7 +18,7 @@ extension SDUIListingDetail: View {
             }
             .edgesIgnoringSafeArea(.top)
         case let .listingDetail(listingDetail):
-            listingDetail.dataView()
+            listingDetail.observedDataView()
         }
     }
 }

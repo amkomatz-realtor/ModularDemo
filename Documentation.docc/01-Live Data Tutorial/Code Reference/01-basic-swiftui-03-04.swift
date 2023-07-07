@@ -48,7 +48,7 @@ struct SpaceWeatherOverviewViewModel_Previews: PreviewProvider {
             .eraseToAnyPublisher()
         
         SpaceWeatherOverviewViewModel(earthWeatherPublisher: responsePubliser)
-            .dataView()
+            .observedDataView()
     }
 }
 

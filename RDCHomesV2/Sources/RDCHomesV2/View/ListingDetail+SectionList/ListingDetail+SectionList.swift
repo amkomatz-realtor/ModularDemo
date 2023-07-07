@@ -12,7 +12,7 @@ extension ListingDetail.SectionList: View {
         VStack(alignment: .leading) {
             VStack(alignment: .leading, spacing: 12) {
                 ForEach(sections) { section in
-                    section.dataView()
+                    section.observedDataView()
                     Spacer()
                         .frame(height: 2)
                 }

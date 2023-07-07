@@ -26,7 +26,7 @@ extension ListingDetail.Section: View {
             .padding([.leading, .trailing])
             
         case .neighborhood(let neighborhood, _):
-            neighborhood.dataView()
+            neighborhood.observedDataView()
             .padding([.leading, .trailing])
             
         case .seeMoreLink(let link, _):

@@ -38,7 +38,7 @@ private extension DetailDataState {
                 return .loaded(.sectionList(LDPRentalListViewModel(detailListingModel: listingModel, resolver: resolver)))
                 
             case .forSale:
-                return .loaded(.forSale(LDPForSaleViewModel(listingModel: listingModel, resolver: resolver).latestValue))
+                return .loaded(.forSale(LDPForSaleViewModel(listingModel: listingModel, resolver: resolver).dataView))
                 
             case .offMarket:
                 return .loaded(.sectionList(LDPOffMarketListViewModel(detailListingModel: listingModel, resolver: resolver)))

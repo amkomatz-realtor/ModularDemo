@@ -35,7 +35,7 @@ extension ListingDetail.ForSale: View {
                 Spacer()
                     .frame(height: 2)
                 
-                neighborhood.dataView()
+                neighborhood.observedDataView()
                 Spacer()
                     .frame(height: 2)
                 

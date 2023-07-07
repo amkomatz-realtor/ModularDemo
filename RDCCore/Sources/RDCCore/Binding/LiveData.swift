@@ -8,24 +8,24 @@ import Combine
 /// Subclass this class to create the view model for your SwiftUI DataView
 open class LiveData<T>: ObservableObject, IHashIdentifiable {
     
-    @Published public private(set) var latestValue: T
+    @Published public private(set) var dataView: T
     
     private let uuid: UniqueHash
     
     public init(_ latestValue: T) {
-        self.latestValue = latestValue
+        self.dataView = latestValue
         self.uuid = .hashableUUID
     }
     
     /// Updating the latest value using `async await` mechanism
     @MainActor public func publish(_ value: T) {
-        self.latestValue = value
+        self.dataView = value
     }
     
     /// Updating the latest value using a `combine publisher`
     public func update(using publisher: AnyPublisher<T, Never>) {
         publisher
-        .assign(to: &$latestValue)
+        .assign(to: &$dataView)
     }
     
     public static func == (lhs: LiveData<T>, rhs: LiveData<T>) -> Bool {
@@ -48,7 +48,7 @@ open class LiveData<T>: ObservableObject, IHashIdentifiable {
 public extension LiveData where T: View {
     /// Use this `dataView()` to layout your view when you have a `LiveData` object
     /// This leverate SwiftUI composable mechanism to update the parent view.
-    @ViewBuilder func dataView() -> some View {
+    @ViewBuilder func observedDataView() -> some View {
         ObservableLiveData(liveData: self)
     }
 }
@@ -60,7 +60,7 @@ public struct LazyView<Content: View>: View {
         self.build = build
     }
     public var body: some View {
-        build().dataView()
+        build().observedDataView()
     }
 }
 
@@ -70,7 +70,7 @@ private struct ObservableLiveData<V: View>: View {
     @StateObject var liveData: LiveData<V>
     
     var body: some View {
-        liveData.latestValue
+        liveData.dataView
     }
 }
 

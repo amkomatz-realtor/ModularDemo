@@ -12,7 +12,7 @@ extension DataView.Assembler: View {
     public var body: some View {
         switch self {
         case let .resolvedView(liveData):
-            liveData.dataView()
+            liveData.observedDataView()
         case .empty:
             EmptyView()
         }

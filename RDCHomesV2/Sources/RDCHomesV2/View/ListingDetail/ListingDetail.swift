@@ -18,7 +18,7 @@ extension ListingDetail: View {
             ZStack {
                 switch self {
                 case .sectionList(let rentalListingDetail):
-                    rentalListingDetail.dataView()
+                    rentalListingDetail.observedDataView()
                 case .forSale(let nonRentalListingDetail):
                     nonRentalListingDetail
                 case .failure:

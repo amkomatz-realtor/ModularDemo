@@ -12,17 +12,17 @@ final class OffMarketSectionViewModel: LiveData<ListingDetail.Section> {
         switch sectionModel.sectionId {
         case .listingHero:
             super.init(.listingHero(
-                ListingHeroViewModel(listingModel: listingModel).latestValue,
+                ListingHeroViewModel(listingModel: listingModel).dataView,
                 uniqueHash: .hashableUUID
             ))
         case .listingStatus:
             super.init(.listingStatus(
-                ListingStatusViewModel(listingModel: listingModel).latestValue,
+                ListingStatusViewModel(listingModel: listingModel).dataView,
                 uniqueHash: .hashableUUID
             ))
         case .listingSize:
             super.init(.listingSize(
-                ListingSizeViewModel(listingModel: listingModel).latestValue,
+                ListingSizeViewModel(listingModel: listingModel).dataView,
                 uniqueHash: .hashableUUID
             ))
         case .neighborhood:
@@ -31,7 +31,7 @@ final class OffMarketSectionViewModel: LiveData<ListingDetail.Section> {
             
         case .seeMoreDetails:
             super.init(.seeMoreLink(
-                SeeMoreLinkViewModel(link: "search", resolver: resolver).latestValue,
+                SeeMoreLinkViewModel(link: "search", resolver: resolver).dataView,
                 uniqueHash: .hashableUUID
             ))
         

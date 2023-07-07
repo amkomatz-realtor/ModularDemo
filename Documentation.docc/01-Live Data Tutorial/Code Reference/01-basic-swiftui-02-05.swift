@@ -37,7 +37,7 @@ struct WeatherReportViewModel_Previews: PreviewProvider {
             .eraseToAnyPublisher()
         
         WeatherReportViewModel(responsePublisher: responsePubliser)
-            .dataView()
+            .observedDataView()
     }
 }
 
