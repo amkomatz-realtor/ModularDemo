@@ -3,7 +3,7 @@ import RDCCore
 
 public enum ListingDetail: IHashIdentifiable {
     /// SDUI Lv2
-    case sectionList(StatefulLiveData<SectionList>)
+    case sectionList(from: StatefulLiveData<SectionList>)
     
     /// Static For-sale LDP
     case forSale(ForSale)
@@ -44,7 +44,7 @@ struct ListingDetail_Previews: PreviewProvider {
 
 extension ListingDetail {
     static func previewRental() -> Self {
-        .sectionList(.loaded(.previewAllSections()))
+        .sectionList(from: .loaded(.previewAllSections()))
     }
     
     static func previewNonRental() -> Self {
