@@ -35,13 +35,13 @@ private extension DetailDataState {
             switch listingModel.status {
                 
             case .forRent:
-                return .loaded(.rentalSectionList(for: listingModel, resolver: resolver))
+                return .loaded(.rentalListingDetail(for: listingModel, resolver: resolver))
                 
             case .forSale:
-                return .loaded(.forSalePage(for: listingModel, resolver: resolver))
+                return .loaded(.forSaleListingDetail(for: listingModel, resolver: resolver))
                 
             case .offMarket:
-                return .loaded(.offMarketSectionList(for: listingModel, resolver: resolver))
+                return .loaded(.offMarketListingDetail(for: listingModel, resolver: resolver))
             }
             
         case .failure:
@@ -51,15 +51,15 @@ private extension DetailDataState {
 }
 
 extension ListingDetail {
-    static func rentalSectionList(for listingModel: DetailListingModel, resolver: IHomesV2Resolver) -> Self {
+    static func rentalListingDetail(for listingModel: DetailListingModel, resolver: IHomesV2Resolver) -> Self {
         return .sectionList(LDPRentalListViewModel(detailListingModel: listingModel, resolver: resolver))
     }
     
-    static func forSalePage(for listingModel: DetailListingModel, resolver: IHomesV2Resolver) -> Self {
+    static func forSaleListingDetail(for listingModel: DetailListingModel, resolver: IHomesV2Resolver) -> Self {
         return .forSale(LDPForSaleViewModel(listingModel: listingModel, resolver: resolver).dataView)
     }
     
-    static func offMarketSectionList(for listingModel: DetailListingModel, resolver: IHomesV2Resolver) -> Self {
+    static func offMarketListingDetail(for listingModel: DetailListingModel, resolver: IHomesV2Resolver) -> Self {
         return .sectionList(LDPOffMarketListViewModel(detailListingModel: listingModel, resolver: resolver))
     }
 }
