@@ -26,7 +26,7 @@ final class ListingDetailViewModelTests: XCTestCase {
     }
     
     func testItShowsPlaceholderViewWhenReceivingCacheData() {
-        givenViewModelWith(dataState: .cached(FakeListingModel()))
+        givenViewModelWith(dataState: .listingSummary(FakeListingModel()))
         XCTAssertEqual(sut.latestValue.loadedView, ListingDetail.placeholder(ListingDetail.Placeholder(
             listingHero: ListingHero(thumbnail: URL(string: "https://fakeurl.com")!),
             price: 140000,
@@ -122,7 +122,7 @@ final class ListingDetailViewModelTests: XCTestCase {
             sqft: 1500
         )
         
-        sut = ListingDetailViewModel(Just(.detail(detailListingModel)).eraseToAnyPublisher(),
+        sut = ListingDetailViewModel(Just(.listingDetail(detailListingModel)).eraseToAnyPublisher(),
                                      resolver: resolver)
     }
     

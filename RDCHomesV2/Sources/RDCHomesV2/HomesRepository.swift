@@ -5,8 +5,8 @@ import Combine
 
 enum DetailDataState {
     case pending
-    case cached(any IListingModel)
-    case detail(DetailListingModel)
+    case listingSummary(any IListingModel)
+    case listingDetail(DetailListingModel)
     case failure(Error)
 }
 
@@ -36,12 +36,12 @@ class HomesRepository {
         Task {
             // no need to handle cache missed error
             if let cachedListing = try? globalStore.require(id: id) {
-                await publisher.updateValue(.cached(cachedListing))
+                await publisher.updateValue(.listingSummary(cachedListing))
             }
                 
             do {
                 let detail = try await networkManager.get(DetailListingModel.self, from: "https://api.realtor.com/listings/\(id)")
-                await publisher.updateValue(.detail(detail))
+                await publisher.updateValue(.listingDetail(detail))
             }
             catch {
                 await publisher.updateValue(.failure(error))

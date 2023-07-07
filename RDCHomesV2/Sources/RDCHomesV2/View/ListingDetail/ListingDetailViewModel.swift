@@ -28,10 +28,10 @@ private extension DetailDataState {
         case .pending:
             return .custom(dataView: ProgressIndicator())
             
-        case .cached(let listingModel):
+        case .listingSummary(let listingModel):
             return .loaded(dataView: .placeholder(LDPPlaceHolderViewModel(listingModel: listingModel).latestValue))
             
-        case .detail(let listingModel):
+        case .listingDetail(let listingModel):
             switch listingModel.status {
                 
             case .forRent:
