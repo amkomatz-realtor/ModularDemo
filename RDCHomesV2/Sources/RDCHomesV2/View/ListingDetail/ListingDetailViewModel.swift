@@ -35,17 +35,31 @@ private extension DetailDataState {
             switch listingModel.status {
                 
             case .forRent:
-                return .loaded(.sectionList(LDPRentalListViewModel(detailListingModel: listingModel, resolver: resolver)))
+                return .loaded(.rentalSectionList(for: listingModel, resolver: resolver))
                 
             case .forSale:
-                return .loaded(.forSale(LDPForSaleViewModel(listingModel: listingModel, resolver: resolver).dataView))
+                return .loaded(.forSalePage(for: listingModel, resolver: resolver))
                 
             case .offMarket:
-                return .loaded(.sectionList(LDPOffMarketListViewModel(detailListingModel: listingModel, resolver: resolver)))
+                return .loaded(.offMarketSectionList(for: listingModel, resolver: resolver))
             }
             
         case .failure:
             return .hidden
         }
+    }
+}
+
+extension ListingDetail {
+    static func rentalSectionList(for listingModel: DetailListingModel, resolver: IHomesV2Resolver) -> Self {
+        return .sectionList(LDPRentalListViewModel(detailListingModel: listingModel, resolver: resolver))
+    }
+    
+    static func forSalePage(for listingModel: DetailListingModel, resolver: IHomesV2Resolver) -> Self {
+        return .forSale(LDPForSaleViewModel(listingModel: listingModel, resolver: resolver).dataView)
+    }
+    
+    static func offMarketSectionList(for listingModel: DetailListingModel, resolver: IHomesV2Resolver) -> Self {
+        return .sectionList(LDPOffMarketListViewModel(detailListingModel: listingModel, resolver: resolver))
     }
 }
