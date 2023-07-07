@@ -35,7 +35,13 @@ private extension SDUIListingSectionsDataState {
             return .loaded(dataView: .sdui(variant: ListingDetail.Variant(sections: sections.compactMap { section in
                 switch section {
                 case .general(let section):
-                    return SDUIGeneralAssemblerViewModel(section: section, resolver: resolver)
+                    return GeneralListingDetailSectionViewModel(section: section, resolver: resolver)
+                    
+                case .forSale(let section):
+                    return GeneralListingDetailSectionViewModel(section: section, resolver: resolver)
+                    
+                case .rental(let section):
+                    return RentalListingDetailSectionViewModel(section: section, resolver: resolver)
                     
                 case .unknown:
                     return nil

@@ -3,6 +3,8 @@ import Foundation
 enum SDUIListingSectionModel: Equatable, Decodable {
     case unknown
     case general(ListingDetail.Section)
+    case rental(ListingDetail.Section)
+    case forSale(ListingDetail.Section)
     
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
