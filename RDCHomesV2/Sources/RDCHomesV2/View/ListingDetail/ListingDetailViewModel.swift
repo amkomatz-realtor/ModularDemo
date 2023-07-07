@@ -26,10 +26,10 @@ private extension DetailDataState {
     func mapToDataViewState(resolver: IHomesV2Resolver) -> DataViewState<ListingDetail> {
         switch self {
         case .pending:
-            return .custom(dataView: ProgressIndicator())
+            return .loading(ProgressIndicator())
             
         case .listingSummary:
-            return .custom(dataView: ProgressIndicator())
+            return .loading(ProgressIndicator())
             
         case .listingDetail(let listingModel):
             switch listingModel.status {
@@ -44,8 +44,8 @@ private extension DetailDataState {
                 return .loaded(dataView: .sectionList(LDPOffMarketVariantViewModel(detailListingModel: listingModel, resolver: resolver)))
             }
             
-        case .failure(let error):
-            return .custom(dataView: ErrorText(message: error.localizedDescription))
+        case .failure:
+            return .hidden
         }
     }
 }

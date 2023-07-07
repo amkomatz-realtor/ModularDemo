@@ -4,7 +4,7 @@ import SwiftUI
 
 extension DataViewState {
     var isEmpty: Bool {
-        if case .empty = self {
+        if case .hidden = self {
             return true
         }
         
@@ -12,7 +12,7 @@ extension DataViewState {
     }
     
     var placeholderView: T? {
-        if case .placeholder(let view) = self {
+        if case .loading(let view) = self {
             return view
         }
         

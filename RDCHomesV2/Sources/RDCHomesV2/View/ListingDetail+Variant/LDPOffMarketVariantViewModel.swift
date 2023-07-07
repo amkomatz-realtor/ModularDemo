@@ -34,7 +34,7 @@ private extension ListingSectionsDataState {
                             resolver: IHomesV2Resolver) -> DataViewState<ListingDetail.SectionList> {
         switch self {
         case .pending:
-            return .custom(dataView: ProgressIndicator())
+            return .loading(ProgressIndicator())
             
         case .success(let sections):
             return .loaded(dataView: ListingDetail.SectionList(sections: sections

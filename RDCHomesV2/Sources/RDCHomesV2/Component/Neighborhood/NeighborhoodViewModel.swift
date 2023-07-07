@@ -25,11 +25,13 @@ extension NeighborhoodDataState {
     func mapToDataViewState() -> DataViewState<Neighborhood> {
         switch self {
         case .pending:
-            return .placeholder(dataView: Neighborhood(name: "Placeholder", rating: 10))
+            return .loading(Neighborhood(name: "Placeholder", rating: 10))
+                            
         case .success(let neigborhoodModel):
             return .loaded(dataView: Neighborhood(name: neigborhoodModel.name, rating: neigborhoodModel.rating))
+                            
         case .failure:
-            return .empty
+            return .hidden
         }
     }
 }

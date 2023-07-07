@@ -6,13 +6,10 @@ public typealias HashIdentifiableView = View & IHashIdentifiable
 
 public enum DataViewState<T: View> {
     /// Hidden
-    case empty
+    case hidden
     
     /// Skeleton from view
-    case placeholder(dataView: T)
-    
-    /// Custom loading view, or error handling
-    case custom(dataView: any HashIdentifiableView)
+    case loading(any HashIdentifiableView)
     
     /// View is loaded with data
     case loaded(dataView: T)
@@ -21,12 +18,10 @@ public enum DataViewState<T: View> {
 extension DataViewState: View {
     public var body: some View {
         switch self {
-        case .empty:
+        case .hidden:
             EmptyView()
-        case .placeholder(let dataView):
-            dataView.redacted(reason: .placeholder)
-        case .custom(let dataView):
-            AnyView(dataView)
+        case .loading(let dataView):
+            AnyView(dataView.redacted(reason: .placeholder))
         case .loaded(let dataView):
             dataView
         }
@@ -35,7 +30,7 @@ extension DataViewState: View {
 
 open class StatefulLiveData<T: View>: LiveData<DataViewState<T>> {
     public init(publisher: AnyPublisher<DataViewState<T>, Never>) {
-        super.init(.empty)
+        super.init(.hidden)
         
         update(using: publisher)
     }
@@ -43,15 +38,11 @@ open class StatefulLiveData<T: View>: LiveData<DataViewState<T>> {
     // MARK: - Factory
     
     public static func empty<T>() -> StatefulLiveData<T> {
-        .init(publisher: Just(.empty).eraseToAnyPublisher())
+        .init(publisher: Just(.hidden).eraseToAnyPublisher())
     }
     
-    public static func placeholder<T>(_ value: T) -> StatefulLiveData<T> {
-        .init(publisher: Just(.placeholder(dataView: value)).eraseToAnyPublisher())
-    }
-    
-    public static func custom<T, V: HashIdentifiableView>(_ value: V) -> StatefulLiveData<T> {
-        .init(publisher: Just(.custom(dataView: value)).eraseToAnyPublisher())
+    public static func loading(_ value: any HashIdentifiableView) -> StatefulLiveData<T> {
+        .init(publisher: Just(.loading(value)).eraseToAnyPublisher())
     }
     
     public static func loaded<T>(_ value: T) -> StatefulLiveData<T> {
