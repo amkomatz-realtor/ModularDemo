@@ -25,7 +25,7 @@ enum SDUIListingSectionModel: Equatable, Decodable {
             self = .general(.listingSize(
                 ListingSize(beds: listingSize.content.beds,
                             baths: listingSize.content.baths,
-                            sqft: listingSize.content.sqrt),
+                            sqft: listingSize.content.sqft),
                 uniqueHash: .hashableUUID
             ))
             
@@ -69,7 +69,7 @@ struct SDUIListingSizeModel: Equatable, Decodable {
     struct Content: Equatable, Decodable {
         let beds: Int
         let baths: Int
-        let sqrt: Int
+        let sqft: Int
     }
     
     let type: String
