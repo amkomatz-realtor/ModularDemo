@@ -12,7 +12,7 @@ public enum DataViewState<T: View> {
     case loading(any HashIdentifiableView)
     
     /// View is loaded with data
-    case loaded(dataView: T)
+    case loaded(_ dataView: T)
 }
 
 extension DataViewState: View {
@@ -46,6 +46,6 @@ open class StatefulLiveData<T: View>: LiveData<DataViewState<T>> {
     }
     
     public static func loaded<T>(_ value: T) -> StatefulLiveData<T> {
-        .init(publisher: Just(.loaded(dataView: value)).eraseToAnyPublisher())
+        .init(publisher: Just(.loaded(value)).eraseToAnyPublisher())
     }
 }

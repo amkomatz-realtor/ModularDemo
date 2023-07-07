@@ -35,13 +35,13 @@ private extension DetailDataState {
             switch listingModel.status {
                 
             case .forRent:
-                return .loaded(dataView: .sectionList(LDPRentalVariantViewModel(detailListingModel: listingModel, resolver: resolver)))
+                return .loaded(.sectionList(LDPRentalVariantViewModel(detailListingModel: listingModel, resolver: resolver)))
                 
             case .forSale:
-                return .loaded(dataView: .forSale(LDPForSaleViewModel(listingModel: listingModel, resolver: resolver).latestValue))
+                return .loaded(.forSale(LDPForSaleViewModel(listingModel: listingModel, resolver: resolver).latestValue))
                 
             case .offMarket:
-                return .loaded(dataView: .sectionList(LDPOffMarketVariantViewModel(detailListingModel: listingModel, resolver: resolver)))
+                return .loaded(.sectionList(LDPOffMarketVariantViewModel(detailListingModel: listingModel, resolver: resolver)))
             }
             
         case .failure:

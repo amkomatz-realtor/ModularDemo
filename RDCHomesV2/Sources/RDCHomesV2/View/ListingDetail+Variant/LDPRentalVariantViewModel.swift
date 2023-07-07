@@ -37,7 +37,7 @@ private extension ListingSectionsDataState {
             return .loading(ProgressIndicator())
             
         case .success(let sections):
-            return .loaded(dataView: ListingDetail.SectionList(sections: sections
+            return .loaded(ListingDetail.SectionList(sections: sections
                 .compactMap { section in
                     RentalListingDetailSectionViewModel(listingModel: listingModel, sectionModel: section, resolver: resolver)
                 }

@@ -24,7 +24,7 @@ extension ListingDetail.SectionList: View {
 }
 
 #if targetEnvironment(simulator)
-struct ListingDetail_Variant_Previews: PreviewProvider {
+struct ListingDetail_SectionList_Previews: PreviewProvider {
     static var previews: some View {
         ListingDetail.SectionList.previewAllSections()
             .previewDisplayName(".all sections")

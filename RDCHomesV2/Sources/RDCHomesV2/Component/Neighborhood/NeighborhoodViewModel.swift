@@ -28,7 +28,7 @@ extension NeighborhoodDataState {
             return .loading(Neighborhood(name: "Placeholder", rating: 10))
                             
         case .success(let neigborhoodModel):
-            return .loaded(dataView: Neighborhood(name: neigborhoodModel.name, rating: neigborhoodModel.rating))
+            return .loaded(Neighborhood(name: neigborhoodModel.name, rating: neigborhoodModel.rating))
                             
         case .failure:
             return .hidden

@@ -32,12 +32,12 @@ private extension SDUIListingSectionsDataState {
             return .loading(ProgressIndicator())
             
         case .success(let sections):
-            return .loaded(dataView: .sdui(
+            return .loaded(.sdui(
                 variant: SDUILevel3VariantViewModel(sectionModels: sections, resolver: resolver).latestValue
             ))
             
         case .failure:
-            return .loaded(dataView: .listingDetail(ListingDetailViewModel(forListingId: id, resolver: resolver)))
+            return .loaded(.listingDetail(ListingDetailViewModel(forListingId: id, resolver: resolver)))
         }
     }
 }
