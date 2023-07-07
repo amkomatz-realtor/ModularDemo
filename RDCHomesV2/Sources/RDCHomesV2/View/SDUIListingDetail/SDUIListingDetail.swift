@@ -2,7 +2,7 @@ import SwiftUI
 import RDCCore
 
 enum SDUIListingDetail: IHashIdentifiable {
-    case sdui(variant: ListingDetail.Variant)
+    case sdui(variant: ListingDetail.SectionList)
     case listingDetail(StatefulLiveData<ListingDetail>)
 }
 

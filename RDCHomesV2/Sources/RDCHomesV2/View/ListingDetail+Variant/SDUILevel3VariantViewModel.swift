@@ -2,9 +2,9 @@ import Foundation
 import RDCCore
 import RDCBusiness
 
-final class SDUILevel3VariantViewModel: LiveData<ListingDetail.Variant> {
+final class SDUILevel3VariantViewModel: LiveData<ListingDetail.SectionList> {
     init(sectionModels: [SDUIListingSectionModel], resolver: IHomesV2Resolver) {
-        super.init(ListingDetail.Variant(sections: sectionModels
+        super.init(ListingDetail.SectionList(sections: sectionModels
             .compactMap { section in
                 switch section {
                 case .general(let section):

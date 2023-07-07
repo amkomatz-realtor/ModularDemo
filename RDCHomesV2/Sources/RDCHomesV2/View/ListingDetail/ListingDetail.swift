@@ -3,7 +3,7 @@ import RDCCore
 
 public enum ListingDetail: IHashIdentifiable {
     /// SDUI Lv2
-    case variant(StatefulLiveData<Variant>)
+    case sectionList(StatefulLiveData<SectionList>)
     
     /// Static For-sale LDP
     case forSale(ForSale)
@@ -17,7 +17,7 @@ extension ListingDetail: View {
         ScrollView {
             ZStack {
                 switch self {
-                case .variant(let rentalListingDetail):
+                case .sectionList(let rentalListingDetail):
                     rentalListingDetail.dataView()
                 case .forSale(let nonRentalListingDetail):
                     nonRentalListingDetail
@@ -44,7 +44,7 @@ struct ListingDetail_Previews: PreviewProvider {
 
 extension ListingDetail {
     static func previewRental() -> Self {
-        .variant(.loaded(.previewAllSections()))
+        .sectionList(.loaded(.previewAllSections()))
     }
     
     static func previewNonRental() -> Self {
