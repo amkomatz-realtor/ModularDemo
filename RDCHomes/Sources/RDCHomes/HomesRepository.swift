@@ -47,4 +47,25 @@ class HomesRepository {
     func getNeighborhoodDetail(forListingId id: UUID) async throws -> NeighborhoodModel {
         try await networkManager.get(NeighborhoodModel.self, from: "https://api.realtor.com/listings/\(id)/neighborhood")
     }
+    
+    func getSections(status: DetailListingModel.Status) -> AnyPublisher<DataState<[ListingSectionModel]>, Never> {
+        let publisher: CurrentValueSubject<DataState<[ListingSectionModel]>, Never> = .init(.loading)
+        
+        Task {
+            do {
+                let sections = try await networkManager.get(
+                    [ListingSectionModel].self,
+                    from: "https://api.realtor.com/ldpSections/\(status.rawValue)"
+                )
+                publisher.send(.success(sections))
+            } catch {
+                // In case of failure, displaying all sections.
+                publisher.send(.success(ListingSectionId.allCases.map {
+                    ListingSectionModel(componentId: $0.rawValue)
+                }))
+            }
+        }
+        
+        return publisher.eraseToAnyPublisher()
+    }
 }
