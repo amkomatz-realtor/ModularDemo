@@ -2,7 +2,7 @@ import Foundation
 import RDCCore
 import RDCBusiness
 
-final class SDUISectionListViewModel: LiveData<ListingDetail.SectionList> {
+final class SDUISectionListViewModel: BaseViewModel<ListingDetail.SectionList> {
     init(sectionModels: [SDUIListingSectionModel], resolver: IHomesV2Resolver) {
         super.init(ListingDetail.SectionList(sections: sectionModels
             .compactMap { section in

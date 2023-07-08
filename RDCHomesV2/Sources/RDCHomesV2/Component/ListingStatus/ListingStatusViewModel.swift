@@ -2,7 +2,7 @@ import Foundation
 import RDCCore
 import RDCBusiness
 
-final class ListingStatusViewModel: LiveData<ListingStatus> {
+final class ListingStatusViewModel: BaseViewModel<ListingStatus> {
     
     public init(listingModel: DetailListingModel) {
         switch listingModel.status {

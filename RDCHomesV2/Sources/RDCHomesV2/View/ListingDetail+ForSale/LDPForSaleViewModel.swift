@@ -2,7 +2,7 @@ import Foundation
 import RDCCore
 import RDCBusiness
 
-final class LDPForSaleViewModel: LiveData<ListingDetail.ForSale> {
+final class LDPForSaleViewModel: BaseViewModel<ListingDetail.ForSale> {
     
     public init(listingModel: DetailListingModel, resolver: IHomesV2Resolver) {
         

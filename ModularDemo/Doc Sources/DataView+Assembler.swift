@@ -3,7 +3,7 @@ import RDCCore
 
 extension DataView {
     public enum Assembler<T: View> {
-        case resolvedView(_ liveData: LiveData<T>)
+        case resolvedView(_ liveData: BaseViewModel<T>)
         case empty
     }
 }

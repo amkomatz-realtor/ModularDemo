@@ -28,7 +28,7 @@ extension DataViewState: View {
     }
 }
 
-open class StatefulLiveData<T: View>: LiveData<DataViewState<T>> {
+open class StatefulLiveData<T: View>: BaseViewModel<DataViewState<T>> {
     public init(publisher: AnyPublisher<DataViewState<T>, Never>) {
         super.init(.hidden)
         

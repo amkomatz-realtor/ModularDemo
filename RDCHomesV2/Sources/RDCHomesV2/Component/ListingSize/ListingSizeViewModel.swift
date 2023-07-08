@@ -2,7 +2,7 @@ import Foundation
 import RDCCore
 import RDCBusiness
 
-final class ListingSizeViewModel: LiveData<ListingSize> {
+final class ListingSizeViewModel: BaseViewModel<ListingSize> {
     
     public init(listingModel: DetailListingModel) {
         super.init(

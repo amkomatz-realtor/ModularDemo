@@ -2,7 +2,7 @@ import Foundation
 import RDCCore
 import RDCBusiness
 
-final class SeeMoreLinkViewModel: LiveData<ListingLink> {
+final class SeeMoreLinkViewModel: BaseViewModel<ListingLink> {
     
     convenience init(listingModel: DetailListingModel, resolver: IHomesV2Resolver) {
         self.init(link: "listing-additional-details_\(listingModel.id)", resolver: resolver)

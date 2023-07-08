@@ -3,7 +3,7 @@ import RDCCore
 
 public extension ListingDetail {
     struct SectionList: IHashIdentifiable {
-        let sections: [LiveData<Section>]
+        let sections: [BaseViewModel<Section>]
     }
 }
 

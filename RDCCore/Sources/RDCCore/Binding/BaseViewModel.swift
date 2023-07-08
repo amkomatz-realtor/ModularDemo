@@ -6,7 +6,7 @@ import Combine
 
 /// A Convenient way to update SwiftUI DataView.
 /// Subclass this class to create the view model for your SwiftUI DataView
-open class LiveData<T>: ObservableObject, IHashIdentifiable {
+open class BaseViewModel<T>: ObservableObject, IHashIdentifiable {
     
     @Published public private(set) var dataView: T
     
@@ -28,7 +28,7 @@ open class LiveData<T>: ObservableObject, IHashIdentifiable {
         .assign(to: &$dataView)
     }
     
-    public static func == (lhs: LiveData<T>, rhs: LiveData<T>) -> Bool {
+    public static func == (lhs: BaseViewModel<T>, rhs: BaseViewModel<T>) -> Bool {
         lhs.uuid == rhs.uuid
     }
     
@@ -40,12 +40,12 @@ open class LiveData<T>: ObservableObject, IHashIdentifiable {
     
     /// Use this when you are asked to supply a `liveData`
     /// But only have fixed value.
-    public static func constant<T>(_ value: T) -> LiveData<T> {
+    public static func constant<T>(_ value: T) -> BaseViewModel<T> {
         .init(value)
     }
 }
 
-public extension LiveData where T: View {
+public extension BaseViewModel where T: View {
     /// Use this `dataView()` to layout your view when you have a `LiveData` object
     /// This leverate SwiftUI composable mechanism to update the parent view.
     @ViewBuilder func observedDataView() -> some View {
@@ -55,8 +55,8 @@ public extension LiveData where T: View {
 
 /// Fix `NavigationLink` non-lazy behavior
 public struct LazyView<Content: View>: View {
-    private let build: () -> LiveData<Content>
-    public init(_ build: @autoclosure @escaping () -> LiveData<Content>) {
+    private let build: () -> BaseViewModel<Content>
+    public init(_ build: @autoclosure @escaping () -> BaseViewModel<Content>) {
         self.build = build
     }
     public var body: some View {
@@ -67,7 +67,7 @@ public struct LazyView<Content: View>: View {
 /// This definition should never change.
 private struct ObservableLiveData<V: View>: View {
     
-    @StateObject var liveData: LiveData<V>
+    @StateObject var liveData: BaseViewModel<V>
     
     var body: some View {
         liveData.dataView

@@ -2,7 +2,7 @@ import Foundation
 import RDCCore
 import RDCBusiness
 
-final class SeeSimilarHomesLinkViewModel: LiveData<ListingLink> {
+final class SeeSimilarHomesLinkViewModel: BaseViewModel<ListingLink> {
     
     public init(listingModel: DetailListingModel, resolver: IHomesV2Resolver) {
         let router = resolver.router.resolve()
