@@ -20,3 +20,33 @@ extension DetailListingModel {
         case offMarket = "off_market"
     }
 }
+
+#if targetEnvironment(simulator)
+
+extension DetailListingModel {
+    static func previewForSaleModel() -> Self {
+        .init(id: .init(),
+              address: "1 Infinity Loop, Apple Park, CA 95324",
+              price: 20000000,
+              thumbnail: URL(string: "https://nh.rdcpix.com/4f40f967f5bafe68c5bee30acb6a5f13e-f3925967158od-w480_h360_x2.webp")!,
+              status: .forSale,
+              beds: 100,
+              baths: 25,
+              sqft: 30000
+        )
+    }
+    
+    static func previewForRentModel() -> Self {
+        .init(id: .init(),
+              address: "123 My little Condo, apt #212, Remote CA 99432",
+              price: 2000,
+              thumbnail: URL(string: "https://nh.rdcpix.com/4f40f967f5bafe68c5bee30acb6a5f13e-f3925967158od-w480_h360_x2.webp")!,
+              status: .forRent,
+              beds: 2,
+              baths: 1,
+              sqft: 912
+        )
+    }
+}
+
+#endif

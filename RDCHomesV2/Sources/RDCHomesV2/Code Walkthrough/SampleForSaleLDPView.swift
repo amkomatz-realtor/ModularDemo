@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-struct SampleForSaleLDP: View {
+struct SampleForSaleLDPView: View {
     
     let thumbnail: URL
     let price: Double
@@ -9,8 +9,22 @@ struct SampleForSaleLDP: View {
     let beds: Int
     let baths: Int
     let sqft: Int
-    let name: String
+    let neighborhoodName: String
     let formattedRating: String
+    
+    init(listingModel: DetailListingModel) {
+        self.thumbnail = listingModel.thumbnail
+        self.price = listingModel.price
+        self.address = listingModel.address
+        self.beds = listingModel.beds
+        self.baths = listingModel.baths
+        self.sqft = listingModel.sqft
+        
+        self.neighborhoodName = "TBD"
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 1
+        self.formattedRating = "\(formatter.string(from: 8)!)/10"
+    }
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -88,7 +102,7 @@ struct SampleForSaleLDP: View {
                 .foregroundColor(.gray)
             
             HStack {
-                Text(name)
+                Text(neighborhoodName)
                 Text(formattedRating)
             }
             .font(.callout)
@@ -101,3 +115,11 @@ struct SampleForSaleLDP: View {
         }
     }
 }
+
+#if targetEnvironment(simulator)
+struct SampleForSaleLDP_Previews: PreviewProvider {
+    static var previews: some View {
+        SampleForSaleLDPView(listingModel: .previewForSaleModel())
+    }
+}
+#endif
