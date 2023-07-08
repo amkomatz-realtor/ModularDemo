@@ -27,38 +27,43 @@ struct SampleForSaleLDPView: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading) {
-            listingHero()
-            
-            VStack(alignment: .leading, spacing: 16) {
-                Text("For sale")
-                    .font(.caption)
-                    .foregroundColor(.gray)
+        ScrollView {
+            VStack(alignment: .leading) {
+                listingHero()
                 
-                VStack(alignment: .leading) {
-                    Text(price.toCurrency())
-                        .font(.title2)
-                        .foregroundColor(.black)
+                VStack(alignment: .leading, spacing: 16) {
+                    listingStatus()
                     
-                        listingAddress()
+                    listingSize()
+                    Spacer()
+                        .frame(height: 2)
+                    
+                    neigborhood()
+                    Spacer()
+                        .frame(height: 2)
+                    
+                    seeMoreLink()
+                    Spacer()
+                        .frame(height: 2)
+                    
+                    HStack { Spacer() }
                 }
-                
-                listingSize()
-                Spacer()
-                    .frame(height: 2)
-                
-                neigborhood()
-                Spacer()
-                    .frame(height: 2)
-                
-                seeMoreLink()
-                Spacer()
-                    .frame(height: 2)
-                
-                HStack { Spacer() }
+                .padding()
             }
-            .frame(maxWidth: .infinity)
-            .padding()
+        }
+    }
+    
+    @ViewBuilder private func listingStatus() -> some View {
+        Text("For sale")
+            .font(.caption)
+            .foregroundColor(.gray)
+        
+        VStack(alignment: .leading) {
+            Text(price.toCurrency())
+                .font(.title2)
+                .foregroundColor(.black)
+            
+                listingAddress()
         }
     }
     
