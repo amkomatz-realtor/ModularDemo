@@ -10,19 +10,19 @@ final class ListingStatusViewModel: BaseViewModel<ListingStatus> {
             super.init(ListingStatus(
                 status: "For rent",
                 price: listingModel.price.toCurrency(),
-                address: ListingAddress(address: listingModel.address)
+                address: ListingAddressViewModel(listingModel: listingModel).dataView
             ))
         case .forSale:
             super.init(ListingStatus(
                 status: "For sale",
                 price: listingModel.price.toCurrency(),
-                address: ListingAddress(address: listingModel.address)
+                address: ListingAddressViewModel(listingModel: listingModel).dataView
             ))
         case .offMarket:
             super.init(ListingStatus(
                 status: "Off market",
                 price: listingModel.price.toCurrency(),
-                address: ListingAddress(address: listingModel.address)
+                address: ListingAddressViewModel(listingModel: listingModel).dataView
             ))
         }
     }

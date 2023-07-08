@@ -9,7 +9,7 @@ final class LDPForSaleViewModel: BaseViewModel<ListingDetail.ForSale> {
         super.init(ListingDetail.ForSale(
             listingHero: ListingHeroViewModel(listingModel: listingModel).dataView,
             price: listingModel.price,
-            listingAddress: ListingAddress(address: listingModel.address),
+            listingAddress: ListingAddressViewModel(listingModel: listingModel).dataView,
             listingSize: ListingSizeViewModel(listingModel: listingModel).dataView,
             neighborhood: NeighborhoodViewModel(forListingId: listingModel.id, resolver: resolver),
             seeMoreLink: SeeMoreLinkViewModel(listingModel: listingModel, resolver: resolver).dataView,
