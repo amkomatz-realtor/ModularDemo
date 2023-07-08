@@ -21,12 +21,12 @@ final class ListingDetailViewModelTests: XCTestCase {
     
     // MARK: - Data Rendering
     
-    func testItShowsCustomProgressViewWhenDataIsPending() {
+    func testItShowsProgressViewWhenDataIsPending() {
         givenViewModelWith(dataState: .pending)
         XCTAssertNotNil(sut.dataView.loadingView as? ProgressIndicator)
     }
     
-    func testItShowsPlaceholderViewWhenReceivingCacheData() {
+    func testItShowsProgressViewWhenReceivingCacheData() {
         givenViewModelWith(dataState: .listingSummary(FakeListingModel()))
         XCTAssertNotNil(sut.dataView.loadingView as? ProgressIndicator)
     }
@@ -50,19 +50,19 @@ final class ListingDetailViewModelTests: XCTestCase {
                        ListingSize(beds: 3, baths: 3, sqft: 1500))
     }
     
-    func testForSale_ItUsesNeighborhoodViewModelToLoadAdditionalInfo() {
+    func testForSale_ItUsesNeighborhoodViewModelToDisplayNeighborhood() {
         givenDetailViewModel(forListingId: .init(), status: .forSale)
         XCTAssertNotNil(sut.dataView.whenLoaded?.forSaleView)
         
         XCTAssertEqual(sut.dataView.whenLoaded?.forSaleView?.neighborhood is NeighborhoodViewModel, true)
     }
     
-    func testForRent_ItUsesForRentViewModelVariant() {
+    func testForRent_ItUsesRentalListingViewModel() {
         givenDetailViewModel(forListingId: .init(), status: .forRent)
         XCTAssertEqual(sut.dataView.whenLoaded?.isFromViewModel(type: LDPRentalListViewModel.self), true)
     }
     
-    func testOffMarket_ItUsesOffMarketViewModelVariant() {
+    func testOffMarket_ItUsesOffMarketListingViewModel() {
         givenDetailViewModel(forListingId: .init(), status: .offMarket)
         XCTAssertEqual(sut.dataView.whenLoaded?.isFromViewModel(type: LDPOffMarketListViewModel.self), true)
     }

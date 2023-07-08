@@ -30,7 +30,7 @@ final class NeighborhoodViewModelTests: XCTestCase {
         XCTAssertEqual(sut.dataView.whenLoaded, Neighborhood(name: "East Newyork", rating: 8))
     }
     
-    func testItShowsCustomErrorOnFailure() {
+    func testItHideViewOnFailure() {
         givenViewModelWith(dataState: .failure(NSError(domain: "unit test", code: -100)))
         XCTAssertTrue(sut.dataView.isHidden)
     }
