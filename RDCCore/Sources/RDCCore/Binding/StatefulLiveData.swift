@@ -4,7 +4,8 @@ import Combine
 
 public typealias HashIdentifiableView = View & IHashIdentifiable
 
-public enum DataViewState<T: View> {
+public enum DataViewState<T: HashIdentifiableView>: IHashIdentifiable {
+    
     /// Hidden
     case hidden
     
@@ -13,6 +14,30 @@ public enum DataViewState<T: View> {
     
     /// View is loaded with data
     case loaded(_ dataView: T)
+    
+    public static func == (lhs: DataViewState<T>, rhs: DataViewState<T>) -> Bool {
+        switch (lhs, rhs) {
+        case (.hidden, .hidden):
+            return true
+        case let (.loading(lhs), .loading(rhs)):
+            return lhs.hashValue == rhs.hashValue
+        case let (.loaded(lhs), .loaded(rhs)):
+            return lhs == rhs
+        default:
+            return false
+        }
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        switch self {
+        case .hidden:
+            hasher.combine(self)
+        case .loading(let dataView):
+            hasher.combine(dataView)
+        case .loaded(let dataView):
+            hasher.combine(dataView)
+        }
+    }
 }
 
 extension DataViewState: View {
@@ -28,7 +53,7 @@ extension DataViewState: View {
     }
 }
 
-open class StatefulLiveData<T: View>: BaseViewModel<DataViewState<T>> {
+open class StatefulLiveData<T: HashIdentifiableView>: BaseViewModel<DataViewState<T>> {
     public init(publisher: AnyPublisher<DataViewState<T>, Never>) {
         super.init(.hidden)
         
