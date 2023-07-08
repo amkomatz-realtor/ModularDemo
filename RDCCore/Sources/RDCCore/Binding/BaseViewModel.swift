@@ -49,7 +49,7 @@ public extension BaseViewModel where T: View {
     /// Use this `dataView()` to layout your view when you have a `LiveData` object
     /// This leverate SwiftUI composable mechanism to update the parent view.
     @ViewBuilder func observedDataView() -> some View {
-        ObservableLiveData(liveData: self)
+        ObservableDataView(viewModel: self)
     }
 }
 
@@ -65,12 +65,12 @@ public struct LazyView<Content: View>: View {
 }
 
 /// This definition should never change.
-private struct ObservableLiveData<V: View>: View {
+private struct ObservableDataView<V: View>: View {
     
-    @StateObject var liveData: BaseViewModel<V>
+    @StateObject var viewModel: BaseViewModel<V>
     
     var body: some View {
-        liveData.dataView
+        viewModel.dataView
     }
 }
 
