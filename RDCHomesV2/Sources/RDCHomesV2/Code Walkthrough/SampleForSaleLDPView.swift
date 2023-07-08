@@ -29,20 +29,20 @@ struct SampleForSaleLDPView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                listingHero()
+                listingHeroView()
                 
                 VStack(alignment: .leading, spacing: 16) {
-                    listingStatus()
+                    listingStatusView()
                     
-                    listingSize()
+                    listingSizeView()
                     Spacer()
                         .frame(height: 2)
                     
-                    neigborhood()
+                    neigborhoodView()
                     Spacer()
                         .frame(height: 2)
                     
-                    seeMoreLink()
+                    seeMoreLinkView()
                     Spacer()
                         .frame(height: 2)
                     
@@ -53,7 +53,7 @@ struct SampleForSaleLDPView: View {
         }
     }
     
-    @ViewBuilder private func listingStatus() -> some View {
+    @ViewBuilder private func listingStatusView() -> some View {
         Text("For sale")
             .font(.caption)
             .foregroundColor(.gray)
@@ -63,11 +63,11 @@ struct SampleForSaleLDPView: View {
                 .font(.title2)
                 .foregroundColor(.black)
             
-                listingAddress()
+                listingAddressView()
         }
     }
     
-    @ViewBuilder private func listingHero() -> some View {
+    @ViewBuilder private func listingHeroView() -> some View {
         AsyncImage(
             url: thumbnail,
             content: { image in
@@ -82,13 +82,13 @@ struct SampleForSaleLDPView: View {
         .frame(height: 256)
     }
     
-    @ViewBuilder private func listingAddress() -> some View {
+    @ViewBuilder private func listingAddressView() -> some View {
         Text(address)
             .font(.caption)
             .foregroundColor(.gray)
     }
     
-    @ViewBuilder private func listingSize() -> some View {
+    @ViewBuilder private func listingSizeView() -> some View {
         (
             Text("\(beds)").fontWeight(.heavy)
                 + Text(" bed • ")
@@ -100,7 +100,7 @@ struct SampleForSaleLDPView: View {
         .font(.footnote)
     }
     
-    @ViewBuilder private func neigborhood() -> some View {
+    @ViewBuilder private func neigborhoodView() -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Neighborhood")
                 .font(.caption.bold())
@@ -114,7 +114,7 @@ struct SampleForSaleLDPView: View {
         }
     }
     
-    @ViewBuilder private func seeMoreLink() -> some View {
+    @ViewBuilder private func seeMoreLinkView() -> some View {
         Button("See more details") {
             print("Tapping see more")
         }
