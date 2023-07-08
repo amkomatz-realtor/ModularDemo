@@ -6,7 +6,7 @@ extension ListingDetail {
         case listingHero(ListingHero, uniqueHash: UniqueHash)
         case listingStatus(ListingStatus, uniqueHash: UniqueHash)
         case listingSize(ListingSize, uniqueHash: UniqueHash)
-        case neighborhood(OptionalViewModel<Neighborhood>, uniqueHash: UniqueHash)
+        case neighborhood(LazyViewModel<Neighborhood>, uniqueHash: UniqueHash)
         case seeMoreLink(ListingLink, uniqueHash: UniqueHash)
     }
 }
@@ -70,7 +70,7 @@ extension ListingDetail.Section {
     }
     
     static func previewNeighborhood() -> Self {
-        .neighborhood(.loaded(.previewNeighborhood()), uniqueHash: .hashableUUID)
+        .neighborhood(.single(.previewNeighborhood()), uniqueHash: .hashableUUID)
     }
     
     static func previewSeeMoreLink() -> Self {

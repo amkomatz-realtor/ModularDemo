@@ -40,7 +40,7 @@ extension ListingDetail.SectionList {
             .single(.listingHero(.previewListingHero(), uniqueHash: .hashableUUID)),
             .single(.listingStatus(.previewListingStatus(), uniqueHash: .hashableUUID)),
             .single(.listingSize(.previewListingSize(), uniqueHash: .hashableUUID)),
-            .single(.neighborhood(.loaded(.previewNeighborhood()), uniqueHash: .hashableUUID))
+            .single(.neighborhood(.single(.previewNeighborhood()), uniqueHash: .hashableUUID))
         ])
     }
     

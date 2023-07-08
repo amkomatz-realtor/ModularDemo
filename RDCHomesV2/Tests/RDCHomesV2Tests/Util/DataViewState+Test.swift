@@ -2,7 +2,7 @@ import Foundation
 import RDCCore
 import SwiftUI
 
-extension OptionalDataView {
+extension LazyDataView {
     var isHidden: Bool {
         if case .hidden = self {
             return true

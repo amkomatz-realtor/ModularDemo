@@ -3,7 +3,7 @@ import Foundation
 import RDCCore
 import RDCBusiness
 
-public final class NeighborhoodViewModel: OptionalViewModel<Neighborhood> {
+public final class NeighborhoodViewModel: LazyViewModel<Neighborhood> {
     
     public convenience init(forListingId id: UUID, resolver: IHomesV2Resolver) {
         let homesRepository = HomesRepository(resolver: resolver)
@@ -22,7 +22,7 @@ public final class NeighborhoodViewModel: OptionalViewModel<Neighborhood> {
 }
 
 extension NeighborhoodDataState {
-    func mapToDataViewState() -> OptionalDataView<Neighborhood> {
+    func mapToDataViewState() -> LazyDataView<Neighborhood> {
         switch self {
         case .pending:
             return .loading(Neighborhood(name: "Placeholder", rating: 10))

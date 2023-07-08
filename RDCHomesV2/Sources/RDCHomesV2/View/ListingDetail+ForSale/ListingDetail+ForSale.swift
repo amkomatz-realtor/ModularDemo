@@ -7,7 +7,7 @@ public extension ListingDetail {
         let price: Double
         let listingAddress: ListingAddress
         let listingSize: ListingSize
-        let neighborhood: OptionalViewModel<Neighborhood>
+        let neighborhood: LazyViewModel<Neighborhood>
         let seeMoreLink: ListingLink
         let seeSimilarHomesLink: ListingLink
     }
@@ -67,7 +67,7 @@ extension ListingDetail.ForSale {
               price: 389999,
               listingAddress: .previewListingAddress(),
               listingSize: .previewListingSize(),
-              neighborhood: .loaded(.previewNeighborhood()),
+              neighborhood: .single(.previewNeighborhood()),
               seeMoreLink: .previewListingLink(),
               seeSimilarHomesLink: .previewListingLink()
         )

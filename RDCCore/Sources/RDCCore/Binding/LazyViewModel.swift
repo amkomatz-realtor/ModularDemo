@@ -4,7 +4,7 @@ import Combine
 
 public typealias IHashIdentifiableView = View & IHashIdentifiable
 
-public enum OptionalDataView<DataView: IHashIdentifiableView>: IHashIdentifiable {
+public enum LazyDataView<DataView: IHashIdentifiableView>: IHashIdentifiable {
     
     /// Hidden
     case hidden
@@ -17,7 +17,7 @@ public enum OptionalDataView<DataView: IHashIdentifiableView>: IHashIdentifiable
 
     // MARK: - IHashIdentifiable
     
-    public static func == (lhs: OptionalDataView<DataView>, rhs: OptionalDataView<DataView>) -> Bool {
+    public static func == (lhs: LazyDataView<DataView>, rhs: LazyDataView<DataView>) -> Bool {
         switch (lhs, rhs) {
         case (.hidden, .hidden):
             return true
@@ -42,7 +42,7 @@ public enum OptionalDataView<DataView: IHashIdentifiableView>: IHashIdentifiable
     }
 }
 
-extension OptionalDataView: View {
+extension LazyDataView: View {
     public var body: some View {
         switch self {
         case .hidden:
@@ -55,8 +55,9 @@ extension OptionalDataView: View {
     }
 }
 
-open class OptionalViewModel<DataView: IHashIdentifiableView>: BaseViewModel<OptionalDataView<DataView>> {
-    public init(publisher: AnyPublisher<OptionalDataView<DataView>, Never>) {
+open class LazyViewModel<DataView: IHashIdentifiableView>: BaseViewModel<LazyDataView<DataView>> {
+    
+    public init(publisher: AnyPublisher<LazyDataView<DataView>, Never>) {
         // Initially hidden
         super.init(.hidden)
         // Updating state based on the stream of `DataView`
@@ -65,15 +66,15 @@ open class OptionalViewModel<DataView: IHashIdentifiableView>: BaseViewModel<Opt
     
     // MARK: - Factory
     
-    public static func empty() -> OptionalViewModel<DataView> {
+    public static func empty() -> LazyViewModel<DataView> {
         .init(publisher: Just(.hidden).eraseToAnyPublisher())
     }
     
-    public static func loading(_ value: any IHashIdentifiableView) -> OptionalViewModel<DataView> {
+    public static func loading(_ value: any IHashIdentifiableView) -> LazyViewModel<DataView> {
         .init(publisher: Just(.loading(value)).eraseToAnyPublisher())
     }
     
-    public static func loaded(_ value: DataView) -> OptionalViewModel<DataView> {
+    public static func single(_ value: DataView) -> LazyViewModel<DataView> {
         .init(publisher: Just(.loaded(value)).eraseToAnyPublisher())
     }
 }
