@@ -25,6 +25,8 @@ open class BaseViewModel<DataView>: ObservableObject, IHashIdentifiable {
         .assign(to: &$dataView)
     }
     
+    // MARK: - IHashIdentifiable
+    
     public static func ==(lhs: BaseViewModel<DataView>, rhs: BaseViewModel<DataView>) -> Bool {
         lhs.uuid == rhs.uuid
     }

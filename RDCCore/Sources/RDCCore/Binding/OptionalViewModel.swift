@@ -2,20 +2,22 @@ import Foundation
 import SwiftUI
 import Combine
 
-public typealias HashIdentifiableView = View & IHashIdentifiable
+public typealias IHashIdentifiableView = View & IHashIdentifiable
 
-public enum OptionalDataView<T: HashIdentifiableView>: IHashIdentifiable {
+public enum OptionalDataView<DataView: IHashIdentifiableView>: IHashIdentifiable {
     
     /// Hidden
     case hidden
     
-    /// Skeleton from view
-    case loading(any HashIdentifiableView)
+    /// Fetching dataView
+    case loading(any IHashIdentifiableView)
     
-    /// View is loaded with data
-    case loaded(_ dataView: T)
+    /// dataView is ready for rendered.
+    case loaded(_ dataView: DataView)
+
+    // MARK: - IHashIdentifiable
     
-    public static func == (lhs: OptionalDataView<T>, rhs: OptionalDataView<T>) -> Bool {
+    public static func == (lhs: OptionalDataView<DataView>, rhs: OptionalDataView<DataView>) -> Bool {
         switch (lhs, rhs) {
         case (.hidden, .hidden):
             return true
@@ -53,24 +55,25 @@ extension OptionalDataView: View {
     }
 }
 
-open class OptionalViewModel<T: HashIdentifiableView>: BaseViewModel<OptionalDataView<T>> {
-    public init(publisher: AnyPublisher<OptionalDataView<T>, Never>) {
+open class OptionalViewModel<DataView: IHashIdentifiableView>: BaseViewModel<OptionalDataView<DataView>> {
+    public init(publisher: AnyPublisher<OptionalDataView<DataView>, Never>) {
+        // Initially hidden
         super.init(.hidden)
-        
+        // Updating state based on the stream of `DataView`
         update(using: publisher)
     }
     
     // MARK: - Factory
     
-    public static func empty<T>() -> OptionalViewModel<T> {
+    public static func empty() -> OptionalViewModel<DataView> {
         .init(publisher: Just(.hidden).eraseToAnyPublisher())
     }
     
-    public static func loading(_ value: any HashIdentifiableView) -> OptionalViewModel<T> {
+    public static func loading(_ value: any IHashIdentifiableView) -> OptionalViewModel<DataView> {
         .init(publisher: Just(.loading(value)).eraseToAnyPublisher())
     }
     
-    public static func loaded<T>(_ value: T) -> OptionalViewModel<T> {
+    public static func loaded(_ value: DataView) -> OptionalViewModel<DataView> {
         .init(publisher: Just(.loaded(value)).eraseToAnyPublisher())
     }
 }
