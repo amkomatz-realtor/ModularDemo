@@ -29,6 +29,7 @@ open class LazyViewModel<DataView: IHashIdentifiableView>: BaseViewModel<LazyDat
     //    public init(_ latestValue: DataView) {
     //       super.init(.loaded(latestValue))
     //    }
+    //```
 }
 
 // MARK: - LazyDataView
