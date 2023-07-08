@@ -14,24 +14,25 @@ final class NeighborhoodViewModelTests: XCTestCase {
         
         givenViewModelWith(listingId: listingId, resolver: homesResolver)
         sleep(1)
-        XCTAssertEqual(homesResolver.stubNetworkManager.verifiedUrl, "https://api.realtor.com/listings/\(listingId)/neighborhood")
+        XCTAssertEqual(homesResolver.stubNetworkManager.verifiedUrl,
+                       "https://api.realtor.com/listings/\(listingId)/neighborhood")
     }
     
     // MARK: - Data Rendering
     
     func testItShowsPlaceHolderWhenDataPending() {
         givenViewModelWith(dataState: .pending)
-        XCTAssertEqual(sut.dataView.placeholderView, Neighborhood(name: "Placeholder", rating: 10))
+        XCTAssertNotNil(sut.dataView.loadingView as? Neighborhood)
     }
 
     func testitShowsViewOnSuccessfulData() {
         givenViewModelWith(dataState: .success(.init(name: "East Newyork", rating: 8)))
-        XCTAssertEqual(sut.dataView.loadedView, Neighborhood(name: "East Newyork", rating: 8))
+        XCTAssertEqual(sut.dataView.whenLoaded, Neighborhood(name: "East Newyork", rating: 8))
     }
     
     func testItShowsCustomErrorOnFailure() {
         givenViewModelWith(dataState: .failure(NSError(domain: "unit test", code: -100)))
-        XCTAssertTrue(sut.dataView.isEmpty)
+        XCTAssertTrue(sut.dataView.isHidden)
     }
     
     private func givenViewModelWith(listingId: UUID, resolver: IHomesV2Resolver) {

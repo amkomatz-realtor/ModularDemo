@@ -2,17 +2,9 @@ import Foundation
 import RDCHomesV2
 
 extension ListingDetail {
-    var placeholderView: Placeholder? {
-        if case .placeholder(let placeholder) = self {
-            return placeholder
-        }
-        
-        return nil
-    }
-    
-    func isVariantByViewModel<VM>(type: VM.Type) -> Bool {
-        if case .variant(let variant) = self {
-            return variant is VM
+    func isFromViewModel<VM>(type: VM.Type) -> Bool {
+        if case .sectionList(let viewModel) = self {
+            return viewModel is VM
         }
         
         return false

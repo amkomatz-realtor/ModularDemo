@@ -3,7 +3,7 @@ import RDCCore
 import SwiftUI
 
 extension OptionalDataView {
-    var isEmpty: Bool {
+    var isHidden: Bool {
         if case .hidden = self {
             return true
         }
@@ -11,7 +11,7 @@ extension OptionalDataView {
         return false
     }
     
-    var placeholderView: T? {
+    var loadingView: (any IHashIdentifiableView)? {
         if case .loading(let view) = self {
             return view
         }
@@ -19,15 +19,7 @@ extension OptionalDataView {
         return nil
     }
     
-    func customView<V>(type: V.Type) -> V? {
-        if case .custom(let view) = self {
-            return view as? V
-        }
-        
-        return nil
-    }
-    
-    var loadedView: T? {
+    var whenLoaded: DataView? {
         if case .loaded(let dataView) = self {
             return dataView
         }

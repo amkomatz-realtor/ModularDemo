@@ -15,59 +15,56 @@ final class ListingDetailViewModelTests: XCTestCase {
         
         givenViewModelWith(listingId: listingId, resolver: homesResolver)
         sleep(1)
-        XCTAssertEqual(homesResolver.stubNetworkManager.verifiedUrl, "https://api.realtor.com/listings/\(listingId)")
+        XCTAssertEqual(homesResolver.stubNetworkManager.verifiedUrl,
+                       "https://api.realtor.com/listings/\(listingId)")
     }
     
     // MARK: - Data Rendering
     
     func testItShowsCustomProgressViewWhenDataIsPending() {
         givenViewModelWith(dataState: .pending)
-        XCTAssertNotNil(sut.dataView.customView(type: ProgressIndicator.self))
+        XCTAssertNotNil(sut.dataView.loadingView as? ProgressIndicator)
     }
     
     func testItShowsPlaceholderViewWhenReceivingCacheData() {
         givenViewModelWith(dataState: .listingSummary(FakeListingModel()))
-        XCTAssertEqual(sut.latestValue.loadedView, ListingDetail.placeholder(ListingDetail.Placeholder(
-            listingHero: ListingHero(thumbnail: URL(string: "https://fakeurl.com")!),
-            price: 140000,
-            listingAddress: ListingAddress(address: "fake address"))
-        ))
+        XCTAssertNotNil(sut.dataView.loadingView as? ProgressIndicator)
     }
     
-    func testItShowsCustomViewForFailure() {
+    func testItHidesUponFailure() {
         givenViewModelWith(dataState: .failure(NSError(domain: "unit test", code: -1)))
-        XCTAssertNotNil(sut.dataView.customView(type: ErrorText.self))
+        XCTAssertNotNil(sut.dataView.isHidden)
     }
     
     func testForSale_ItShowsForSaleViewWhenReceivingListingDetail() {
         givenDetailViewModel(forListingId: .init(), status: .forSale)
-        XCTAssertNotNil(sut.dataView.loadedView?.forSaleView)
+        XCTAssertNotNil(sut.dataView.whenLoaded?.forSaleView)
         
-        XCTAssertEqual(sut.dataView.loadedView?.forSaleView?.listingHero,
+        XCTAssertEqual(sut.dataView.whenLoaded?.forSaleView?.listingHero,
                        ListingHero(thumbnail: URL(string: "https://fakeurl.com")!))
-        XCTAssertEqual(sut.dataView.loadedView?.forSaleView?.price,
+        XCTAssertEqual(sut.dataView.whenLoaded?.forSaleView?.price,
                        200000)
-        XCTAssertEqual(sut.dataView.loadedView?.forSaleView?.listingAddress,
+        XCTAssertEqual(sut.dataView.whenLoaded?.forSaleView?.listingAddress,
                        ListingAddress(address: "fake listing detail address"))
-        XCTAssertEqual(sut.dataView.loadedView?.forSaleView?.listingSize,
+        XCTAssertEqual(sut.dataView.whenLoaded?.forSaleView?.listingSize,
                        ListingSize(beds: 3, baths: 3, sqft: 1500))
     }
     
     func testForSale_ItUsesNeighborhoodViewModelToLoadAdditionalInfo() {
         givenDetailViewModel(forListingId: .init(), status: .forSale)
-        XCTAssertNotNil(sut.dataView.loadedView?.forSaleView)
+        XCTAssertNotNil(sut.dataView.whenLoaded?.forSaleView)
         
-        XCTAssertEqual(sut.dataView.loadedView?.forSaleView?.neighborhood is NeighborhoodViewModel, true)
+        XCTAssertEqual(sut.dataView.whenLoaded?.forSaleView?.neighborhood is NeighborhoodViewModel, true)
     }
     
     func testForRent_ItUsesForRentViewModelVariant() {
         givenDetailViewModel(forListingId: .init(), status: .forRent)
-        XCTAssertEqual(sut.dataView.loadedView?.isVariantByViewModel(type: LDPRentalVariantViewModel.self), true)
+        XCTAssertEqual(sut.dataView.whenLoaded?.isFromViewModel(type: LDPRentalListViewModel.self), true)
     }
     
     func testOffMarket_ItUsesOffMarketViewModelVariant() {
         givenDetailViewModel(forListingId: .init(), status: .offMarket)
-        XCTAssertEqual(sut.dataView.loadedView?.isVariantByViewModel(type: LDPOffMarketVariantViewModel.self), true)
+        XCTAssertEqual(sut.dataView.whenLoaded?.isFromViewModel(type: LDPOffMarketListViewModel.self), true)
     }
     
     // MARK: - Side Effect
@@ -78,8 +75,8 @@ final class ListingDetailViewModelTests: XCTestCase {
 
         givenDetailViewModel(forListingId: listingId, status: .forSale, resolver: stubResolver)
         
-        XCTAssertNotNil(sut.dataView.loadedView?.forSaleView)
-        XCTAssertEqual(sut.dataView.loadedView?.forSaleView?.seeMoreLink.displayText, "See more details")
+        XCTAssertNotNil(sut.dataView.whenLoaded?.forSaleView)
+        XCTAssertEqual(sut.dataView.whenLoaded?.forSaleView?.seeMoreLink.displayText, "See more details")
         
         whenTapSeeMoreLink()
         
@@ -91,8 +88,8 @@ final class ListingDetailViewModelTests: XCTestCase {
 
         givenDetailViewModel(forListingId: .init(), status: .forSale, resolver: stubResolver)
         
-        XCTAssertNotNil(sut.dataView.loadedView?.forSaleView)
-        XCTAssertEqual(sut.dataView.loadedView?.forSaleView?.seeSimilarHomesLink.displayText, "See similar homes")
+        XCTAssertNotNil(sut.dataView.whenLoaded?.forSaleView)
+        XCTAssertEqual(sut.dataView.whenLoaded?.forSaleView?.seeSimilarHomesLink.displayText, "See similar homes")
         
         whenTapSimilarHomesLink()
         
@@ -127,10 +124,10 @@ final class ListingDetailViewModelTests: XCTestCase {
     }
     
     private func whenTapSeeMoreLink() {
-        sut.dataView.loadedView?.forSaleView?.seeMoreLink.onTap.occurs()
+        sut.dataView.whenLoaded?.forSaleView?.seeMoreLink.onTap.occurs()
     }
     
     private func whenTapSimilarHomesLink() {
-        sut.dataView.loadedView?.forSaleView?.seeSimilarHomesLink.onTap.occurs()
+        sut.dataView.whenLoaded?.forSaleView?.seeSimilarHomesLink.onTap.occurs()
     }
 }

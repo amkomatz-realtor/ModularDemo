@@ -26,11 +26,19 @@ extension ListingDetail.Section {
         return nil
     }
     
-    func isUsingNeighborhoodViewModel<VM>(type: VM.Type) -> Bool {
-        if case let .neighborhood(neighborhood, _) = self {
-            return neighborhood is VM
+    func isFromViewModel<VM>(type: VM.Type) -> Bool {
+        if case let .neighborhood(viewModel, _) = self {
+            return viewModel is VM
         }
         
         return false
+    }
+    
+    var seeMoreLink: ListingLink? {
+        if case let .seeMoreLink(link, _) = self {
+            return link
+        }
+        
+        return nil
     }
 }
