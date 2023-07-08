@@ -3,7 +3,7 @@ import RDCCore
 import RDCBusiness
 import Combine
 
-final class SDUIListingDetailViewModel: StatefulLiveData<SDUIListingDetail> {
+final class SDUIListingDetailViewModel: OptionalViewModel<SDUIListingDetail> {
     
     public convenience init(forListingId id: UUID, resolver: IHomesV2Resolver) {
         let sduiRepository = SDUIRepository(resolver: resolver)
@@ -26,7 +26,7 @@ final class SDUIListingDetailViewModel: StatefulLiveData<SDUIListingDetail> {
 }
 
 private extension SDUIListingSectionsDataState {
-    func mapToDataViewState(forListingId id: UUID, resolver: IHomesV2Resolver) -> DataViewState<SDUIListingDetail> {
+    func mapToDataViewState(forListingId id: UUID, resolver: IHomesV2Resolver) -> OptionalDataView<SDUIListingDetail> {
         switch self {
         case .pending:
             return .loading(ProgressIndicator())

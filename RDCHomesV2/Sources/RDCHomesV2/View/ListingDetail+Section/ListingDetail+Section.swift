@@ -6,7 +6,7 @@ extension ListingDetail {
         case listingHero(ListingHero, uniqueHash: UniqueHash)
         case listingStatus(ListingStatus, uniqueHash: UniqueHash)
         case listingSize(ListingSize, uniqueHash: UniqueHash)
-        case neighborhood(StatefulLiveData<Neighborhood>, uniqueHash: UniqueHash)
+        case neighborhood(OptionalViewModel<Neighborhood>, uniqueHash: UniqueHash)
         case seeMoreLink(ListingLink, uniqueHash: UniqueHash)
     }
 }

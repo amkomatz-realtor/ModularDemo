@@ -3,7 +3,7 @@ import RDCCore
 
 public enum ListingDetail: IHashIdentifiable {
     /// SDUI Lv2
-    case sectionList(from: StatefulLiveData<SectionList>)
+    case sectionList(from: OptionalViewModel<SectionList>)
     
     /// Static For-sale LDP
     case forSale(ForSale)

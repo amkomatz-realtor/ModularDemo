@@ -4,7 +4,7 @@ import Combine
 
 public typealias HashIdentifiableView = View & IHashIdentifiable
 
-public enum DataViewState<T: HashIdentifiableView>: IHashIdentifiable {
+public enum OptionalDataView<T: HashIdentifiableView>: IHashIdentifiable {
     
     /// Hidden
     case hidden
@@ -15,7 +15,7 @@ public enum DataViewState<T: HashIdentifiableView>: IHashIdentifiable {
     /// View is loaded with data
     case loaded(_ dataView: T)
     
-    public static func == (lhs: DataViewState<T>, rhs: DataViewState<T>) -> Bool {
+    public static func == (lhs: OptionalDataView<T>, rhs: OptionalDataView<T>) -> Bool {
         switch (lhs, rhs) {
         case (.hidden, .hidden):
             return true
@@ -40,7 +40,7 @@ public enum DataViewState<T: HashIdentifiableView>: IHashIdentifiable {
     }
 }
 
-extension DataViewState: View {
+extension OptionalDataView: View {
     public var body: some View {
         switch self {
         case .hidden:
@@ -53,8 +53,8 @@ extension DataViewState: View {
     }
 }
 
-open class StatefulLiveData<T: HashIdentifiableView>: BaseViewModel<DataViewState<T>> {
-    public init(publisher: AnyPublisher<DataViewState<T>, Never>) {
+open class OptionalViewModel<T: HashIdentifiableView>: BaseViewModel<OptionalDataView<T>> {
+    public init(publisher: AnyPublisher<OptionalDataView<T>, Never>) {
         super.init(.hidden)
         
         update(using: publisher)
@@ -62,15 +62,15 @@ open class StatefulLiveData<T: HashIdentifiableView>: BaseViewModel<DataViewStat
     
     // MARK: - Factory
     
-    public static func empty<T>() -> StatefulLiveData<T> {
+    public static func empty<T>() -> OptionalViewModel<T> {
         .init(publisher: Just(.hidden).eraseToAnyPublisher())
     }
     
-    public static func loading(_ value: any HashIdentifiableView) -> StatefulLiveData<T> {
+    public static func loading(_ value: any HashIdentifiableView) -> OptionalViewModel<T> {
         .init(publisher: Just(.loading(value)).eraseToAnyPublisher())
     }
     
-    public static func loaded<T>(_ value: T) -> StatefulLiveData<T> {
+    public static func loaded<T>(_ value: T) -> OptionalViewModel<T> {
         .init(publisher: Just(.loaded(value)).eraseToAnyPublisher())
     }
 }

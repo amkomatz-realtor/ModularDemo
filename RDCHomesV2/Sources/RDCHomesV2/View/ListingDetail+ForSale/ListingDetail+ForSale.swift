@@ -7,7 +7,7 @@ public extension ListingDetail {
         let price: Double
         let listingAddress: ListingAddress
         let listingSize: ListingSize
-        let neighborhood: StatefulLiveData<Neighborhood>
+        let neighborhood: OptionalViewModel<Neighborhood>
         let seeMoreLink: ListingLink
         let seeSimilarHomesLink: ListingLink
     }

@@ -3,7 +3,7 @@ import RDCCore
 import RDCBusiness
 import Combine
 
-final class LDPOffMarketListViewModel: StatefulLiveData<ListingDetail.SectionList> {
+final class LDPOffMarketListViewModel: OptionalViewModel<ListingDetail.SectionList> {
     
     public convenience init(detailListingModel: DetailListingModel, resolver: IHomesV2Resolver) {
         let homesRepository = HomesRepository(resolver: resolver)
@@ -31,7 +31,7 @@ final class LDPOffMarketListViewModel: StatefulLiveData<ListingDetail.SectionLis
 
 private extension ListingSectionsDataState {
     func mapToDataViewState(listingModel: DetailListingModel,
-                            resolver: IHomesV2Resolver) -> DataViewState<ListingDetail.SectionList> {
+                            resolver: IHomesV2Resolver) -> OptionalDataView<ListingDetail.SectionList> {
         switch self {
         case .pending:
             return .loading(ProgressIndicator())

@@ -2,7 +2,7 @@ import Foundation
 import RDCCore
 import SwiftUI
 
-extension DataViewState {
+extension OptionalDataView {
     var isEmpty: Bool {
         if case .hidden = self {
             return true
