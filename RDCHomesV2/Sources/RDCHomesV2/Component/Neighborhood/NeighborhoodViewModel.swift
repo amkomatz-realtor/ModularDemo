@@ -21,7 +21,7 @@ public final class NeighborhoodViewModel: LazyViewModel<Neighborhood> {
     }
 }
 
-extension NeighborhoodDataState {
+private extension NeighborhoodDataState {
     func mapToDataViewState() -> LazyDataView<Neighborhood> {
         switch self {
         case .pending:
@@ -33,5 +33,15 @@ extension NeighborhoodDataState {
         case .failure:
             return .hidden
         }
+    }
+}
+
+extension Neighborhood {
+    init(name: String, rating: Double) {
+        self.name = name
+        
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 1
+        self.formattedRating = "\(formatter.string(from: rating as NSNumber)!)/10"
     }
 }

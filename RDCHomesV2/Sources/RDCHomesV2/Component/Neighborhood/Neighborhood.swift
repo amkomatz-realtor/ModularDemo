@@ -3,15 +3,7 @@ import RDCCore
 
 public struct Neighborhood: IHashIdentifiable {
     let name: String
-    let rating: String
-    
-    init(name: String, rating: Double) {
-        self.name = name
-        
-        let formatter = NumberFormatter()
-        formatter.maximumFractionDigits = 1
-        self.rating = "\(formatter.string(from: rating as NSNumber)!)/10"
-    }
+    let formattedRating: String
 }
 
 extension Neighborhood: View {
@@ -23,7 +15,7 @@ extension Neighborhood: View {
             
             HStack {
                 Text(name)
-                Text(rating)
+                Text(formattedRating)
             }
             .font(.callout)
         }
@@ -40,7 +32,7 @@ struct Neighborhood_Previews: PreviewProvider {
 
 extension Neighborhood {
     static func previewNeighborhood() -> Self {
-        .init(name: "Downtown", rating: 8)
+        .init(name: "Downtown", formattedRating: "8/10")
     }
 }
 #endif

@@ -32,7 +32,7 @@ enum SDUIListingSectionModel: Equatable, Decodable {
         } else if let listingNeighborhood = try? container.decode(SDUIListingNeighborhoodModel.self) {
             self = .general(.neighborhood(
                 .single(Neighborhood(name: listingNeighborhood.content.name,
-                        rating: listingNeighborhood.content.rating)),
+                                     rating: listingNeighborhood.content.rating)),
                 uniqueHash: .hashableUUID
             ))
             
