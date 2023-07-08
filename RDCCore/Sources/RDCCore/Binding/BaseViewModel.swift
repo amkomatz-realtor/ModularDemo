@@ -17,8 +17,8 @@ open class BaseViewModel<DataView>: ObservableObject, IHashIdentifiable {
         self.uuid = .hashableUUID
     }
     
-    /// Manually update the value, use this together with the `observable` factory method
-    public func publish(_ value: DataView) {
+    /// Updating the latest value using `async await`
+    @MainActor public func publish(_ value: DataView) {
         self.dataView = value
     }
     
@@ -54,14 +54,7 @@ public extension BaseViewModel {
     
     /// Providing a generic ViewModel with a single `dataView` value
     /// Useful for preview canvas
-    static func single<DataView>(_ value: DataView) -> BaseViewModel<DataView> {
-        .init(value)
-    }
-    
-    /// Providing a generic ViewModel to update the `dataView` over time
-    /// The name difference between this and `single` is only for readability sake (at least for now)
-    /// Useful when we have a side effect that need to update the state within the same view.
-    static func observable(initial value: DataView) -> BaseViewModel<DataView> {
+    static func single<T>(_ value: T) -> BaseViewModel<T> {
         .init(value)
     }
 }
