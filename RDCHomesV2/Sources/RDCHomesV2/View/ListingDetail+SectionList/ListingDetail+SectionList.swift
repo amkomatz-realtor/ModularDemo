@@ -37,17 +37,17 @@ struct ListingDetail_SectionList_Previews: PreviewProvider {
 extension ListingDetail.SectionList {
     static func previewAllSections() -> Self {
         .init(sections: [
-            .constant(.listingHero(.previewListingHero(), uniqueHash: .hashableUUID)),
-            .constant(.listingStatus(.previewListingStatus(), uniqueHash: .hashableUUID)),
-            .constant(.listingSize(.previewListingSize(), uniqueHash: .hashableUUID)),
-            .constant(.neighborhood(.loaded(.previewNeighborhood()), uniqueHash: .hashableUUID))
+            .single(.listingHero(.previewListingHero(), uniqueHash: .hashableUUID)),
+            .single(.listingStatus(.previewListingStatus(), uniqueHash: .hashableUUID)),
+            .single(.listingSize(.previewListingSize(), uniqueHash: .hashableUUID)),
+            .single(.neighborhood(.loaded(.previewNeighborhood()), uniqueHash: .hashableUUID))
         ])
     }
     
     static func previewSomeSections() -> Self {
         .init(sections: [
-            .constant(.listingHero(.previewListingHero(), uniqueHash: .hashableUUID)),
-            .constant(.listingStatus(.previewListingStatus(), uniqueHash: .hashableUUID)),
+            .single(.listingHero(.previewListingHero(), uniqueHash: .hashableUUID)),
+            .single(.listingStatus(.previewListingStatus(), uniqueHash: .hashableUUID)),
         ])
     }
 }

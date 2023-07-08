@@ -2,33 +2,30 @@ import Foundation
 import SwiftUI
 import Combine
 
-// MARK: - Live Data
-
-/// A Convenient way to update SwiftUI DataView.
-/// Subclass this class to create the view model for your SwiftUI DataView
-open class BaseViewModel<T>: ObservableObject, IHashIdentifiable {
+/// The Base ViewModel that hold and update the `dataView`
+open class BaseViewModel<DataView>: ObservableObject, IHashIdentifiable {
     
-    @Published public private(set) var dataView: T
+    @Published public private(set) var dataView: DataView
     
     private let uuid: UniqueHash
     
-    public init(_ latestValue: T) {
+    public init(_ latestValue: DataView) {
         self.dataView = latestValue
         self.uuid = .hashableUUID
     }
     
-    /// Updating the latest value using `async await` mechanism
-    @MainActor public func publish(_ value: T) {
+    /// Updating the latest value using `async await`
+    @MainActor public func publish(_ value: DataView) {
         self.dataView = value
     }
     
-    /// Updating the latest value using a `combine publisher`
-    public func update(using publisher: AnyPublisher<T, Never>) {
+    /// connecting the stream of a `publisher` to update the `dataView`
+    public func update(using publisher: AnyPublisher<DataView, Never>) {
         publisher
         .assign(to: &$dataView)
     }
     
-    public static func == (lhs: BaseViewModel<T>, rhs: BaseViewModel<T>) -> Bool {
+    public static func ==(lhs: BaseViewModel<DataView>, rhs: BaseViewModel<DataView>) -> Bool {
         lhs.uuid == rhs.uuid
     }
     
@@ -38,14 +35,14 @@ open class BaseViewModel<T>: ObservableObject, IHashIdentifiable {
     
     // MARK: - Factory
     
-    /// Use this when you are asked to supply a `liveData`
-    /// But only have fixed value.
-    public static func constant<T>(_ value: T) -> BaseViewModel<T> {
+    /// Providing a generic ViewModel with a single `dataView` value
+    /// Useful for preview canvas
+    public static func single<T>(_ value: T) -> BaseViewModel<T> {
         .init(value)
     }
 }
 
-public extension BaseViewModel where T: View {
+public extension BaseViewModel where DataView: View {
     /// Use this `dataView()` to layout your view when you have a `LiveData` object
     /// This leverate SwiftUI composable mechanism to update the parent view.
     @ViewBuilder func observedDataView() -> some View {
@@ -53,30 +50,14 @@ public extension BaseViewModel where T: View {
     }
 }
 
-/// Fix `NavigationLink` non-lazy behavior
-public struct LazyView<Content: View>: View {
-    private let build: () -> BaseViewModel<Content>
-    public init(_ build: @autoclosure @escaping () -> BaseViewModel<Content>) {
-        self.build = build
-    }
-    public var body: some View {
-        build().observedDataView()
-    }
-}
-
-/// This definition should never change.
+/// Provide a view that would be refresh when the `dataView` updated.
+/// Nesting this within the `body` of any SwiftUI View.
+/// The definition of this struct should never be changed.
 private struct ObservableDataView<V: View>: View {
     
     @StateObject var viewModel: BaseViewModel<V>
     
     var body: some View {
         viewModel.dataView
-    }
-}
-
-/// Use this to publish value on main thread as needed
-public extension CurrentValueSubject where Failure == Never {
-    @MainActor func updateValue(_ value: Output) {
-        self.value = value
     }
 }
