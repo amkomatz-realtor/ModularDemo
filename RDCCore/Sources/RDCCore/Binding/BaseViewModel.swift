@@ -2,7 +2,10 @@ import Foundation
 import SwiftUI
 import Combine
 
-/// The Base ViewModel that hold and update the `dataView`
+// MARK: - BaseViewModel
+
+/// Providing the Base ViewModel that hold and update the `dataView`
+/// Subclassing this when you already have data ready to be displayed.
 open class BaseViewModel<DataView>: ObservableObject, IHashIdentifiable {
     
     @Published public private(set) var dataView: DataView
@@ -19,13 +22,14 @@ open class BaseViewModel<DataView>: ObservableObject, IHashIdentifiable {
         self.dataView = value
     }
     
-    /// connecting the stream of a `publisher` to update the `dataView`
+    /// Connecting the stream of a matching `publisher` to update the `dataView`
+    /// You may need to perform `.map()` if your publisher does not emit `dataView`
     public func update(using publisher: AnyPublisher<DataView, Never>) {
         publisher
         .assign(to: &$dataView)
     }
     
-    // MARK: - IHashIdentifiable
+    // MARK: IHashIdentifiable
     
     public static func ==(lhs: BaseViewModel<DataView>, rhs: BaseViewModel<DataView>) -> Bool {
         lhs.uuid == rhs.uuid
@@ -34,27 +38,31 @@ open class BaseViewModel<DataView>: ObservableObject, IHashIdentifiable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(uuid)
     }
-    
-    // MARK: - Factory
-    
-    /// Providing a generic ViewModel with a single `dataView` value
-    /// Useful for preview canvas
-    public static func single<T>(_ value: T) -> BaseViewModel<T> {
-        .init(value)
-    }
 }
 
 public extension BaseViewModel where DataView: View {
-    /// Use this `dataView()` to layout your view when you have a `LiveData` object
-    /// This leverate SwiftUI composable mechanism to update the parent view.
+    /// Provide a view that would be refresh when the `dataView` updated.
+    /// Nesting this within the `body` of any SwiftUI View.
     @ViewBuilder func observedDataView() -> some View {
         ObservableDataView(viewModel: self)
     }
 }
 
+// MARK: - Factory
+
+public extension BaseViewModel {
+    
+    /// Providing a generic ViewModel with a single `dataView` value
+    /// Useful for preview canvas
+    static func single<T>(_ value: T) -> BaseViewModel<T> {
+        .init(value)
+    }
+}
+
+// MARK: - Private
+
 /// Provide a view that would be refresh when the `dataView` updated.
-/// Nesting this within the `body` of any SwiftUI View.
-/// The definition of this struct should never be changed.
+/// The definition of this struct should never be changed and intentionaly made `private`
 private struct ObservableDataView<V: View>: View {
     
     @StateObject var viewModel: BaseViewModel<V>
