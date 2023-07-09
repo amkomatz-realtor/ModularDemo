@@ -20,6 +20,7 @@ struct SampleForSaleLDPView: View {
         self.baths = listingModel.baths
         self.sqft = listingModel.sqft
         
+        // REQ 3: We will need to make a separate api call to get `NeighborhoodModel`
         self.neighborhoodName = "TBD"
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 1
@@ -29,9 +30,13 @@ struct SampleForSaleLDPView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
+                // REQ 1: Rental need to reuse the `listingHeroView` and `listingStatusView`
+                // But the data is coming from `RentalAttributeModel` instead of `DetailListingModel`
                 listingHeroView()
                 
                 VStack(alignment: .leading, spacing: 16) {
+                    // REQ 2: When reusing `listingStatusView`, they need to decorate this view with branding information
+                    // Branding data also coming from `RentalAttributeModel`
                     listingStatusView()
                     
                     listingSizeView()
