@@ -11,33 +11,32 @@ extension ListingDetailView {
         
         @Published private(set) var state: State = .initializing
         
-        private var cancellable: AnyCancellable?
-        
         public init(id listingId: UUID, resolver: IHomesResolver) {
             self.listingId = listingId
             homesRepository = HomesRepository(resolver: resolver)
             self.resolver = resolver
             
-            cancellable = homesRepository.getListingDetail(id: listingId)
+            homesRepository.getListingDetail(id: listingId)
                 .receive(on: DispatchQueue.main)
-                .sink(receiveValue: onDataStateChange)
+                .map(Self.onDataStateChange)
+                .assign(to: &$state)
         }
         
-        private func onDataStateChange(_ dataState: DataStateWithCache<any IListingModel, DetailListingModel>) {
+        private static func onDataStateChange(_ dataState: DataStateWithCache<any IListingModel, DetailListingModel>) -> State {
             switch dataState {
             case .loading:
-                state = .loading
+                return .loading
             case .cache(let cache):
-                state = .loadingWithCache(cache)
+                return .loadingWithCache(cache)
             case .success(let listing):
                 switch listing.status {
                 case .forSale, .offMarket:
-                    state = .successForSale(listing)
+                    return .successForSale(listing)
                 case .forRent:
-                    state = .successForRent(listing)
+                    return .successForRent(listing)
                 }
             case .failure(let error):
-                state = .failure(error.localizedDescription)
+                return .failure(error.localizedDescription)
             }
         }
     }

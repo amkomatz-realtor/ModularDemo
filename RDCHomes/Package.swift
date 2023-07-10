@@ -15,6 +15,7 @@ let package = Package(
     dependencies: [
         .package(path: "RDCCore"),
         .package(path: "RDCBusiness"),
+        .package(url: "https://github.com/nalexn/ViewInspector", from: "0.9.7"),
     ],
     targets: [
         .target(
@@ -23,7 +24,7 @@ let package = Package(
         ),
         .testTarget(
             name: "RDCHomesTests",
-            dependencies: ["RDCHomes"]
+            dependencies: ["RDCHomes", "ViewInspector"]
         ),
     ]
 )

@@ -1,4 +1,5 @@
 import SwiftUI
+import RDCCore
 
 extension NeighborhoodView {
     struct ResultsView: View {
@@ -22,10 +23,13 @@ extension NeighborhoodView {
                 Text("Neighborhood")
                     .font(.caption.bold())
                     .foregroundColor(.gray)
+                    .identify(.homes.neighborhoodTitle)
                 
                 HStack {
                     Text(name)
+                        .identify(.homes.neighborhoodName)
                     Text(rating)
+                        .identify(.homes.neighborhoodRating)
                 }
                 .font(.callout)
             }
