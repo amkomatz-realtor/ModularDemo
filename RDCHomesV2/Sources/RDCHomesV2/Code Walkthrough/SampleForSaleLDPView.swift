@@ -6,11 +6,14 @@ import Combine
 struct SampleForSaleLDPView: View {
     
     let thumbnail: URL
+    
     let price: Double
     let address: String
+    
     let beds: Int
     let baths: Int
     let sqft: Int
+    
     let neighborhoodName: String
     let formattedRating: String
     
