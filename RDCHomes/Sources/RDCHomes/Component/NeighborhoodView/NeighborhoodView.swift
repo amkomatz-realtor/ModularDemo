@@ -15,8 +15,8 @@ struct NeighborhoodView: View {
                 Placeholder()
             case .failure:
                 Text("Unable to load neighborhood info")
-            case .success(let neighborhoodDetail):
-                ResultsView(neighborhood: neighborhoodDetail)
+            case .success(let neighborhood):
+                ResultsView(.init(neighborhood))
             }
         }
         .task {

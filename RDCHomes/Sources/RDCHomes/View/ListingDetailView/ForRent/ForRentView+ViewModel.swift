@@ -11,20 +11,14 @@ extension ListingDetailView.ForRentView {
         
         @Published private(set) var state: DataState<[ListingSectionModel]> = .loading
         
-        private var cancellable: AnyCancellable?
-        
         public init(listing: DetailListingModel, resolver: IHomesResolver) {
             self.listing = listing
             homesRepository = HomesRepository(resolver: resolver)
             self.resolver = resolver
             
-            cancellable = homesRepository.getSections(status: listing.status)
+            homesRepository.getSections(status: listing.status)
                 .receive(on: DispatchQueue.main)
-                .sink(receiveValue: onDataStateChange)
-        }
-        
-        private func onDataStateChange(_ dataState: DataState<[ListingSectionModel]>) {
-            self.state = dataState
+                .assign(to: &$state)
         }
     }
 }
