@@ -22,7 +22,7 @@ final class ListingSectionViewTests: XCTestCase {
         let sut = try ListingSectionView(listing, section: section, resolver: resolver).inspect()
         
         // Then
-        try XCTAssertNoThrow(sut.find(ListingHeroView.self))
+        try XCTAssertNoThrow(sut.view(ListingSectionView.self).view(ListingHeroView.self))
     }
     
     func test_listingStatusSection_displaysCorrectView() throws {
@@ -32,7 +32,7 @@ final class ListingSectionViewTests: XCTestCase {
         let sut = try ListingSectionView(listing, section: section, resolver: resolver).inspect()
         
         // Then
-        try XCTAssertNoThrow(sut.find(ListingStatusView.self))
+        try XCTAssertNoThrow(sut.view(ListingSectionView.self).view(ListingStatusView.self))
     }
     
     func test_listingSizeSection_displaysCorrectView() throws {
@@ -42,7 +42,7 @@ final class ListingSectionViewTests: XCTestCase {
         let sut = try ListingSectionView(listing, section: section, resolver: resolver).inspect()
         
         // Then
-        try XCTAssertNoThrow(sut.find(ListingSizeView.self))
+        try XCTAssertNoThrow(sut.view(ListingSectionView.self).view(ListingSizeView.self))
     }
     
     func test_listingNeighborhoodSection_displaysCorrectView() throws {
@@ -52,7 +52,7 @@ final class ListingSectionViewTests: XCTestCase {
         let sut = try ListingSectionView(listing, section: section, resolver: resolver).inspect()
         
         // Then
-        try XCTAssertNoThrow(sut.find(NeighborhoodView.self))
+        try XCTAssertNoThrow(sut.view(ListingSectionView.self).view(NeighborhoodView.self))
         try print(sut.find(NeighborhoodView.self))
     }
     
