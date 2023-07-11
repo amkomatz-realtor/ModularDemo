@@ -8,25 +8,25 @@ import Combine
 /// Subclassing this when you already have data ready to be displayed.
 open class BaseViewModel<DataView>: ObservableObject, IHashIdentifiable {
     
-    @Published public private(set) var dataView: DataView
+    @Published var latestValue: DataView
     
     private let uuid: UniqueHash
     
     public init(_ latestValue: DataView) {
-        self.dataView = latestValue
+        self.latestValue = latestValue
         self.uuid = .hashableUUID
     }
     
     /// Updating the latest value using `async await`
     @MainActor public func publish(_ value: DataView) {
-        self.dataView = value
+        self.latestValue = value
     }
     
     /// Connecting the stream of a matching `publisher` to update the `dataView`
     /// You may need to perform `.map()` if your publisher does not emit `dataView`
     public func update(using publisher: AnyPublisher<DataView, Never>) {
         publisher
-        .assign(to: &$dataView)
+        .assign(to: &$latestValue)
     }
     
     // MARK: IHashIdentifiable
@@ -41,6 +41,10 @@ open class BaseViewModel<DataView>: ObservableObject, IHashIdentifiable {
 }
 
 public extension BaseViewModel where DataView: View {
+    var dataView: DataView {
+        latestValue
+    }
+    
     /// Provide a view that would be refresh when the `dataView` updated.
     /// Nesting this within the `body` of any SwiftUI View.
     @ViewBuilder func observedDataView() -> some View {

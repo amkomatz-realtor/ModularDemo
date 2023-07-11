@@ -1,4 +1,6 @@
 import Foundation
+import Combine
+import SwiftUI
 
 // MARK: - Call back
 
@@ -43,6 +45,41 @@ public struct SideEffect<T>: IHashIdentifiable {
     }
 }
 
+// MARK: - Binding Side Effect
+
+/// A side-effect that helps forward any swift `Binding` value changes to the parent view model
+/// This is intentionally made `final`
+public final class BindingSideEffect<Value>: BaseViewModel<Value> {
+    
+    private var cancellables = Set<AnyCancellable>()
+    
+    public init(initialValue: Value, onChange: @escaping (Value) -> Void) {
+        super.init(initialValue)
+        
+        $latestValue.sink {
+            onChange($0)
+        }
+        .store(in: &cancellables)
+    }
+    
+    public func bindToView<Content: View>(_ viewBuilder: @escaping (Binding<Value>) -> Content) -> some View {
+        ObservableSideEffectView(viewModel: self, viewBuilder: viewBuilder)
+    }
+    
+    // MARK: - Factory
+    
+    public static func onChange<T>(
+        ofInitial value: T,
+        perform action: @escaping (T) -> Void) -> BindingSideEffect<T> {
+            
+        .init(initialValue: value, onChange: action)
+    }
+    
+    public static func noSideEffect<T>(_ initialValue: T) -> BindingSideEffect<T> {
+        .init(initialValue: initialValue, onChange: { _ in })
+    }
+}
+
 // MARK: - Factory
 
 public typealias ActionSideEffect = SideEffect<Void>
@@ -56,5 +93,24 @@ public typealias ValueChangeSideEffect = SideEffect
 public extension ValueChangeSideEffect {
     func didChange(_ value: T) {
         occursWithInput(value)
+    }
+}
+
+// MARK: - Private
+
+/// Provide a view that would be refresh when the `dataView` updated.
+/// The definition of this struct should never be changed and intentionaly made `private`
+private struct ObservableSideEffectView<V, Content: View>: View {
+    
+    @ObservedObject var viewModel: BindingSideEffect<V>
+    private let viewBuilder: (Binding<V>) -> Content
+    
+    init(viewModel: BindingSideEffect<V>, viewBuilder: @escaping (Binding<V>) -> Content) {
+        self.viewModel = viewModel
+        self.viewBuilder = viewBuilder
+    }
+    
+    var body: some View {
+        viewBuilder($viewModel.latestValue)
     }
 }
