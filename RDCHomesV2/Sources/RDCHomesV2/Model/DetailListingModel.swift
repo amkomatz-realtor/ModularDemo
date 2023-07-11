@@ -24,7 +24,7 @@ extension DetailListingModel {
 #if targetEnvironment(simulator)
 
 extension DetailListingModel {
-    static func previewForSaleModel() -> Self {
+    static func previewDetailListingModel() -> Self {
         .init(id: .init(),
               address: "1 Infinity Loop, Apple Park, CA 95324",
               price: 20000000,

@@ -76,7 +76,7 @@ struct SampleForSaleLDPView: View {
 #if targetEnvironment(simulator)
 struct SampleForSaleLDP_Previews: PreviewProvider {
     static var previews: some View {
-        SampleForSaleLDPView(listingModel: .previewForSaleModel())
+        SampleForSaleLDPView(listingModel: .previewDetailListingModel())
     }
 }
 #endif
