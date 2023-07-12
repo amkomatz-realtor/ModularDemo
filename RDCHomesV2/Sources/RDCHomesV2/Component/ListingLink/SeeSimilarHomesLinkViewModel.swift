@@ -8,7 +8,7 @@ final class SeeSimilarHomesLinkViewModel: BaseViewModel<ListingLink> {
         let router = resolver.router.resolve()
         
         super.init(ListingLink(displayText: "See similar homes", onTap: .onTap {
-            router.route("search")
+            router.route(.global.search)
         }))
     }
 }

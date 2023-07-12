@@ -1,5 +1,5 @@
 import SwiftUI
 
 public protocol IModuleRouter {
-    func view(for destination: String, with state: INavigationState) -> AnyView?
+    func view(for destination: any IRouteDestination, with state: INavigationState) -> Navigation?
 }

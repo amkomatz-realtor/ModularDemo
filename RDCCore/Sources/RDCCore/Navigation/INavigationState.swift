@@ -1,4 +1,4 @@
 
 public protocol INavigationState {
-    var path: [String] { get }
+    var path: [any IRouteDestination] { get }
 }

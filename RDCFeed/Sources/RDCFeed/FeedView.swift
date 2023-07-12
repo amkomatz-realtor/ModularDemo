@@ -71,7 +71,7 @@ public struct FeedView: View {
                                 HStack(spacing: 16) {
                                     ForEach(feed.newOnRealtor) { listing in
                                         FeedListingCard(listing, displayOption: .daysOnRealtor).onTapGesture {
-                                            router.route("listing_\(listing.id)")
+                                            router.route(.global.ldp(id: listing.id))
                                         }
                                     }
                                 }
@@ -89,7 +89,7 @@ public struct FeedView: View {
                                 HStack(spacing: 16) {
                                     ForEach(feed.openHouse) { listing in
                                         FeedListingCard(listing, displayOption: .openHouseDate).onTapGesture {
-                                            router.route("listing_\(listing.id)")
+                                            router.route(.global.ldp(id: listing.id))
                                         }
                                     }
                                 }

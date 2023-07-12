@@ -13,7 +13,7 @@ struct ListingSeeMoreDetailsView: View {
     
     var body: some View {
         Button("See more details") {
-            router.route("listing-additional-details_\(listing.id)")
+            router.route(.homes.listingAdditionalDetails(id: listing.id))
         }
     }
 }

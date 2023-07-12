@@ -31,7 +31,7 @@ final class OffMarketSectionViewModel: BaseViewModel<ListingDetail.Section> {
             
         case .seeMoreDetails:
             super.init(.seeMoreLink(
-                SeeMoreLinkViewModel(link: "search", resolver: resolver).dataView,
+                SeeMoreLinkViewModel(link: .global.search, resolver: resolver).dataView,
                 uniqueHash: .hashableUUID
             ))
         
