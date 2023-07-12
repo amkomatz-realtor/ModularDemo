@@ -39,17 +39,13 @@ public struct SideEffect<T>: IHashIdentifiable {
     public static func onTap(_ action: @escaping () -> Void) -> ActionSideEffect {
         .init(action)
     }
-    
-    public static func onChange<T>(_ action: @escaping (T) -> Void ) -> ValueChangeSideEffect<T> {
-        .init(action)
-    }
 }
 
 // MARK: - Binding Side Effect
 
 /// A side-effect that helps forward any swift `Binding` value changes to the parent view model
 /// This is intentionally made `final`
-public final class BindingSideEffect<Value>: BaseViewModel<Value> {
+public final class ValueChangedSideEffect<Value>: BaseViewModel<Value> {
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -62,20 +58,24 @@ public final class BindingSideEffect<Value>: BaseViewModel<Value> {
         .store(in: &cancellables)
     }
     
-    public func bindToView<Content: View>(_ viewBuilder: @escaping (Binding<Value>) -> Content) -> some View {
+    public func observedOn<Content: View>(_ viewBuilder: @escaping (Binding<Value>) -> Content) -> some View {
         ObservableSideEffectView(viewModel: self, viewBuilder: viewBuilder)
+    }
+    
+    public func observedOn(_ value: Value) {
+        latestValue = value
     }
     
     // MARK: - Factory
     
     public static func onChange<T>(
-        ofInitial value: T,
-        perform action: @escaping (T) -> Void) -> BindingSideEffect<T> {
+        fromInitial value: T,
+        perform action: @escaping (T) -> Void) -> ValueChangedSideEffect<T> {
             
         .init(initialValue: value, onChange: action)
     }
     
-    public static func noSideEffect<T>(_ initialValue: T) -> BindingSideEffect<T> {
+    public static func noSideEffect<T>(_ initialValue: T) -> ValueChangedSideEffect<T> {
         .init(initialValue: initialValue, onChange: { _ in })
     }
 }
@@ -89,23 +89,16 @@ public extension ActionSideEffect {
     }
 }
 
-public typealias ValueChangeSideEffect = SideEffect
-public extension ValueChangeSideEffect {
-    func didChange(_ value: T) {
-        occursWithInput(value)
-    }
-}
-
 // MARK: - Private
 
 /// Provide a view that would be refresh when the `dataView` updated.
 /// The definition of this struct should never be changed and intentionaly made `private`
 private struct ObservableSideEffectView<V, Content: View>: View {
     
-    @ObservedObject var viewModel: BindingSideEffect<V>
+    @ObservedObject var viewModel: ValueChangedSideEffect<V>
     private let viewBuilder: (Binding<V>) -> Content
     
-    init(viewModel: BindingSideEffect<V>, viewBuilder: @escaping (Binding<V>) -> Content) {
+    init(viewModel: ValueChangedSideEffect<V>, viewBuilder: @escaping (Binding<V>) -> Content) {
         self.viewModel = viewModel
         self.viewBuilder = viewBuilder
     }
