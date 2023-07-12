@@ -38,8 +38,8 @@ class PreviewRouter: HostRouter {
     
     func route(_ destination: any IRouteDestination) {}
     
-    func view(for destination: any IRouteDestination) -> AnyView {
-        AnyView(Text(String(describing: destination)))
+    func view(for destination: any IRouteDestination) -> Navigation {
+        .push(Text(String(describing: destination)))
     }
     
     func onDismiss(_ index: Int) {}

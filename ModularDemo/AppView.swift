@@ -32,9 +32,9 @@ struct AppView: View {
                 Button("Show me the magic!") {
                     // imagine a deep link like, "search/listing_{id}/details"
                     // TODO: Simulate deep link
-//                    router.route(.global.search)
-//                    router.route(.global.ldp(id: UUID(uuidString: "F7FF90EB-FECE-4F3C-A10D-8ABBB68F1E1D")!))
-//                    router.route("listing-additional-details_F7FF90EB-FECE-4F3C-A10D-8ABBB68F1E1D")
+                    router.route(.global.search)
+                    router.route(.global.ldp(id: UUID(uuidString: "F7FF90EB-FECE-4F3C-A10D-8ABBB68F1E1D")!))
+                    router.route(.global.ldp(id: UUID(uuidString: "F7FF90EB-FECE-4F3C-A10D-8ABBB68F1E1D")!))
                 }
                 .tabItem {
                     Image(systemName: "line.3.horizontal")

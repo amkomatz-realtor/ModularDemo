@@ -44,14 +44,14 @@ class AppRouter: HostRouter, INavigationState, ObservableObject {
         path.append(destination)
     }
     
-    func view(for destination: any IRouteDestination) -> AnyView {
+    func view(for destination: any IRouteDestination) -> Navigation {
         for router in childRouters {
             if let view = router.view(for: destination, with: self) {
                 return view
             }
         }
         
-        return AnyView(Text("Uh oh"))
+        return .push(Text("Uh oh"))
     }
     
     func onDismiss(_ index: Int) {

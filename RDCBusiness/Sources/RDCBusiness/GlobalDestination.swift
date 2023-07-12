@@ -1,7 +1,7 @@
 import Foundation
 import RDCCore
 
-public enum GlobalDestination: IRouteDestination, Equatable {
+public enum GlobalDestination: IRouteDestination {
     case search
     case ldp(id: UUID)
 }

@@ -9,13 +9,13 @@ public class HomesRouter: IModuleRouter {
         self.resolver = resolver
     }
     
-    public func view(for destination: any IRouteDestination, with state: INavigationState) -> AnyView? {
+    public func view(for destination: any IRouteDestination, with state: INavigationState) -> Navigation? {
         if case GlobalDestination.ldp(let id) = destination {
-            return AnyView(ListingDetailView(id: id, resolver: resolver))
+            return .push(ListingDetailView(id: id, resolver: resolver))
         }
         
         if case HomesDestination.listingAdditionalDetails(let id) = destination {
-            return AnyView(ListingAdditionalDetailView(id: id, resolver: resolver))
+            return .push(ListingAdditionalDetailView(id: id, resolver: resolver))
         }
         
         return nil

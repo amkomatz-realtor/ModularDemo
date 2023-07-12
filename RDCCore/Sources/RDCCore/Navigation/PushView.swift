@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct PushView: View {
-    private let content: AnyView
+    private let navigation: Navigation
     private let children: [any IRouteDestination]
     private let router: HostRouter
     private let index: Int
@@ -11,13 +11,13 @@ struct PushView: View {
     @State private var initialized = false
     
     init(
-        @ViewBuilder _ content: @escaping () -> AnyView,
+        _ navigation: Navigation,
         children: [any IRouteDestination],
         router: HostRouter,
         index: Int,
         onDismiss: @escaping (Int) -> ()
     ) {
-        self.content = content()
+        self.navigation = navigation
         self.children = children
         self.router = router
         self.index = index
@@ -25,32 +25,38 @@ struct PushView: View {
     }
     
     var body: some View {
-        NavigationLink(
-            destination: content.background {
-                if let child = children.first {
-                    PushView({ router.view(for: child) }, children: Array(children.dropFirst(1)), router: router, index: index + 1) { dismissedIndex in
-                        onDismiss(dismissedIndex)
+        switch navigation {
+        case .push(let view):
+            NavigationLink(
+                destination: AnyView(view).background {
+                    if let child = children.first {
+                        PushView(router.view(for: child), children: Array(children.dropFirst(1)), router: router, index: index + 1) { dismissedIndex in
+                            onDismiss(dismissedIndex)
+                        }
                     }
-                }
-            },
-            isActive: Binding(
-                get: {
-                    show
                 },
-                set: { newValue in
-                    if show && !newValue {
-                        onDismiss(index)
+                isActive: Binding(
+                    get: {
+                        show
+                    },
+                    set: { newValue in
+                        if show && !newValue {
+                            onDismiss(index)
+                        }
+                        show = newValue
                     }
-                    show = newValue
+                ),
+                label: { }
+            )
+            .onAppear {
+                if !initialized {
+                    initialized = true
+                    show = true
                 }
-            ),
-            label: { }
-        )
-        .onAppear {
-            if !initialized {
-                initialized = true
-                show = true
             }
+            
+        case .present(let view):
+            EmptyView()
         }
     }
 }

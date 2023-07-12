@@ -14,7 +14,7 @@ public struct ModuleView<Content>: View where Content: View {
             content()
                 .background {
                     if let child = router.path.first {
-                        PushView({ router.view(for: child) }, children: Array(router.path.dropFirst(1)), router: router, index: 0) { dismissedIndex in
+                        PushView(router.view(for: child), children: Array(router.path.dropFirst(1)), router: router, index: 0) { dismissedIndex in
                             router.onDismiss(dismissedIndex)
                         }
                     }
