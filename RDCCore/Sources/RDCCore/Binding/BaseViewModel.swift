@@ -22,6 +22,10 @@ open class BaseViewModel<DataView>: ObservableObject, IHashIdentifiable {
         self.latestValue = value
     }
     
+    public func update(dataView value: DataView) {
+        self.latestValue = value
+    }
+    
     /// Connecting the stream of a matching `publisher` to update the `dataView`
     /// You may need to perform `.map()` if your publisher does not emit `dataView`
     public func update(using publisher: AnyPublisher<DataView, Never>) {

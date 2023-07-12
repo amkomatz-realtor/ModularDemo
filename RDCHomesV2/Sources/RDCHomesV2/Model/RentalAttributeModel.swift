@@ -14,7 +14,7 @@ public struct RentalAttributeModel: IListingModel, Decodable {
 #if targetEnvironment(simulator)
 
 extension RentalAttributeModel {
-    static func previewDetailListingModel() -> Self {
+    static func previewRentalAttributeModel() -> Self {
         .init(id: .init(),
               address: "112 Rental Property",
               price: 3000,
