@@ -19,7 +19,7 @@ extension LazyDataView {
         return nil
     }
     
-    var whenLoaded: DataView? {
+    var loadedView: DataView? {
         if case .loaded(let dataView) = self {
             return dataView
         }

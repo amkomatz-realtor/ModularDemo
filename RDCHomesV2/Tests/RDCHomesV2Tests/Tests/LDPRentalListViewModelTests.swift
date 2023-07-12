@@ -42,23 +42,23 @@ final class LDPRentalListViewModelTests: XCTestCase {
             ListingSectionModel(componentId: $0.rawValue)
         }))
         
-        guard sut.dataView.whenLoaded?.sections.count == 5 else {
-            XCTFail("Unexpected sections count \(String(describing: sut.dataView.whenLoaded?.sections))")
+        guard sut.dataView.loadedView?.sections.count == 5 else {
+            XCTFail("Unexpected sections count \(String(describing: sut.dataView.loadedView?.sections))")
             return
         }
         
-        XCTAssertEqual(sut.dataView.whenLoaded?.sections[0].dataView.listingHero,
+        XCTAssertEqual(sut.dataView.loadedView?.sections[0].dataView.listingHero,
                        ListingHero(thumbnail: URL(string: "https://fakeurl.com")!))
         
-        XCTAssertEqual(sut.dataView.whenLoaded?.sections[1].dataView.listingStatus,
+        XCTAssertEqual(sut.dataView.loadedView?.sections[1].dataView.listingStatus,
                        ListingStatus(status: "For rent",
                                      price: "$200,000",
                                      address: ListingAddress(address: "fake listing detail address")))
         
-        XCTAssertEqual(sut.dataView.whenLoaded?.sections[2].dataView.listingSize,
+        XCTAssertEqual(sut.dataView.loadedView?.sections[2].dataView.listingSize,
                        ListingSize(beds: 3, baths: 3, sqft: 1500))
         
-        XCTAssertEqual(sut.dataView.whenLoaded?.sections[3].dataView.isFromViewModel(type: NeighborhoodViewModel.self),
+        XCTAssertEqual(sut.dataView.loadedView?.sections[3].dataView.isFromViewModel(type: NeighborhoodViewModel.self),
                        true)
     }
     
@@ -68,15 +68,15 @@ final class LDPRentalListViewModelTests: XCTestCase {
             ListingSectionModel(componentId: ListingSectionId.listingStatus.rawValue)
         ]))
         
-        guard sut.dataView.whenLoaded?.sections.count == 2 else {
-            XCTFail("Unexpected sections count \(String(describing: sut.dataView.whenLoaded?.sections))")
+        guard sut.dataView.loadedView?.sections.count == 2 else {
+            XCTFail("Unexpected sections count \(String(describing: sut.dataView.loadedView?.sections))")
             return
         }
         
-        XCTAssertEqual(sut.dataView.whenLoaded?.sections[0].dataView.listingSize,
+        XCTAssertEqual(sut.dataView.loadedView?.sections[0].dataView.listingSize,
                        ListingSize(beds: 3, baths: 3, sqft: 1500))
         
-        XCTAssertEqual(sut.dataView.whenLoaded?.sections[1].dataView.listingStatus,
+        XCTAssertEqual(sut.dataView.loadedView?.sections[1].dataView.listingStatus,
                        ListingStatus(status: "For rent",
                                      price: "$200,000",
                                      address: ListingAddress(address: "fake listing detail address")))
@@ -89,15 +89,15 @@ final class LDPRentalListViewModelTests: XCTestCase {
             ListingSectionModel(componentId: ListingSectionId.listingStatus.rawValue)
         ]))
         
-        guard sut.dataView.whenLoaded?.sections.count == 2 else {
-            XCTFail("Unexpected sections count \(String(describing: sut.dataView.whenLoaded?.sections))")
+        guard sut.dataView.loadedView?.sections.count == 2 else {
+            XCTFail("Unexpected sections count \(String(describing: sut.dataView.loadedView?.sections))")
             return
         }
         
-        XCTAssertEqual(sut.dataView.whenLoaded?.sections[0].dataView.listingHero,
+        XCTAssertEqual(sut.dataView.loadedView?.sections[0].dataView.listingHero,
                        ListingHero(thumbnail: URL(string: "https://fakeurl.com")!))
         
-        XCTAssertEqual(sut.dataView.whenLoaded?.sections[1].dataView.listingStatus,
+        XCTAssertEqual(sut.dataView.loadedView?.sections[1].dataView.listingStatus,
                        ListingStatus(status: "For rent",
                                      price: "$200,000",
                                      address: ListingAddress(address: "fake listing detail address")))
