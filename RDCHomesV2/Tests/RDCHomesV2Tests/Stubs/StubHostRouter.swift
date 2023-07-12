@@ -3,18 +3,18 @@ import RDCCore
 import SwiftUI
 
 final class StubHostRouter: HostRouter {
+    var verifiedDestination: String?
+    func route(_ destination: any RDCCore.IRouteDestination) {
+        verifiedDestination = "\(destination)"
+    }
+    
+    func view(for destination: any RDCCore.IRouteDestination) -> RDCCore.Navigation {
+        .push(EmptyView())
+    }
+    
+    var path: [any RDCCore.IRouteDestination] = []
+    
     func register(_ router: IModuleRouter) {}
     
-    var verifiedDestination: String?
-    func route(_ destination: String) {
-        verifiedDestination = destination
-    }
-    
-    func view(for destination: String) -> AnyView {
-        AnyView(EmptyView())
-    }
-    
     func onDismiss(_ index: Int) {}
-    
-    var path: [String] = []
 }
