@@ -95,7 +95,7 @@ public extension LazyViewModel {
     
     /// Providing a generic ViewModel with hidden view
     /// Useful for preview canvas
-    static func empty() -> LazyViewModel<DataView> {
+    static func hidden() -> LazyViewModel<DataView> {
         .init(publisher: Just(.hidden).eraseToAnyPublisher())
     }
     
