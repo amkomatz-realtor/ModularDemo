@@ -107,7 +107,7 @@ public extension LazyViewModel {
     
     /// Providing a generic ViewModel with a single `dataView` value
     /// Useful for preview canvas
-    static func single(_ value: DataView) -> LazyViewModel<DataView> {
+    static func justUse(_ value: DataView) -> LazyViewModel<DataView> {
         .init(publisher: Just(.loaded(value)).eraseToAnyPublisher())
     }
 }

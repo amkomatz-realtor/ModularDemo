@@ -67,7 +67,7 @@ extension ListingDetail.ForSale {
               price: 389999,
               listingAddress: .previewListingAddress(),
               listingSize: .previewListingSize(),
-              neighborhood: .single(.previewNeighborhood()),
+              neighborhood: .justUse(.previewNeighborhood()),
               seeMoreLink: .previewListingLink(),
               seeSimilarHomesLink: .previewListingLink()
         )

@@ -44,7 +44,7 @@ struct ListingDetail_Previews: PreviewProvider {
 
 extension ListingDetail {
     static func previewRental() -> Self {
-        .sectionList(from: .single(.previewAllSections()))
+        .sectionList(from: .justUse(.previewAllSections()))
     }
     
     static func previewNonRental() -> Self {

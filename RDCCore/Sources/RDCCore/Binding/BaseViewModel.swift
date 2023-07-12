@@ -58,7 +58,7 @@ public extension BaseViewModel {
     
     /// Providing a generic ViewModel with a single `dataView` value
     /// Useful for preview canvas
-    static func single<T>(_ value: T) -> BaseViewModel<T> {
+    static func justUse<T>(_ value: T) -> BaseViewModel<T> {
         .init(value)
     }
 }

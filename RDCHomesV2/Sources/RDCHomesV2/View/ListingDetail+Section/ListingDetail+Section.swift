@@ -70,7 +70,7 @@ extension ListingDetail.Section {
     }
     
     static func previewNeighborhood() -> Self {
-        .neighborhood(.single(.previewNeighborhood()), uniqueHash: .hashableUUID)
+        .neighborhood(.justUse(.previewNeighborhood()), uniqueHash: .hashableUUID)
     }
     
     static func previewSeeMoreLink() -> Self {
