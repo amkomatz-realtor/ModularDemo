@@ -15,6 +15,7 @@ let package = Package(
     dependencies: [
         .package(path: "RDCCore"),
         .package(path: "RDCBusiness"),
+        .package(url: "https://github.com/pointfreeco/swift-custom-dump", from: "0.11.0"),
     ],
     targets: [
         .target(
@@ -23,7 +24,7 @@ let package = Package(
         ),
         .testTarget(
             name: "RDCHomesV2Tests",
-            dependencies: ["RDCHomesV2"]
+            dependencies: ["RDCHomesV2", .product(name: "CustomDump", package: "swift-custom-dump")]
         ),
     ]
 )
