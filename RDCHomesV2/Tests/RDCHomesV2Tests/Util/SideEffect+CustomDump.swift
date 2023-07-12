@@ -2,9 +2,9 @@ import Foundation
 import CustomDump
 @testable import RDCCore
 
-extension SideEffect: CustomDumpStringConvertible {
+extension ActionSideEffect: CustomDumpStringConvertible {
     
     public var customDumpDescription: String {
-        "side-effect: \(hashValue)"
+        "ActionSideEffect: test by calling `.occurs()`"
     }
 }
