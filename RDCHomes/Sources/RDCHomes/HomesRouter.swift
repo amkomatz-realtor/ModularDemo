@@ -8,13 +8,13 @@ public class HomesRouter: IModuleRouter {
         self.resolver = resolver
     }
     
-    public func view(for destination: String, with state: INavigationState) -> AnyView? {
-        if let match = destination.matches(of: "listing_(.*)").get(1), let id = UUID(uuidString: match) {
-            return AnyView(ListingDetailView(id: id, resolver: resolver))
+    public func view(for destination: IRouteDestination, with state: INavigationState) -> AnyView? {
+        if let destination = destination as? IdRouteDestination<UUID>, destination.destination == "ldp" {
+            return AnyView(ListingDetailView(id: destination.id, resolver: resolver))
         }
         
-        if let match = destination.matches(of: "listing-additional-details_(.*)").get(1), let id = UUID(uuidString: match) {
-            return AnyView(ListingAdditionalDetailView(id: id, resolver: resolver))
+        if let destination = destination as? IdRouteDestination<UUID>, destination.destination == "listing-additional-details" {
+            return AnyView(ListingAdditionalDetailView(id: destination.id, resolver: resolver))
         }
         
         return nil

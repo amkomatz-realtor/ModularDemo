@@ -2,7 +2,7 @@ import SwiftUI
 
 struct PushView: View {
     private let content: AnyView
-    private let children: [String]
+    private let children: [IRouteDestination]
     private let router: HostRouter
     private let index: Int
     private let onDismiss: (Int) -> ()
@@ -10,7 +10,13 @@ struct PushView: View {
     @State private var show = false
     @State private var initialized = false
     
-    init(@ViewBuilder _ content: @escaping () -> AnyView, children: [String], router: HostRouter, index: Int, onDismiss: @escaping (Int) -> ()) {
+    init(
+        @ViewBuilder _ content: @escaping () -> AnyView,
+        children: [IRouteDestination],
+        router: HostRouter,
+        index: Int,
+        onDismiss: @escaping (Int) -> ()
+    ) {
         self.content = content()
         self.children = children
         self.router = router

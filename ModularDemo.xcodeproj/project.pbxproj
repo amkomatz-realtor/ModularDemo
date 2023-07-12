@@ -24,7 +24,6 @@
 		3194AEA02A4B819300B90244 /* WeatherResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3194AE9F2A4B819300B90244 /* WeatherResponse.swift */; };
 		3194AEA22A4B8C4300B90244 /* SpaceWeatherOverviewVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3194AEA12A4B8C4300B90244 /* SpaceWeatherOverviewVM.swift */; };
 		3194AEA42A4B8D2A00B90244 /* SpaceWeatherOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3194AEA32A4B8D2A00B90244 /* SpaceWeatherOverviewView.swift */; };
-		31D33B142A540B3E0014E8FD /* RDCHomesV2 in Frameworks */ = {isa = PBXBuildFile; productRef = 31D33B132A540B3E0014E8FD /* RDCHomesV2 */; };
 		574EA0552A3C0553001AB395 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574EA0542A3C0553001AB395 /* AppView.swift */; };
 		5752837829F82A0F00BEC08C /* ModularDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5752837729F82A0F00BEC08C /* ModularDemoApp.swift */; };
 		5752837C29F82A1000BEC08C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5752837B29F82A1000BEC08C /* Assets.xcassets */; };
@@ -100,7 +99,6 @@
 				576B5CF429F8379900971079 /* RDCSearch in Frameworks */,
 				57A2230729F84B2600BBC616 /* RDCHomes in Frameworks */,
 				57A2230529F84B2300BBC616 /* RDCBusiness in Frameworks */,
-				31D33B142A540B3E0014E8FD /* RDCHomesV2 in Frameworks */,
 				579862082A32D6050000D032 /* RDCFeed in Frameworks */,
 				57A222FF29F8456100BBC616 /* RDCCore in Frameworks */,
 			);
@@ -261,7 +259,6 @@
 				57A2230429F84B2300BBC616 /* RDCBusiness */,
 				57A2230629F84B2600BBC616 /* RDCHomes */,
 				579862072A32D6050000D032 /* RDCFeed */,
-				31D33B132A540B3E0014E8FD /* RDCHomesV2 */,
 			);
 			productName = ModularDemo;
 			productReference = 5752837429F82A0F00BEC08C /* ModularDemo.app */;
@@ -722,10 +719,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		31D33B132A540B3E0014E8FD /* RDCHomesV2 */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = RDCHomesV2;
-		};
 		576B5CF329F8379900971079 /* RDCSearch */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RDCSearch;

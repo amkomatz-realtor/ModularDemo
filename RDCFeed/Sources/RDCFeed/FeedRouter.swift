@@ -8,7 +8,7 @@ public class FeedRouter: IModuleRouter {
         self.resolver = resolver
     }
     
-    public func view(for destination: String, with state: INavigationState) -> AnyView? {
+    public func view(for destination: IRouteDestination, with state: INavigationState) -> AnyView? {
         nil
     }
 }

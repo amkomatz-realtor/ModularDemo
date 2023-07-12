@@ -32,14 +32,14 @@ class PreviewNetworkManager: INetworkManager {
 }
 
 class PreviewRouter: HostRouter {
-    var path: [String] = []
+    var path: [IRouteDestination] = []
     
     func register(_ router: IModuleRouter) {}
     
-    func route(_ destination: String) {}
+    func route(_ destination: IRouteDestination) {}
     
-    func view(for destination: String) -> AnyView {
-        AnyView(Text(destination))
+    func view(for destination: IRouteDestination) -> AnyView {
+        AnyView(Text(destination.destination))
     }
     
     func onDismiss(_ index: Int) {}

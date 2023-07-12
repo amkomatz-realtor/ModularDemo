@@ -2,18 +2,19 @@ import SwiftUI
 import RDCBusiness
 import RDCSearch
 import RDCHomes
-import RDCHomesV2
+// TODO:
+//import RDCHomesV2
 import RDCFeed
 import RDCCore
 
 class AppRouter: HostRouter, INavigationState, ObservableObject {
-    @Published private(set) var path: [String] = []
+    @Published private(set) var path: [IRouteDestination] = []
     @Published var tabIndex: Int = 0
     
     private let resolver: AppResolver
     private var childRouters: [any IModuleRouter] = []
     
-    private let isV2Enabled: Bool = true
+    private let isV2Enabled: Bool = false
     
     init(resolver: AppResolver) {
         self.resolver = resolver
@@ -22,7 +23,8 @@ class AppRouter: HostRouter, INavigationState, ObservableObject {
         register(FeedRouter(resolver: resolver))
         
         if isV2Enabled {
-            register(HomesV2Router(resolver: resolver))
+            // TODO:
+//            register(HomesV2Router(resolver: resolver))
         } else {
             register(HomesRouter(resolver: resolver))
         }
@@ -32,8 +34,8 @@ class AppRouter: HostRouter, INavigationState, ObservableObject {
         childRouters.append(router)
     }
     
-    func route(_ destination: String) {
-        if destination == "search" {
+    func route(_ destination: IRouteDestination) {
+        if let destination = destination as? SimpleRouteDestination, destination.destination == "search" {
             tabIndex = 1
             path = []
             return
@@ -42,7 +44,7 @@ class AppRouter: HostRouter, INavigationState, ObservableObject {
         path.append(destination)
     }
     
-    func view(for destination: String) -> AnyView {
+    func view(for destination: IRouteDestination) -> AnyView {
         for router in childRouters {
             if let view = router.view(for: destination, with: self) {
                 return view

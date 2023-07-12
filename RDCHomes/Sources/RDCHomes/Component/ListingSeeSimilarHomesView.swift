@@ -11,7 +11,7 @@ struct ListingSeeSimilarHomesView: View {
     
     var body: some View {
         Button("See similar homes") {
-            router.route("search")
+            router.route(.global.search)
         }
     }
 }
