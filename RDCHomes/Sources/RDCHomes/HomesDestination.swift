@@ -1,12 +1,10 @@
 import Foundation
 import RDCCore
 
-struct HomesDestination {
-    static func listingAdditionalDetails(id: UUID) -> any IRouteDestination {
-        IdRouteDestination("listing-additional-details", id: id)
-    }
+enum HomesDestination: IRouteDestination {
+    case listingAdditionalDetails(id: UUID)
 }
 
-extension IRouteDestination where Self == SimpleRouteDestination {
+extension IRouteDestination where Self == HomesDestination {
     static var homes: HomesDestination.Type { HomesDestination.self }
 }

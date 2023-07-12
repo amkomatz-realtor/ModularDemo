@@ -1,5 +1,6 @@
 import SwiftUI
 import RDCCore
+import RDCBusiness
 
 public class HomesRouter: IModuleRouter {
     private let resolver: IHomesResolver
@@ -8,13 +9,13 @@ public class HomesRouter: IModuleRouter {
         self.resolver = resolver
     }
     
-    public func view(for destination: IRouteDestination, with state: INavigationState) -> AnyView? {
-        if let destination = destination as? IdRouteDestination<UUID>, destination.destination == "ldp" {
-            return AnyView(ListingDetailView(id: destination.id, resolver: resolver))
+    public func view(for destination: any IRouteDestination, with state: INavigationState) -> AnyView? {
+        if case GlobalDestination.ldp(let id) = destination {
+            return AnyView(ListingDetailView(id: id, resolver: resolver))
         }
         
-        if let destination = destination as? IdRouteDestination<UUID>, destination.destination == "listing-additional-details" {
-            return AnyView(ListingAdditionalDetailView(id: destination.id, resolver: resolver))
+        if case HomesDestination.listingAdditionalDetails(let id) = destination {
+            return AnyView(ListingAdditionalDetailView(id: id, resolver: resolver))
         }
         
         return nil

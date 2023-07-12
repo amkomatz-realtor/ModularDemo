@@ -8,7 +8,7 @@ import RDCFeed
 import RDCCore
 
 class AppRouter: HostRouter, INavigationState, ObservableObject {
-    @Published private(set) var path: [IRouteDestination] = []
+    @Published private(set) var path: [any IRouteDestination] = []
     @Published var tabIndex: Int = 0
     
     private let resolver: AppResolver
@@ -34,8 +34,8 @@ class AppRouter: HostRouter, INavigationState, ObservableObject {
         childRouters.append(router)
     }
     
-    func route(_ destination: IRouteDestination) {
-        if let destination = destination as? SimpleRouteDestination, destination.destination == "search" {
+    func route(_ destination: any IRouteDestination) {
+        if case GlobalDestination.search = destination {
             tabIndex = 1
             path = []
             return
@@ -44,7 +44,7 @@ class AppRouter: HostRouter, INavigationState, ObservableObject {
         path.append(destination)
     }
     
-    func view(for destination: IRouteDestination) -> AnyView {
+    func view(for destination: any IRouteDestination) -> AnyView {
         for router in childRouters {
             if let view = router.view(for: destination, with: self) {
                 return view

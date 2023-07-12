@@ -1,17 +1,11 @@
 import Foundation
 import RDCCore
 
-public struct GlobalDestination {
-    public static var search: any IRouteDestination {
-        SimpleRouteDestination("search")
-    }
-    
-    public static func ldp(id: UUID) -> any IRouteDestination {
-        IdRouteDestination("ldp", id: id)
-    }
+public enum GlobalDestination: IRouteDestination, Equatable {
+    case search
+    case ldp(id: UUID)
 }
 
-// TODO: Self == SimpleRouteDestination?
-extension IRouteDestination where Self == SimpleRouteDestination {
+extension IRouteDestination where Self == GlobalDestination {
     public static var global: GlobalDestination.Type { GlobalDestination.self }
 }
