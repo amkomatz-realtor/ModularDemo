@@ -2,8 +2,7 @@ import SwiftUI
 import RDCBusiness
 import RDCSearch
 import RDCHomes
-// TODO:
-//import RDCHomesV2
+import RDCHomesV2
 import RDCFeed
 import RDCCore
 
@@ -14,7 +13,7 @@ class AppRouter: HostRouter, INavigationState, ObservableObject {
     private let resolver: AppResolver
     private var childRouters: [any IModuleRouter] = []
     
-    private let isV2Enabled: Bool = false
+    private let isV2Enabled: Bool = true
     
     init(resolver: AppResolver) {
         self.resolver = resolver
@@ -23,8 +22,7 @@ class AppRouter: HostRouter, INavigationState, ObservableObject {
         register(FeedRouter(resolver: resolver))
         
         if isV2Enabled {
-            // TODO:
-//            register(HomesV2Router(resolver: resolver))
+            register(HomesV2Router(resolver: resolver))
         } else {
             register(HomesRouter(resolver: resolver))
         }

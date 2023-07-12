@@ -2,11 +2,10 @@ import RDCCore
 import RDCBusiness
 import RDCSearch
 import RDCHomes
-// TODO: 
-//import RDCHomesV2
+import RDCHomesV2
 import RDCFeed
 
-public class AppResolver: ICoreResolver, IBusinessResolver, ISearchResolver, IHomesResolver, IFeedResolver {
+public class AppResolver: ICoreResolver, IBusinessResolver, ISearchResolver, IHomesResolver, IHomesV2Resolver, IFeedResolver {
     public let networkManager: any IResolver<INetworkManager> = SingletonResolver {
         NetworkManager()
     }
