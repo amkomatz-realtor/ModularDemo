@@ -1,6 +1,7 @@
 import Foundation
 import RDCCore
 import RDCBusiness
+import SwiftUI
 
 final class SampleRentalLDPViewModel: BaseViewModel<SampleRentalLDPView> {
 
@@ -18,3 +19,11 @@ private extension SampleRentalLDPView {
         self.listingStatusView = SampleListingStatusViewModel(rentalModel: model).dataView
     }
 }
+
+#if targetEnvironment(simulator)
+struct SampleRentalLDPViewModel_Previews: PreviewProvider {
+    static var previews: some View {
+        SampleRentalLDPViewModel(with: .previewRentalAttributeModel()).dataView
+    }
+}
+#endif

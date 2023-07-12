@@ -52,7 +52,9 @@ public final class ValueChangedSideEffect<Value>: BaseViewModel<Value> {
     public init(initialValue: Value, onChange: @escaping (Value) -> Void) {
         super.init(initialValue)
         
-        $latestValue.sink {
+        $latestValue
+            .dropFirst()
+            .sink {
             onChange($0)
         }
         .store(in: &cancellables)
