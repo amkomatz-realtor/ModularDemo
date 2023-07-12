@@ -1,6 +1,7 @@
 import Foundation
 import RDCCore
 import RDCBusiness
+import SwiftUI
 
 final class SampleListingStatusViewModel: BaseViewModel<SampleListingStatusView> {
 
@@ -29,3 +30,15 @@ private extension SampleListingStatusView {
         self.sampleListingAddressView = SampleListingAddressViewModel(rentalModel: rentalModel).dataView
     }
 }
+
+#if targetEnvironment(simulator)
+struct SampleListingStatusViewModel_Previews: PreviewProvider {
+    static var previews: some View {
+        SampleListingStatusViewModel(with: .previewDetailListingModel()).dataView
+            .previewDisplayName(".for sale")
+        
+        SampleListingStatusViewModel(rentalModel: .previewRentalAttributeModel()).dataView
+            .previewDisplayName(".for rent")
+    }
+}
+#endif
