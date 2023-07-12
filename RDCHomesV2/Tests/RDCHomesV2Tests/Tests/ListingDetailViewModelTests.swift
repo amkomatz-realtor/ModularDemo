@@ -38,33 +38,33 @@ final class ListingDetailViewModelTests: XCTestCase {
     
     func testForSale_ItShowsForSaleViewWhenReceivingListingDetail() {
         givenDetailViewModel(forListingId: .init(), status: .forSale)
-        XCTAssertNotNil(sut.dataView.whenLoaded?.forSaleView)
+        XCTAssertNotNil(sut.dataView.loadedView?.forSaleView)
         
-        XCTAssertEqual(sut.dataView.whenLoaded?.forSaleView?.listingHero,
+        XCTAssertEqual(sut.dataView.loadedView?.forSaleView?.listingHero,
                        ListingHero(thumbnail: URL(string: "https://fakeurl.com")!))
-        XCTAssertEqual(sut.dataView.whenLoaded?.forSaleView?.price,
+        XCTAssertEqual(sut.dataView.loadedView?.forSaleView?.price,
                        200000)
-        XCTAssertEqual(sut.dataView.whenLoaded?.forSaleView?.listingAddress,
+        XCTAssertEqual(sut.dataView.loadedView?.forSaleView?.listingAddress,
                        ListingAddress(address: "fake listing detail address"))
-        XCTAssertEqual(sut.dataView.whenLoaded?.forSaleView?.listingSize,
+        XCTAssertEqual(sut.dataView.loadedView?.forSaleView?.listingSize,
                        ListingSize(beds: 3, baths: 3, sqft: 1500))
     }
     
     func testForSale_ItUsesNeighborhoodViewModelToDisplayNeighborhood() {
         givenDetailViewModel(forListingId: .init(), status: .forSale)
-        XCTAssertNotNil(sut.dataView.whenLoaded?.forSaleView)
+        XCTAssertNotNil(sut.dataView.loadedView?.forSaleView)
         
-        XCTAssertEqual(sut.dataView.whenLoaded?.forSaleView?.neighborhood is NeighborhoodViewModel, true)
+        XCTAssertEqual(sut.dataView.loadedView?.forSaleView?.neighborhood is NeighborhoodViewModel, true)
     }
     
     func testForRent_ItUsesRentalListingViewModel() {
         givenDetailViewModel(forListingId: .init(), status: .forRent)
-        XCTAssertEqual(sut.dataView.whenLoaded?.isFromViewModel(type: LDPRentalListViewModel.self), true)
+        XCTAssertEqual(sut.dataView.loadedView?.isFromViewModel(type: LDPRentalListViewModel.self), true)
     }
     
     func testOffMarket_ItUsesOffMarketListingViewModel() {
         givenDetailViewModel(forListingId: .init(), status: .offMarket)
-        XCTAssertEqual(sut.dataView.whenLoaded?.isFromViewModel(type: LDPOffMarketListViewModel.self), true)
+        XCTAssertEqual(sut.dataView.loadedView?.isFromViewModel(type: LDPOffMarketListViewModel.self), true)
     }
     
     // MARK: - Side Effect
@@ -75,8 +75,8 @@ final class ListingDetailViewModelTests: XCTestCase {
 
         givenDetailViewModel(forListingId: listingId, status: .forSale, resolver: stubResolver)
         
-        XCTAssertNotNil(sut.dataView.whenLoaded?.forSaleView)
-        XCTAssertEqual(sut.dataView.whenLoaded?.forSaleView?.seeMoreLink.displayText, "See more details")
+        XCTAssertNotNil(sut.dataView.loadedView?.forSaleView)
+        XCTAssertEqual(sut.dataView.loadedView?.forSaleView?.seeMoreLink.displayText, "See more details")
         
         whenTapSeeMoreLink()
         
@@ -88,8 +88,8 @@ final class ListingDetailViewModelTests: XCTestCase {
 
         givenDetailViewModel(forListingId: .init(), status: .forSale, resolver: stubResolver)
         
-        XCTAssertNotNil(sut.dataView.whenLoaded?.forSaleView)
-        XCTAssertEqual(sut.dataView.whenLoaded?.forSaleView?.seeSimilarHomesLink.displayText, "See similar homes")
+        XCTAssertNotNil(sut.dataView.loadedView?.forSaleView)
+        XCTAssertEqual(sut.dataView.loadedView?.forSaleView?.seeSimilarHomesLink.displayText, "See similar homes")
         
         whenTapSimilarHomesLink()
         
@@ -124,10 +124,10 @@ final class ListingDetailViewModelTests: XCTestCase {
     }
     
     private func whenTapSeeMoreLink() {
-        sut.dataView.whenLoaded?.forSaleView?.seeMoreLink.onTap.occurs()
+        sut.dataView.loadedView?.forSaleView?.seeMoreLink.onTap.occurs()
     }
     
     private func whenTapSimilarHomesLink() {
-        sut.dataView.whenLoaded?.forSaleView?.seeSimilarHomesLink.onTap.occurs()
+        sut.dataView.loadedView?.forSaleView?.seeSimilarHomesLink.onTap.occurs()
     }
 }

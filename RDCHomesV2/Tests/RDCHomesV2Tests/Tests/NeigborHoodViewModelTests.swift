@@ -27,7 +27,7 @@ final class NeighborhoodViewModelTests: XCTestCase {
 
     func testitShowsViewOnSuccessfulData() {
         givenViewModelWith(dataState: .success(.init(name: "East Newyork", rating: 8)))
-        XCTAssertEqual(sut.dataView.whenLoaded, Neighborhood(name: "East Newyork", formattedRating: "8/10"))
+        XCTAssertEqual(sut.dataView.loadedView, Neighborhood(name: "East Newyork", formattedRating: "8/10"))
     }
     
     func testItHideViewOnFailure() {

@@ -15,8 +15,6 @@ extension SampleRentalLDPView: View {
             }
             .padding(.all)
         }
-        .background(.green, in: RoundedRectangle(cornerRadius: 8))
-        .padding(.all)
     }
 }
 

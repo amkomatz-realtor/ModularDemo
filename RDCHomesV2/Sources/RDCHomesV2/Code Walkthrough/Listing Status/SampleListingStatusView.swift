@@ -8,16 +8,18 @@ struct SampleListingStatusView: IHashIdentifiable {
 
 extension SampleListingStatusView: View {
     var body: some View {
-        Text("For sale")
-            .font(.caption)
-            .foregroundColor(.gray)
-        
         VStack(alignment: .leading) {
-            Text(price.toCurrency())
-                .font(.title2)
-                .foregroundColor(.black)
+            Text("For sale")
+                .font(.caption)
+                .foregroundColor(.gray)
             
-                sampleListingAddressView
+            VStack(alignment: .leading) {
+                Text(price.toCurrency())
+                    .font(.title2)
+                    .foregroundColor(.black)
+                
+                    sampleListingAddressView
+            }
         }
     }
 }
