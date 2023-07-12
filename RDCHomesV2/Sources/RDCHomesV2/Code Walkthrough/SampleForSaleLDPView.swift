@@ -7,19 +7,15 @@ struct SampleForSaleLDPView: View {
 
     let sampleListingHeroView: SampleListingHeroView
     let sampleListingStatusView: SampleListingStatusView
+    let sampleListingSizeView: SampleListingSizeView
+    
     let sampleNeighborhoodViewModel: LazyViewModel<SampleNeighborhoodView>
     
-    let beds: Int
-    let baths: Int
-    let sqft: Int
-    
     init(listingModel: DetailListingModel) {
-        self.beds = listingModel.beds
-        self.baths = listingModel.baths
-        self.sqft = listingModel.sqft
-    
         sampleListingHeroView = SampleListingHeroViewModel(with: listingModel).dataView
         sampleListingStatusView = SampleListingStatusViewModel(with: listingModel).dataView
+        sampleListingSizeView = SampleListingSizeViewModel(with: listingModel).dataView
+        
         sampleNeighborhoodViewModel = SampleNeighborhoodViewModel(Just(nil).eraseToAnyPublisher())
     }
     
@@ -35,7 +31,7 @@ struct SampleForSaleLDPView: View {
                     // Branding data also coming from `RentalAttributeModel`
                     sampleListingStatusView
                     
-                    listingSizeView()
+                    sampleListingSizeView
                     Spacer()
                         .frame(height: 2)
                     
@@ -52,18 +48,6 @@ struct SampleForSaleLDPView: View {
                 .padding()
             }
         }
-    }
-    
-    @ViewBuilder private func listingSizeView() -> some View {
-        (
-            Text("\(beds)").fontWeight(.heavy)
-                + Text(" bed • ")
-                + Text("\(baths)").fontWeight(.heavy)
-                + Text(" bath • ")
-                + Text("\(sqft)").fontWeight(.heavy)
-                + Text(" sqft")
-        )
-        .font(.footnote)
     }
     
     @ViewBuilder private func seeMoreLinkView() -> some View {
