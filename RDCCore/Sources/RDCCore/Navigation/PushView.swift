@@ -28,35 +28,55 @@ struct PushView: View {
         switch navigation {
         case .push(let view):
             NavigationLink(
-                destination: AnyView(view).background {
-                    if let child = children.first {
-                        PushView(router.view(for: child), children: Array(children.dropFirst(1)), router: router, index: index + 1) { dismissedIndex in
-                            onDismiss(dismissedIndex)
-                        }
-                    }
-                },
-                isActive: Binding(
-                    get: {
-                        show
-                    },
-                    set: { newValue in
-                        if show && !newValue {
-                            onDismiss(index)
-                        }
-                        show = newValue
-                    }
-                ),
+                destination: destination(for: view),
+                isActive: presentationBinding,
                 label: { }
             )
             .onAppear {
-                if !initialized {
-                    initialized = true
-                    show = true
-                }
+                initialize()
             }
             
         case .present(let view):
-            EmptyView()
+            Color.clear.sheet(
+                isPresented: presentationBinding,
+                content: {
+                    NavigationView {
+                        destination(for: view)
+                    }
+                }
+            )
+            .onAppear {
+                initialize()
+            }
+        }
+    }
+    
+    private func initialize() {
+        if !initialized {
+            initialized = true
+            show = true
+        }
+    }
+    
+    private var presentationBinding: Binding<Bool> {
+        Binding(
+            get: { show },
+            set: { newValue in
+                if show && !newValue {
+                    onDismiss(index)
+                }
+                show = newValue
+            }
+        )
+    }
+    
+    private func destination(for view: any View) -> some View {
+        AnyView(view).background {
+            if let child = children.first {
+                PushView(router.view(for: child), children: Array(children.dropFirst(1)), router: router, index: index + 1) { dismissedIndex in
+                    onDismiss(dismissedIndex)
+                }
+            }
         }
     }
 }

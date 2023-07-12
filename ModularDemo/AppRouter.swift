@@ -55,7 +55,8 @@ class AppRouter: HostRouter, INavigationState, ObservableObject {
     }
     
     func onDismiss(_ index: Int) {
-        if index < path.count {
+        // Remove the index, and any destinations after the index.
+        while index < path.count {
             path.remove(at: index)
         }
     }
