@@ -3,8 +3,9 @@ import RDCBusiness
 import RDCHomes
 
 class StubHomesResolver: IHomesResolver {
-    let router: any IResolver<HostRouter> = SingletonResolver {
-        StubRouter()
+    var stubRouter: any HostRouter = StubRouter()
+    lazy var router: any IResolver<HostRouter> = SingletonResolver { [unowned self] in
+        stubRouter
     }
     
     var stubNetworkManager: StubNetworkManager = StubNetworkManager()

@@ -2,7 +2,7 @@ import XCTest
 import RDCCore
 @testable import RDCHomes
 
-final class NeighborhoodViewModelTests: XCTestCase {
+final class NeighborhoodViewModel_Tests: XCTestCase {
     private let listing = DetailListingModel(
         id: UUID(),
         address: "11226 Reflection Point Dr, Fishers, IN 46037",

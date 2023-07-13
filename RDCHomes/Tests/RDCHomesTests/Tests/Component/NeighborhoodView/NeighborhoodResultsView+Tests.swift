@@ -3,7 +3,7 @@ import ViewInspector
 @testable import RDCHomes
 import SwiftUI
 
-final class NeighborhoodResultsViewTests: XCTestCase {
+final class NeighborhoodResultsView_Tests: XCTestCase {
     func test_name_isCorrect() throws {
         // Given
         let neighborhood = NeighborhoodModel(name: "Downtown", rating: 8)

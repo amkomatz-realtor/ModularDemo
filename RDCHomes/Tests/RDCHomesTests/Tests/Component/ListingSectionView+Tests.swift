@@ -3,7 +3,7 @@ import ViewInspector
 @testable import RDCHomes
 import SwiftUI
 
-final class ListingSectionViewTests: XCTestCase {
+final class ListingSectionView_Tests: XCTestCase {
     private let listing = DetailListingModel(
         id: UUID(),
         address: "11226 Reflection Point Dr, Fishers, IN 46037",
