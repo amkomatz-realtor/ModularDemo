@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct PushView: View {
+struct NavigatorView: View {
     private let navigation: Navigation
     private let children: [any IRouteDestination]
     private let router: HostRouter
@@ -73,7 +73,7 @@ struct PushView: View {
     private func destination(for view: any View) -> some View {
         AnyView(view).background {
             if let child = children.first {
-                PushView(router.view(for: child), children: Array(children.dropFirst(1)), router: router, index: index + 1) { dismissedIndex in
+                NavigatorView(router.view(for: child), children: Array(children.dropFirst(1)), router: router, index: index + 1) { dismissedIndex in
                     onDismiss(dismissedIndex)
                 }
             }

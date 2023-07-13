@@ -44,8 +44,8 @@ class AppRouter: HostRouter, INavigationState, ObservableObject {
     
     func view(for destination: any IRouteDestination) -> Navigation {
         for router in childRouters {
-            if let view = router.view(for: destination, with: self) {
-                return view
+            if let navigation = router.view(for: destination, with: self) {
+                return navigation
             }
         }
         
