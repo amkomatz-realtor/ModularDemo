@@ -27,7 +27,7 @@ extension ListingDetailView {
                             .font(.title2)
                             .foregroundColor(.black)
                         
-                        ListingAddressView(listing: detail)
+                        ListingAddressView(.init(listing: detail))
                     }
                     
                     ListingSizeView(listing: detail)

@@ -19,7 +19,7 @@ struct ListingStatusView: View {
                 .font(.title2)
                 .foregroundColor(.black)
             
-            ListingAddressView(listing: viewModel.listing)
+            ListingAddressView(.init(listing: viewModel.listing))
         }
     }
 }
