@@ -30,8 +30,6 @@ final class ListingSeeMoreDetailsView_Tests: XCTestCase {
         let sut = try ListingSeeMoreDetailsView(.init(listing, resolver: resolver)).inspect()
         
         // Then
-        let buttonStyle = try sut.button().buttonStyle()
-        XCTAssertTrue(buttonStyle is PlainButtonStyle, "Incorrect button style: \(buttonStyle)")
         try XCTAssertEqual(sut.button().font(), .body)
         try XCTAssertEqual(sut.button().tint(), Color.red)
     }

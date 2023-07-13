@@ -13,7 +13,6 @@ struct ListingSeeMoreDetailsView: View {
         Button("See more details") {
             viewModel.onTapSeeMoreDetails()
         }
-        .buttonStyle(.plain)
         .font(.body)
         .tint(.red)
     }
