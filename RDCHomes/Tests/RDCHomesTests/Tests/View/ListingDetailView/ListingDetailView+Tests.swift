@@ -62,6 +62,19 @@ final class ListingDetailView_Tests: XCTestCase {
         // Then
         try XCTAssertNoThrow(sut.scrollView().zStack().view(ListingDetailView.ForRentView.self, 0))
     }
+    
+    func test_failure_displaysCorrectView() throws {
+        // Given
+        let resolver = StubHomesResolver()
+        let viewModel = MockViewModel(id: listing.id, resolver: resolver)
+        let sut = try ListingDetailView(viewModel).inspect()
+        
+        // When
+        viewModel.state = .failure("Error")
+        
+        // Then
+        try XCTAssertNoThrow(sut.scrollView().zStack().text(0))
+    }
 }
 
 private class MockViewModel: ListingDetailView.ViewModel {
