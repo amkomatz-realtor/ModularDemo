@@ -40,7 +40,7 @@ extension ListingDetailView {
                     Spacer()
                         .frame(height: 2)
                     
-                    ListingSeeMoreDetailsView(detail, resolver: resolver)
+                    ListingSeeMoreDetailsView(.init(detail, resolver: resolver))
                     
                     ListingSeeSimilarHomesView(resolver: resolver)
                     
