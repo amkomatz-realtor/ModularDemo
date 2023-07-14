@@ -5,6 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "RDCHomes",
+    defaultLocalization: "en",
     platforms: [.iOS(.v15)],
     products: [
         .library(
@@ -20,7 +21,8 @@ let package = Package(
     targets: [
         .target(
             name: "RDCHomes",
-            dependencies: ["RDCCore", "RDCBusiness"]
+            dependencies: ["RDCCore", "RDCBusiness"],
+            resources: [.process("Resources")]
         ),
         .testTarget(
             name: "RDCHomesTests",

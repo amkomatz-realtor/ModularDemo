@@ -17,8 +17,8 @@ extension ListingDetailView {
             VStack(alignment: .leading) {
                 ListingHeroView(detail)
                 
-                VStack(alignment: .leading, spacing: 16) {
-                    Text("For sale")
+                VStack(alignment: .leading) {
+                    Text(.homes.statusForSale)
                         .font(.caption)
                         .foregroundColor(.gray)
                     
