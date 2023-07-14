@@ -4,7 +4,7 @@ import RDCBusiness
 import Combine
 
 final class ListingDetailForRentViewModel: LazyViewModel<ListingDetail.ForRent> {
-    
+
     public convenience init(detailListingModel: DetailListingModel, resolver: IHomesV2Resolver) {
         let homesRepository = HomesRepository(resolver: resolver)
         
@@ -12,36 +12,43 @@ final class ListingDetailForRentViewModel: LazyViewModel<ListingDetail.ForRent> 
                   detailListingModel: detailListingModel,
                   resolver: resolver)
     }
-    
-    init(_ publisher: AnyPublisher<ListingSectionsDataState, Never>,
-         detailListingModel: DetailListingModel,
-         resolver: IHomesV2Resolver) {
+
+    public init(_ modelPublisher: AnyPublisher<ListingSectionsDataState, Never>,
+                detailListingModel: DetailListingModel,
+                resolver: IHomesV2Resolver) {
         
-        super.init(publisher: publisher
-            .map { dataState in
-                dataState.mapToDataViewState(
-                    listingModel: detailListingModel,
-                    resolver: resolver
-                )
+        super.init(publisher: modelPublisher
+            .map { model in
+                LazyDataView(with: model, detailListingModel: detailListingModel, resolver: resolver)
             }
             .eraseToAnyPublisher()
         )
     }
 }
 
-private extension ListingSectionsDataState {
-    func mapToDataViewState(listingModel: DetailListingModel,
-                            resolver: IHomesV2Resolver) -> LazyDataView<ListingDetail.ForRent> {
-        switch self {
+private extension LazyDataView<ListingDetail.ForRent> {
+    
+    init(with dataState: ListingSectionsDataState,
+         detailListingModel: DetailListingModel,
+         resolver: IHomesV2Resolver) {
+        
+        switch dataState {
         case .pending:
-            return .loading(ProgressIndicator())
-            
+            self = .hidden
         case .success(let sections):
-            return .loaded(ListingDetail.ForRent(sections: sections
-                .compactMap { section in
-                    ListingSectionViewModel(listingModel: listingModel, sectionModel: section, resolver: resolver)
-                }
-            ))
+            self = .loaded(ListingDetail.ForRent(with: sections, detailListingModel: detailListingModel, resolver: resolver))
         }
+    }
+}
+
+private extension ListingDetail.ForRent {
+
+    init(with sections: [ListingSectionModel], detailListingModel: DetailListingModel, resolver: IHomesV2Resolver) {
+        self.init(sections: sections.compactMap { sectionModel in
+            ListingSectionViewModel(
+                listingModel: detailListingModel,
+                sectionModel: sectionModel,
+                resolver: resolver)
+        })
     }
 }
