@@ -25,10 +25,10 @@ final class ListingDetailViewModelTests: XCTestCase {
         XCTAssertTrue(sut.loadingView is ProgressIndicator)
     }
     
-    func testItShowsProgressIndicatorForListingSummary() {
+    func testItShowsCacheViewForListingSummary() {
         givenViewModel(with: .listingSummary(FakeListingModel()))
         
-        XCTAssertTrue(sut.loadingView is ProgressIndicator)
+        XCTAssertTrue(sut.loadingView is ListingCache)
     }
     
     func testItGeneratesViewFromModel() {

@@ -27,8 +27,8 @@ private extension LazyDataView<ListingDetail> {
         case .pending:
             self = .loading(ProgressIndicator())
             
-        case .listingSummary:
-            self = .loading(ProgressIndicator())
+        case .listingSummary(let summaryModel):
+            self = .loading(ListingCacheViewModel(with: summaryModel).dataView)
             
         case .listingDetail(let listingModel):
             switch listingModel.status {
