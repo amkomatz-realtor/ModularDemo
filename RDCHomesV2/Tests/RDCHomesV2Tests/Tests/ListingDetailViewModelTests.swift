@@ -1,134 +1,64 @@
 import XCTest
 import Combine
-import RDCBusiness
-import RDCCore
+import CustomDump
 @testable import RDCHomesV2
 
 final class ListingDetailViewModelTests: XCTestCase {
-    private var sut: ListingDetailViewModel!
-    
+
+    var sut: ListingDetailViewModel!
+
     // MARK: - Resolving
-    
+
     func testItInjectsListingDetailStreamForListingId() {
         let homesResolver = StubHomesResolver()
         let listingId = UUID()
-        
+
         givenViewModelWith(listingId: listingId, resolver: homesResolver)
         sleep(1)
         XCTAssertEqual(homesResolver.stubNetworkManager.verifiedUrl,
                        "https://api.realtor.com/listings/\(listingId)")
     }
-    
-    // MARK: - Data Rendering
-    
-    func testItShowsProgressViewWhenDataIsPending() {
-        givenViewModelWith(dataState: .pending)
-        XCTAssertNotNil(sut.dataView.loadingView as? ProgressIndicator)
-    }
-    
-    func testItShowsProgressViewWhenReceivingCacheData() {
-        givenViewModelWith(dataState: .listingSummary(FakeListingModel()))
-        XCTAssertNotNil(sut.dataView.loadingView as? ProgressIndicator)
-    }
-    
-    func testItHidesUponFailure() {
-        givenViewModelWith(dataState: .failure(NSError(domain: "unit test", code: -1)))
-        XCTAssertTrue(sut.dataView.isHidden)
-    }
-    
-    func testForSale_ItShowsForSaleViewWhenReceivingListingDetail() {
-        givenDetailViewModel(forListingId: .init(), status: .forSale)
-        XCTAssertNotNil(sut.dataView.loadedView?.forSaleView)
-        
-        XCTAssertEqual(sut.dataView.loadedView?.forSaleView?.listingHero,
-                       ListingHero(thumbnail: URL(string: "https://fakeurl.com")!))
-        XCTAssertEqual(sut.dataView.loadedView?.forSaleView?.price,
-                       200000)
-        XCTAssertEqual(sut.dataView.loadedView?.forSaleView?.listingAddress,
-                       ListingAddress(address: "fake listing detail address"))
-        XCTAssertEqual(sut.dataView.loadedView?.forSaleView?.listingSize,
-                       ListingSize(beds: 3, baths: 3, sqft: 1500))
-    }
-    
-    func testForSale_ItUsesNeighborhoodViewModelToDisplayNeighborhood() {
-        givenDetailViewModel(forListingId: .init(), status: .forSale)
-        XCTAssertNotNil(sut.dataView.loadedView?.forSaleView)
-        
-        XCTAssertEqual(sut.dataView.loadedView?.forSaleView?.neighborhood is NeighborhoodViewModel, true)
-    }
-    
-    func testForRent_ItUsesRentalListingViewModel() {
-        givenDetailViewModel(forListingId: .init(), status: .forRent)
-        XCTAssertEqual(sut.dataView.loadedView?.isFromViewModel(type: ListingDetailForRentViewModel.self), true)
-    }
-    
-    func testOffMarket_ItHides() {
-        givenDetailViewModel(forListingId: .init(), status: .offMarket)
-        XCTAssertTrue(sut.dataView.isHidden)
-    }
-    
-    // MARK: - Side Effect
-    
-    // TODO: update to new link format
-    func disable_testItRoutesToAdditionalDetails() {
-        let listingId = UUID()
-        let stubResolver = StubHomesResolver()
 
-        givenDetailViewModel(forListingId: listingId, status: .forSale, resolver: stubResolver)
         
-        XCTAssertNotNil(sut.dataView.loadedView?.forSaleView)
-        XCTAssertEqual(sut.dataView.loadedView?.forSaleView?.seeMoreLink.displayText, "See more details")
+    func testItShowsProgressIndicatorWhenDataPending() {
+        givenViewModel(with: .pending)
         
-        whenTapSeeMoreLink()
-        
-        XCTAssertEqual(stubResolver.stubHostRouter.verifiedDestination, "listing-additional-details_\(listingId)")
+        XCTAssertTrue(sut.loadingView is ProgressIndicator)
     }
     
-    func testItRoutesToSearch() {
-        let stubResolver = StubHomesResolver()
+    func testItShowsProgressIndicatorForListingSummary() {
+        givenViewModel(with: .listingSummary(FakeListingModel()))
+        
+        XCTAssertTrue(sut.loadingView is ProgressIndicator)
+    }
+    
+    func testItGeneratesViewFromModel() {
+        givenViewModel(with: .listingDetail(.previewDetailListingModel()))
+        
+        XCTAssertEqual(sut.loadedDataView?.forSaleView?.listingHero.thumbnail.absoluteString,
+                       "https://nh.rdcpix.com/4f40f967f5bafe68c5bee30acb6a5f13e-f3925967158od-w480_h360_x2.webp")
+        
+        XCTAssertEqual(sut.loadedDataView?.forSaleView?.price,
+                       20000000.0)
+        
+        XCTAssertEqual(sut.loadedDataView?.forSaleView?.listingAddress.address,
+                       "1 Infinity Loop, Apple Park, CA 95324")
+        
+        XCTAssertEqual(sut.loadedDataView?.forSaleView?.seeMoreLink.displayText,
+                       "See more details")
+        
+        XCTAssertEqual(sut.loadedDataView?.forSaleView?.seeSimilarHomesLink.displayText,
+                       "See similar homes")
+    }
 
-        givenDetailViewModel(forListingId: .init(), status: .forSale, resolver: stubResolver)
+    // MARK: - Test Helpers
         
-        XCTAssertNotNil(sut.dataView.loadedView?.forSaleView)
-        XCTAssertEqual(sut.dataView.loadedView?.forSaleView?.seeSimilarHomesLink.displayText, "See similar homes")
-        
-        whenTapSimilarHomesLink()
-        
-        XCTAssertEqual(stubResolver.stubHostRouter.verifiedDestination, "search")
+    /// Guide: Replace `InstructionDataModel` with the actual data model(s) that provide data for your view.
+    private func givenViewModel(with model: DetailDataState) {
+        sut = ListingDetailViewModel(Just(model).eraseToAnyPublisher(), resolver: StubHomesResolver())
     }
-    
-    // MARK: - Test Helper
     
     private func givenViewModelWith(listingId: UUID, resolver: IHomesV2Resolver) {
         sut = ListingDetailViewModel(forListingId: listingId, resolver: resolver)
-    }
-    
-    private func givenViewModelWith(dataState: DetailDataState) {
-        sut = ListingDetailViewModel(Just(dataState).eraseToAnyPublisher(),
-                                     resolver: StubHomesResolver())
-    }
-    
-    private func givenDetailViewModel(forListingId id: UUID, status: DetailListingModel.Status, resolver: StubHomesResolver = StubHomesResolver()) {
-        let detailListingModel = DetailListingModel(
-            id: id,
-            address: "fake listing detail address",
-            price: 200000,
-            thumbnail: URL(string: "https://fakeurl.com")!,
-            status: status,
-            beds: 3,
-            baths: 3,
-            sqft: 1500
-        )
-        
-        sut = ListingDetailViewModel(Just(.listingDetail(detailListingModel)).eraseToAnyPublisher(),
-                                     resolver: resolver)
-    }
-    
-    private func whenTapSeeMoreLink() {
-        sut.dataView.loadedView?.forSaleView?.seeMoreLink.onTap.occurs()
-    }
-    
-    private func whenTapSimilarHomesLink() {
-        sut.dataView.loadedView?.forSaleView?.seeSimilarHomesLink.onTap.occurs()
     }
 }

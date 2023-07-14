@@ -34,10 +34,10 @@ private extension LazyDataView<ListingDetail> {
             switch listingModel.status {
                 
             case .forRent:
-                self = .loaded(ListingDetail(forSaleModel: listingModel, resolver: resolver))
+                self = .loaded(ListingDetail(forRentModel: listingModel, resolver: resolver))
                 
             case .forSale:
-                self = .loaded(ListingDetail(forRentModel: listingModel, resolver: resolver))
+                self = .loaded(ListingDetail(forSaleModel: listingModel, resolver: resolver))
                 
             case .offMarket:
                 self = .hidden
