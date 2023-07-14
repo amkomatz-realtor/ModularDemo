@@ -31,8 +31,8 @@ final class ListingDetailViewModelTests: XCTestCase {
         XCTAssertTrue(sut.loadingView is ListingCache)
     }
     
-    func testItGeneratesViewFromModel() {
-        givenViewModel(with: .listingDetail(.previewDetailListingModel()))
+    func testItGeneratesForSaleViewFromModel() {
+        givenViewModel(with: .listingDetail(.previewForSaleListingModel()))
         
         XCTAssertEqual(sut.loadedDataView?.forSaleView?.listingHero.thumbnail.absoluteString,
                        "https://nh.rdcpix.com/4f40f967f5bafe68c5bee30acb6a5f13e-f3925967158od-w480_h360_x2.webp")
@@ -48,6 +48,18 @@ final class ListingDetailViewModelTests: XCTestCase {
         
         XCTAssertEqual(sut.loadedDataView?.forSaleView?.seeSimilarHomesLink.displayText,
                        "See similar homes")
+    }
+    
+    func testItHidesOffMarketListing() {
+        givenViewModel(with: .listingDetail(.previewOffMarketListingModel()))
+        
+        XCTAssertTrue(sut.isViewHidden)
+    }
+    
+    func testItUsesForRentViewModel() {
+        givenViewModel(with: .listingDetail(.previewRentalListingModel()))
+        
+        XCTAssertEqual(sut.loadedDataView?.isFromViewModel(type: ListingDetailForRentViewModel.self), true)
     }
 
     // MARK: - Test Helpers
