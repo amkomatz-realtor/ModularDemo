@@ -2,34 +2,34 @@ import SwiftUI
 import RDCCore
 
 extension ListingDetail {
-    enum Section: IHashIdentifiable {
-        case listingHero(ListingHero, uniqueHash: UniqueHash)
-        case listingStatus(ListingStatus, uniqueHash: UniqueHash)
-        case listingSize(ListingSize, uniqueHash: UniqueHash)
-        case neighborhood(LazyViewModel<Neighborhood>, uniqueHash: UniqueHash)
-        case seeMoreLink(ListingLink, uniqueHash: UniqueHash)
+    enum ListingSection: IHashIdentifiable {
+        case listingHero(ListingHero)
+        case listingStatus(ListingStatus)
+        case listingSize(ListingSize)
+        case neighborhood(LazyViewModel<Neighborhood>)
+        case seeMoreLink(ListingLink)
     }
 }
 
-extension ListingDetail.Section: View {
+extension ListingDetail.ListingSection: View {
     var body: some View {
         switch self {
-        case .listingHero(let listingHero, _):
+        case .listingHero(let listingHero):
             listingHero
             
-        case .listingStatus(let listingStatus, _):
+        case .listingStatus(let listingStatus):
             listingStatus
             .padding([.leading, .trailing])
             
-        case .listingSize(let listingSize, _):
+        case .listingSize(let listingSize):
             listingSize
             .padding([.leading, .trailing])
             
-        case .neighborhood(let neighborhood, _):
+        case .neighborhood(let neighborhood):
             neighborhood.observedDataView()
             .padding([.leading, .trailing])
             
-        case .seeMoreLink(let link, _):
+        case .seeMoreLink(let link):
             link
             .padding([.leading, .trailing])
         }
@@ -39,42 +39,42 @@ extension ListingDetail.Section: View {
 #if targetEnvironment(simulator)
 struct ListingDetail_ForRentSection_Previews: PreviewProvider {
     static var previews: some View {
-        ListingDetail.Section.previewListingHero()
+        ListingDetail.ListingSection.previewListingHero()
             .previewDisplayName(".listing hero")
         
-        ListingDetail.Section.previewListingStatus()
+        ListingDetail.ListingSection.previewListingStatus()
             .previewDisplayName(".listing status")
         
-        ListingDetail.Section.previewListingSize()
+        ListingDetail.ListingSection.previewListingSize()
             .previewDisplayName(".listing size")
         
-        ListingDetail.Section.previewNeighborhood()
+        ListingDetail.ListingSection.previewNeighborhood()
             .previewDisplayName(".neighborhood")
         
-        ListingDetail.Section.previewSeeMoreLink()
+        ListingDetail.ListingSection.previewSeeMoreLink()
             .previewDisplayName(".see more")
     }
 }
 
-extension ListingDetail.Section {
+extension ListingDetail.ListingSection {
     static func previewListingHero() -> Self {
-        .listingHero(.previewListingHero(), uniqueHash: .hashableUUID)
+        .listingHero(.previewListingHero())
     }
     
     static func previewListingStatus() -> Self {
-        .listingStatus(.previewListingStatus(), uniqueHash: .hashableUUID)
+        .listingStatus(.previewListingStatus())
     }
     
     static func previewListingSize() -> Self {
-        .listingSize(.previewListingSize(), uniqueHash: .hashableUUID)
+        .listingSize(.previewListingSize())
     }
     
     static func previewNeighborhood() -> Self {
-        .neighborhood(.justUse(.previewNeighborhood()), uniqueHash: .hashableUUID)
+        .neighborhood(.justUse(.previewNeighborhood()))
     }
     
     static func previewSeeMoreLink() -> Self {
-        .seeMoreLink(.init(displayText: "See more details", onTap: .noSideEffect()), uniqueHash: .hashableUUID)
+        .seeMoreLink(.init(displayText: "See more details", onTap: .noSideEffect()))
     }
 }
 #endif

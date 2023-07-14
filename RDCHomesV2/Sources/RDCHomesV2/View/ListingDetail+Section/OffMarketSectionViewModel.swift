@@ -1,9 +1,9 @@
 import Foundation
 import RDCCore
 
-final class OffMarketSectionViewModel: BaseViewModel<ListingDetail.Section> {
+final class OffMarketSectionViewModel: BaseViewModel<ListingDetail.ListingSection> {
     
-    public init(section: ListingDetail.Section, resolver: IHomesV2Resolver) {
+    public init(section: ListingDetail.ListingSection, resolver: IHomesV2Resolver) {
         // Use the `resolver to reassign the viewModel for each section as needed
         super.init(section)
     }
@@ -12,18 +12,15 @@ final class OffMarketSectionViewModel: BaseViewModel<ListingDetail.Section> {
         switch sectionModel.sectionId {
         case .listingHero:
             super.init(.listingHero(
-                ListingHeroViewModel(listingModel: listingModel).dataView,
-                uniqueHash: .hashableUUID
+                ListingHeroViewModel(listingModel: listingModel).dataView
             ))
         case .listingStatus:
             super.init(.listingStatus(
-                ListingStatusViewModel(listingModel: listingModel).dataView,
-                uniqueHash: .hashableUUID
+                ListingStatusViewModel(listingModel: listingModel).dataView
             ))
         case .listingSize:
             super.init(.listingSize(
-                ListingSizeViewModel(listingModel: listingModel).dataView,
-                uniqueHash: .hashableUUID
+                ListingSizeViewModel(listingModel: listingModel).dataView
             ))
         case .neighborhood:
             // off-market does not support neighborhood section
@@ -31,8 +28,7 @@ final class OffMarketSectionViewModel: BaseViewModel<ListingDetail.Section> {
             
         case .seeMoreDetails:
             super.init(.seeMoreLink(
-                SeeMoreLinkViewModel(link: .global.search, resolver: resolver).dataView,
-                uniqueHash: .hashableUUID
+                SeeMoreLinkViewModel(link: .global.search, resolver: resolver).dataView
             ))
         
         case .unknown:

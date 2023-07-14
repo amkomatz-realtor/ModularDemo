@@ -3,7 +3,7 @@ import RDCCore
 
 public enum ListingDetail: IHashIdentifiable {
     /// SDUI Lv2
-    case forRent(LazyViewModel<SectionList>)
+    case forRent(LazyViewModel<ForRent>)
     
     /// Static For-sale LDP
     case forSale(ForSale)

@@ -3,7 +3,7 @@ import RDCCore
 import RDCBusiness
 import Combine
 
-final class LDPOffMarketListViewModel: LazyViewModel<ListingDetail.SectionList> {
+final class LDPOffMarketListViewModel: LazyViewModel<ListingDetail.ForRent> {
     
     public convenience init(detailListingModel: DetailListingModel, resolver: IHomesV2Resolver) {
         let homesRepository = HomesRepository(resolver: resolver)
@@ -31,13 +31,13 @@ final class LDPOffMarketListViewModel: LazyViewModel<ListingDetail.SectionList> 
 
 private extension ListingSectionsDataState {
     func mapToDataViewState(listingModel: DetailListingModel,
-                            resolver: IHomesV2Resolver) -> LazyDataView<ListingDetail.SectionList> {
+                            resolver: IHomesV2Resolver) -> LazyDataView<ListingDetail.ForRent> {
         switch self {
         case .pending:
             return .loading(ProgressIndicator())
             
         case .success(let sections):
-            return .loaded(ListingDetail.SectionList(sections: sections
+            return .loaded(ListingDetail.ForRent(sections: sections
                 .compactMap { section in
                     OffMarketSectionViewModel(listingModel: listingModel, sectionModel: section, resolver: resolver)
                 }

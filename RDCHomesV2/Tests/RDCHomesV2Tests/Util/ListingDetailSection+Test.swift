@@ -1,9 +1,9 @@
 import Foundation
 @testable import RDCHomesV2
 
-extension ListingDetail.Section {
+extension ListingDetail.ListingSection {
     var listingHero: ListingHero? {
-        if case let .listingHero(listingHero, _) = self {
+        if case let .listingHero(listingHero) = self {
             return listingHero
         }
         
@@ -11,7 +11,7 @@ extension ListingDetail.Section {
     }
     
     var listingStatus: ListingStatus? {
-        if case let .listingStatus(listingStatus, _) = self {
+        if case let .listingStatus(listingStatus) = self {
             return listingStatus
         }
         
@@ -19,7 +19,7 @@ extension ListingDetail.Section {
     }
     
     var listingSize: ListingSize? {
-        if case let .listingSize(listingSize, _) = self {
+        if case let .listingSize(listingSize) = self {
             return listingSize
         }
         
@@ -27,7 +27,7 @@ extension ListingDetail.Section {
     }
     
     func isFromViewModel<VM>(type: VM.Type) -> Bool {
-        if case let .neighborhood(viewModel, _) = self {
+        if case let .neighborhood(viewModel) = self {
             return viewModel is VM
         }
         
@@ -35,7 +35,7 @@ extension ListingDetail.Section {
     }
     
     var seeMoreLink: ListingLink? {
-        if case let .seeMoreLink(link, _) = self {
+        if case let .seeMoreLink(link) = self {
             return link
         }
         

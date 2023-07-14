@@ -2,12 +2,12 @@ import SwiftUI
 import RDCCore
 
 public extension ListingDetail {
-    struct SectionList: IHashIdentifiable {
-        let sections: [BaseViewModel<Section>]
+    struct ForRent: IHashIdentifiable {
+        let sections: [BaseViewModel<ListingSection>]
     }
 }
 
-extension ListingDetail.SectionList: View {
+extension ListingDetail.ForRent: View {
     public var body: some View {
         VStack(alignment: .leading) {
             VStack(alignment: .leading, spacing: 12) {
@@ -26,28 +26,28 @@ extension ListingDetail.SectionList: View {
 #if targetEnvironment(simulator)
 struct ListingDetail_SectionList_Previews: PreviewProvider {
     static var previews: some View {
-        ListingDetail.SectionList.previewAllSections()
+        ListingDetail.ForRent.previewAllSections()
             .previewDisplayName(".all sections")
         
-        ListingDetail.SectionList.previewSomeSections()
+        ListingDetail.ForRent.previewSomeSections()
             .previewDisplayName(".some sections")
     }
 }
 
-extension ListingDetail.SectionList {
+extension ListingDetail.ForRent {
     static func previewAllSections() -> Self {
         .init(sections: [
-            .justUse(.listingHero(.previewListingHero(), uniqueHash: .hashableUUID)),
-            .justUse(.listingStatus(.previewListingStatus(), uniqueHash: .hashableUUID)),
-            .justUse(.listingSize(.previewListingSize(), uniqueHash: .hashableUUID)),
-            .justUse(.neighborhood(.justUse(.previewNeighborhood()), uniqueHash: .hashableUUID))
+            .justUse(.listingHero(.previewListingHero())),
+            .justUse(.listingStatus(.previewListingStatus())),
+            .justUse(.listingSize(.previewListingSize())),
+            .justUse(.neighborhood(.justUse(.previewNeighborhood())))
         ])
     }
     
     static func previewSomeSections() -> Self {
         .init(sections: [
-            .justUse(.listingHero(.previewListingHero(), uniqueHash: .hashableUUID)),
-            .justUse(.listingStatus(.previewListingStatus(), uniqueHash: .hashableUUID)),
+            .justUse(.listingHero(.previewListingHero())),
+            .justUse(.listingStatus(.previewListingStatus())),
         ])
     }
 }

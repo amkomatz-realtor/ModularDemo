@@ -2,9 +2,9 @@ import Foundation
 import RDCCore
 import RDCBusiness
 
-final class SDUISectionListViewModel: BaseViewModel<ListingDetail.SectionList> {
+final class SDUISectionListViewModel: BaseViewModel<ListingDetail.ForRent> {
     init(sectionModels: [SDUIListingSectionModel], resolver: IHomesV2Resolver) {
-        super.init(ListingDetail.SectionList(sections: sectionModels
+        super.init(ListingDetail.ForRent(sections: sectionModels
             .compactMap { section in
                 switch section {
                 case .general(let section):
