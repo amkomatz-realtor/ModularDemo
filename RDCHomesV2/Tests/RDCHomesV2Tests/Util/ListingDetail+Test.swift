@@ -3,7 +3,7 @@ import RDCHomesV2
 
 extension ListingDetail {
     func isFromViewModel<VM>(type: VM.Type) -> Bool {
-        if case .sectionList(let viewModel) = self {
+        if case .forRent(let viewModel) = self {
             return viewModel is VM
         }
         

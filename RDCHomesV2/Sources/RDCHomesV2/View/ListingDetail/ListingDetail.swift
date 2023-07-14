@@ -3,7 +3,7 @@ import RDCCore
 
 public enum ListingDetail: IHashIdentifiable {
     /// SDUI Lv2
-    case sectionList(from: LazyViewModel<SectionList>)
+    case forRent(LazyViewModel<SectionList>)
     
     /// Static For-sale LDP
     case forSale(ForSale)
@@ -17,10 +17,12 @@ extension ListingDetail: View {
         ScrollView {
             ZStack {
                 switch self {
-                case .sectionList(let rentalListingDetail):
-                    rentalListingDetail.observedDataView()
-                case .forSale(let nonRentalListingDetail):
-                    nonRentalListingDetail
+                case let .forRent(forRentLDP):
+                    forRentLDP.observedDataView()
+                    
+                case .forSale(let forSaleLDP):
+                    forSaleLDP
+                    
                 case .failure:
                     Text("Unable to load listing detail")
                 }
@@ -44,7 +46,7 @@ struct ListingDetail_Previews: PreviewProvider {
 
 extension ListingDetail {
     static func previewRental() -> Self {
-        .sectionList(from: .justUse(.previewAllSections()))
+        .forRent(.justUse(.previewAllSections()))
     }
     
     static func previewNonRental() -> Self {

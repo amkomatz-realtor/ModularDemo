@@ -12,12 +12,14 @@ final class ListingStatusViewModel: BaseViewModel<ListingStatus> {
                 price: listingModel.price.toCurrency(),
                 address: ListingAddressViewModel(listingModel: listingModel).dataView
             ))
+            
         case .forSale:
             super.init(ListingStatus(
                 status: "For sale",
                 price: listingModel.price.toCurrency(),
                 address: ListingAddressViewModel(listingModel: listingModel).dataView
             ))
+            
         case .offMarket:
             super.init(ListingStatus(
                 status: "Off market",

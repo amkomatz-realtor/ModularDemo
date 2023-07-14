@@ -52,7 +52,7 @@ private extension DetailDataState {
 
 extension ListingDetail {
     static func rentalListingDetail(for listingModel: DetailListingModel, resolver: IHomesV2Resolver) -> Self {
-        return .sectionList(from: LDPRentalListViewModel(detailListingModel: listingModel, resolver: resolver))
+        return .forRent(LDPRentalListViewModel(detailListingModel: listingModel, resolver: resolver))
     }
     
     static func forSaleListingDetail(for listingModel: DetailListingModel, resolver: IHomesV2Resolver) -> Self {
@@ -60,6 +60,6 @@ extension ListingDetail {
     }
     
     static func offMarketListingDetail(for listingModel: DetailListingModel, resolver: IHomesV2Resolver) -> Self {
-        return .sectionList(from: LDPOffMarketListViewModel(detailListingModel: listingModel, resolver: resolver))
+        return .forRent(LDPOffMarketListViewModel(detailListingModel: listingModel, resolver: resolver))
     }
 }
