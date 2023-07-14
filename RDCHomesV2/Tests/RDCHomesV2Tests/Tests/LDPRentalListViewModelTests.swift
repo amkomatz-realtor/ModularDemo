@@ -17,7 +17,7 @@ final class LDPRentalListViewModelTests: XCTestCase {
         sqft: 1500
     )
     
-    var sut: LDPRentalListViewModel!
+    var sut: ListingDetailForRentViewModel!
 
     // MARK: - Resolving
     
@@ -106,10 +106,10 @@ final class LDPRentalListViewModelTests: XCTestCase {
     // MARK: - Test Helper
     
     private func givenViewModelWith(resolver: IHomesV2Resolver) {
-        sut = LDPRentalListViewModel(detailListingModel: detailListingModel, resolver: resolver)
+        sut = ListingDetailForRentViewModel(detailListingModel: detailListingModel, resolver: resolver)
     }
     
     private func givenViewModelWith(dataState: ListingSectionsDataState) {
-        sut = LDPRentalListViewModel(Just(dataState).eraseToAnyPublisher(), detailListingModel: detailListingModel, resolver: StubHomesResolver())
+        sut = ListingDetailForRentViewModel(Just(dataState).eraseToAnyPublisher(), detailListingModel: detailListingModel, resolver: StubHomesResolver())
     }
 }

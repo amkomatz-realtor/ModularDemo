@@ -33,7 +33,7 @@ final class ListingDetailViewModelTests: XCTestCase {
     
     func testItHidesUponFailure() {
         givenViewModelWith(dataState: .failure(NSError(domain: "unit test", code: -1)))
-        XCTAssertNotNil(sut.dataView.isHidden)
+        XCTAssertTrue(sut.dataView.isHidden)
     }
     
     func testForSale_ItShowsForSaleViewWhenReceivingListingDetail() {
@@ -59,12 +59,12 @@ final class ListingDetailViewModelTests: XCTestCase {
     
     func testForRent_ItUsesRentalListingViewModel() {
         givenDetailViewModel(forListingId: .init(), status: .forRent)
-        XCTAssertEqual(sut.dataView.loadedView?.isFromViewModel(type: LDPRentalListViewModel.self), true)
+        XCTAssertEqual(sut.dataView.loadedView?.isFromViewModel(type: ListingDetailForRentViewModel.self), true)
     }
     
-    func testOffMarket_ItUsesOffMarketListingViewModel() {
+    func testOffMarket_ItHides() {
         givenDetailViewModel(forListingId: .init(), status: .offMarket)
-        XCTAssertEqual(sut.dataView.loadedView?.isFromViewModel(type: LDPOffMarketListViewModel.self), true)
+        XCTAssertTrue(sut.dataView.isHidden)
     }
     
     // MARK: - Side Effect
