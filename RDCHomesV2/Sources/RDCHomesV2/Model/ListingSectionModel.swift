@@ -15,3 +15,17 @@ enum ListingSectionId: String, CaseIterable {
     case neighborhood
     case seeMoreDetails
 }
+
+#if targetEnvironment(simulator)
+
+extension Array where Element == ListingSectionModel {
+    static func previewAllRentalListingSections() -> Self {
+        [
+            .init(componentId: ListingSectionId.listingHero.rawValue),
+            .init(componentId: ListingSectionId.listingStatus.rawValue),
+            .init(componentId: ListingSectionId.listingSize.rawValue)
+        ]
+    }
+}
+
+#endif

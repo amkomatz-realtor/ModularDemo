@@ -35,6 +35,18 @@ extension DetailListingModel {
               sqft: 30000
         )
     }
+    
+    static func previewRentalListingModel() -> Self {
+        .init(id: .init(),
+              address: "123 MyAparment Somewhere",
+              price: 2000,
+              thumbnail: URL(string: "https://nh.rdcpix.com/4f40f967f5bafe68c5bee30acb6a5f13e-f3925967158od-w480_h360_x2.webp")!,
+              status: .forRent,
+              beds: 1,
+              baths: 1,
+              sqft: 900
+        )
+    }
 }
 
 #endif

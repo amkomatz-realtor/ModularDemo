@@ -46,8 +46,8 @@ private extension ListingDetail.ForRent {
     init(with sections: [ListingSectionModel], detailListingModel: DetailListingModel, resolver: IHomesV2Resolver) {
         self.init(sections: sections.compactMap { sectionModel in
             ListingSectionViewModel(
-                listingModel: detailListingModel,
                 sectionModel: sectionModel,
+                listingModel: detailListingModel,
                 resolver: resolver)
         })
     }

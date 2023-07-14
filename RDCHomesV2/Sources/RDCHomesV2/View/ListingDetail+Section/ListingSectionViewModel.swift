@@ -4,19 +4,20 @@ import RDCBusiness
 
 final class ListingSectionViewModel: BaseViewModel<ListingDetail.ListingSection> {
 
-    /// Guide: Replace `InstructionDataModel` with the actual data model(s) that provide data for your view.
-    public init?(listingModel: DetailListingModel,
-                sectionModel: ListingSectionModel,
-                resolver: IHomesV2Resolver) {
+    public init?(sectionModel: ListingSectionModel,
+                 listingModel: DetailListingModel,
+                 resolver: IHomesV2Resolver) {
+        
         if let section = ListingDetail.ListingSection(
             listingModel: listingModel,
             sectionModel: sectionModel,
             resolver: resolver) {
             
             super.init(section)
+            
+        } else {
+            return nil
         }
-        
-        return nil
     }
 }
 
