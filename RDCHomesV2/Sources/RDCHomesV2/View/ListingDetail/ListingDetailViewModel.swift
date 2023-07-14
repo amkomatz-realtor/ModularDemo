@@ -1,61 +1,61 @@
-import Combine
 import Foundation
 import RDCCore
 import RDCBusiness
+import Combine
 
-public final class ListingDetailViewModel: LazyViewModel<ListingDetail> {
+final class ListingDetailViewModel: LazyViewModel<ListingDetail> {
+
     public convenience init(forListingId id: UUID, resolver: IHomesV2Resolver) {
         let homesRepository = HomesRepository(resolver: resolver)
-        self.init(homesRepository.getListingDetail(id: id),
-                  resolver: resolver)
+        self.init(homesRepository.getListingDetail(id: id), resolver: resolver)
     }
-    
-    init(_ publisher: AnyPublisher<DetailDataState, Never>,
-         resolver: IHomesV2Resolver) {
-        
-        super.init(publisher: publisher
-            .map { dataState in
-                dataState.mapToDataViewState(resolver: resolver)
+
+    public init(_ modelPublisher: AnyPublisher<DetailDataState, Never>, resolver: IHomesV2Resolver) {
+        super.init(publisher: modelPublisher
+            .map { model in
+                LazyDataView(with: model, resolver: resolver)
             }
             .eraseToAnyPublisher()
         )
     }
 }
 
-private extension DetailDataState {
-    func mapToDataViewState(resolver: IHomesV2Resolver) -> LazyDataView<ListingDetail> {
-        switch self {
+private extension LazyDataView<ListingDetail> {
+    
+    init(with model: DetailDataState, resolver: IHomesV2Resolver) {
+        switch model {
         case .pending:
-            return .loading(ProgressIndicator())
+            self = .loading(ProgressIndicator())
             
         case .listingSummary:
-            return .loading(ProgressIndicator())
+            self = .loading(ProgressIndicator())
             
         case .listingDetail(let listingModel):
             switch listingModel.status {
                 
             case .forRent:
-                return .loaded(.rentalListingDetail(for: listingModel, resolver: resolver))
+                self = .loaded(ListingDetail(forSaleModel: listingModel, resolver: resolver))
                 
             case .forSale:
-                return .loaded(.forSaleListingDetail(for: listingModel, resolver: resolver))
+                self = .loaded(ListingDetail(forRentModel: listingModel, resolver: resolver))
                 
             case .offMarket:
-                return .hidden
+                self = .hidden
             }
             
         case .failure:
-            return .hidden
+            self = .hidden
         }
     }
 }
 
-extension ListingDetail {
-    static func rentalListingDetail(for listingModel: DetailListingModel, resolver: IHomesV2Resolver) -> Self {
-        return .forRent(ListingDetailForRentViewModel(detailListingModel: listingModel, resolver: resolver))
+private extension ListingDetail {
+    
+    init(forSaleModel: DetailListingModel, resolver: IHomesV2Resolver) {
+        self = .forSale(ListingDetailForSaleViewModel(listingModel: forSaleModel, resolver: resolver).dataView)
     }
     
-    static func forSaleListingDetail(for listingModel: DetailListingModel, resolver: IHomesV2Resolver) -> Self {
-        return .forSale(ListingDetailForSaleViewModel(listingModel: listingModel, resolver: resolver).dataView)
+    init(forRentModel: DetailListingModel, resolver: IHomesV2Resolver) {
+        self = .forRent(ListingDetailForRentViewModel(detailListingModel: forRentModel, resolver: resolver))
     }
 }
