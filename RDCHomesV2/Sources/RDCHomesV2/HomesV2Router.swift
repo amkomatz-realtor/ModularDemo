@@ -11,7 +11,7 @@ public class HomesV2Router: IModuleRouter {
     
     public func view(for destination: any IRouteDestination, with state: INavigationState) -> Navigation? {
         if case GlobalDestination.ldp(let id) = destination {
-            return .push(SDUIListingDetailViewModel(forListingId: id, resolver: self.resolver).observedDataView())
+            return .push(ListingDetailViewModel(forListingId: id, resolver: resolver).observedDataView())
         }
         
         if case HomesDestination.listingAdditionalDetails(let id) = destination {
