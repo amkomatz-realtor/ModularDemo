@@ -8,7 +8,7 @@ final class SDUISectionListViewModel: BaseViewModel<ListingDetail.ForRent> {
             .compactMap { section in
                 switch section {
                 case .general(let section):
-                    return GeneralSectionViewModel(section: section, resolver: resolver)
+                    return SDUIGeneralSectionViewModel(section: section, resolver: resolver)
                     
                 case .forSale(let section):
                     return SDUIForSaleSectionViewModel(section: section, resolver: resolver)
