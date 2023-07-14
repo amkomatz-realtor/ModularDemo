@@ -39,7 +39,7 @@ private extension ListingSectionsDataState {
         case .success(let sections):
             return .loaded(ListingDetail.ForRent(sections: sections
                 .compactMap { section in
-                    SDUIForRentSectionViewModel(listingModel: listingModel, sectionModel: section, resolver: resolver)
+                    ListingSectionViewModel(listingModel: listingModel, sectionModel: section, resolver: resolver)
                 }
             ))
         }
