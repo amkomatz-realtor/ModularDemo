@@ -1,7 +1,7 @@
 import Foundation
 import RDCCore
 
-final class ForSaleSectionViewModel: BaseViewModel<ListingDetail.ListingSection> {
+final class SDUIForSaleSectionViewModel: BaseViewModel<ListingDetail.ListingSection> {
     
     public init(section: ListingDetail.ListingSection, resolver: IHomesV2Resolver) {
         // Use the `resolver to reassign the viewModel for each section as needed

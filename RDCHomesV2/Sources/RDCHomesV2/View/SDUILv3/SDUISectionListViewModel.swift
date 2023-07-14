@@ -11,10 +11,10 @@ final class SDUISectionListViewModel: BaseViewModel<ListingDetail.ForRent> {
                     return GeneralSectionViewModel(section: section, resolver: resolver)
                     
                 case .forSale(let section):
-                    return ForSaleSectionViewModel(section: section, resolver: resolver)
+                    return SDUIForSaleSectionViewModel(section: section, resolver: resolver)
                     
                 case .rental(let section):
-                    return RentalSectionViewModel(section: section, resolver: resolver)
+                    return SDUIForRentSectionViewModel(section: section, resolver: resolver)
                     
                 case .unknown:
                     return nil
