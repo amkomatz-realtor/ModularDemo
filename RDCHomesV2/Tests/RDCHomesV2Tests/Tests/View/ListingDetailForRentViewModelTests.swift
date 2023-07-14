@@ -4,7 +4,7 @@ import RDCBusiness
 import RDCCore
 @testable import RDCHomesV2
 
-final class LDPRentalListViewModelTests: XCTestCase {
+final class ListingDetailForRentViewModelTests: XCTestCase {
 
     let detailListingModel = DetailListingModel(
         id: .init(),
