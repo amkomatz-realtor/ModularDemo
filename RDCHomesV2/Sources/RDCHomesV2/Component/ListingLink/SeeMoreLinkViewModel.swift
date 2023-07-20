@@ -2,7 +2,7 @@ import Foundation
 import RDCCore
 import RDCBusiness
 
-final class SeeMoreLinkViewModel: BaseViewModel<ListingLink> {
+final class SeeMoreLinkViewModel: SingleViewModel<ListingLink> {
     
     convenience init(listingModel: DetailListingModel, resolver: IHomesV2Resolver) {
         self.init(link: .homes.listingAdditionalDetails(id: listingModel.id), resolver: resolver)
@@ -11,8 +11,10 @@ final class SeeMoreLinkViewModel: BaseViewModel<ListingLink> {
     public init(link: any IRouteDestination, resolver: IHomesV2Resolver) {
         let router = resolver.router.resolve()
         
-        super.init(ListingLink(displayText: "See more details", onTap: .onTap {
-            router.route(link)
-        }))
+        super.init {
+            ListingLink(displayText: "See more details", onTap: .onTap {
+                router.route(link)
+            })
+        }
     }
 }

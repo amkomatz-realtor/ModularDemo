@@ -15,7 +15,7 @@ public class HomesV2Router: IModuleRouter {
         }
         
         if case HomesDestination.listingAdditionalDetails(let id) = destination {
-            return .present(ListingAdditionalDetailViewModel(forListingId: id).observedDataView())
+            return .present(ListingAdditionalDetailViewModel(forListingId: id).dataView)
         }
         
         return nil

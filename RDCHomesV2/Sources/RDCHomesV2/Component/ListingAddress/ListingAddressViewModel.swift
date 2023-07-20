@@ -2,9 +2,11 @@ import Foundation
 import RDCCore
 import RDCBusiness
 
-final class ListingAddressViewModel: BaseViewModel<ListingAddress> {
+final class ListingAddressViewModel: SingleViewModel<ListingAddress> {
     
     public init(listingModel: DetailListingModel) {
-        super.init(ListingAddress(address: listingModel.address))
+        super.init {
+            ListingAddress(address: listingModel.address)
+        }
     }
 }

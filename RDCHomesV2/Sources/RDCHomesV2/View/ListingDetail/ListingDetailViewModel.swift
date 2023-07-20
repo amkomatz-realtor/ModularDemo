@@ -3,7 +3,7 @@ import RDCCore
 import RDCBusiness
 import Combine
 
-final class ListingDetailViewModel: LazyViewModel<ListingDetail> {
+final class ListingDetailViewModel: StreamViewModel<ListingDetail> {
 
     public convenience init(forListingId id: UUID, resolver: IHomesV2Resolver) {
         let homesRepository = HomesRepository(resolver: resolver)
@@ -11,16 +11,16 @@ final class ListingDetailViewModel: LazyViewModel<ListingDetail> {
     }
 
     public init(_ modelPublisher: AnyPublisher<DetailDataState, Never>, resolver: IHomesV2Resolver) {
-        super.init(publisher: modelPublisher
+        super.init(statePublisher: modelPublisher
             .map { model in
-                LazyDataView(with: model, resolver: resolver)
+                DataViewState(with: model, resolver: resolver)
             }
             .eraseToAnyPublisher()
         )
     }
 }
 
-private extension LazyDataView<ListingDetail> {
+private extension DataViewState<ListingDetail> {
     
     init(with model: DetailDataState, resolver: IHomesV2Resolver) {
         switch model {
@@ -56,6 +56,6 @@ private extension ListingDetail {
     }
     
     init(forRentModel: DetailListingModel, resolver: IHomesV2Resolver) {
-        self = .forRent(ListingDetailForRentViewModel(detailListingModel: forRentModel, resolver: resolver))
+        self = .forRent(.viewObserving(stream: ListingDetailForRentViewModel(detailListingModel: forRentModel, resolver: resolver)))
     }
 }

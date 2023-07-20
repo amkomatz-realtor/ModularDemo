@@ -3,7 +3,7 @@ import RDCCore
 import RDCBusiness
 import Combine
 
-final class SDUIListingDetailViewModel: LazyViewModel<SDUIListingDetail> {
+final class SDUIListingDetailViewModel: StreamViewModel<SDUIListingDetail> {
     
     public convenience init(forListingId id: UUID, resolver: IHomesV2Resolver) {
         let sduiRepository = SDUIRepository(resolver: resolver)
@@ -16,28 +16,30 @@ final class SDUIListingDetailViewModel: LazyViewModel<SDUIListingDetail> {
          forListingId id: UUID,
          resolver: IHomesV2Resolver) {
         
-        super.init(publisher: publisher
+        super.init(statePublisher: publisher
             .map { dataState in
-                dataState.mapToDataViewState(forListingId: id, resolver: resolver)
+                DataViewState(dataState: dataState, forListingId: id, resolver: resolver)
             }
             .eraseToAnyPublisher()
         )
     }
 }
 
-private extension SDUIListingSectionsDataState {
-    func mapToDataViewState(forListingId id: UUID, resolver: IHomesV2Resolver) -> LazyDataView<SDUIListingDetail> {
-        switch self {
+private extension DataViewState<SDUIListingDetail> {
+    init(dataState: SDUIListingSectionsDataState, forListingId id: UUID, resolver: IHomesV2Resolver) {
+        switch dataState {
         case .pending:
-            return .loading(ProgressIndicator())
+            self = .loading(ProgressIndicator())
             
         case .success(let sections):
-            return .loaded(.sdui(
+            self = .loaded(.sdui(
                 variant: SDUISectionListViewModel(sectionModels: sections, resolver: resolver).dataView
             ))
             
         case .failure:
-            return .loaded(.listingDetail(ListingDetailViewModel(forListingId: id, resolver: resolver)))
+            self = .loaded(.listingDetail(
+                .viewObserving(stream: ListingDetailViewModel(forListingId: id, resolver: resolver))
+            ))
         }
     }
 }

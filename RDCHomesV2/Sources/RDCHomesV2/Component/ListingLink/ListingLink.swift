@@ -3,7 +3,7 @@ import RDCCore
 
 struct ListingLink: IHashIdentifiable {
     let displayText: String
-    let onTap: ActionSideEffect
+    let onTap: ActionEffect
 }
 
 extension ListingLink: View {
@@ -24,7 +24,7 @@ struct ListingLink_Previews: PreviewProvider {
 
 extension ListingLink {
     static func previewListingLink() -> Self {
-        .init(displayText: "Link to some place", onTap: .noSideEffect())
+        .init(displayText: "Link to some place", onTap: .noEffect())
     }
 }
 #endif

@@ -2,21 +2,20 @@ import Foundation
 import RDCCore
 import RDCBusiness
 
-final class ListingSectionViewModel: BaseViewModel<ListingDetail.ListingSection> {
+final class ListingSectionViewModel: StreamViewModel<ListingDetail.ListingSection> {
 
-    public init?(sectionModel: ListingSectionModel,
-                 listingModel: DetailListingModel,
-                 resolver: IHomesV2Resolver) {
+    public init(sectionModel: ListingSectionModel,
+                listingModel: DetailListingModel,
+                resolver: IHomesV2Resolver) {
         
         if let section = ListingDetail.ListingSection(
             listingModel: listingModel,
             sectionModel: sectionModel,
             resolver: resolver) {
-            
-            super.init(section)
-            
+            super.init(initialState: .loaded(section))
+
         } else {
-            return nil
+            super.init()
         }
     }
 }
@@ -39,7 +38,7 @@ private extension ListingDetail.ListingSection {
             )
         case .neighborhood:
             self = .neighborhood(
-                NeighborhoodViewModel(forListingId: listingModel.id, resolver: resolver)
+                .viewObserving(stream: NeighborhoodViewModel(forListingId: listingModel.id, resolver: resolver))
             )
         case .seeMoreDetails:
             self = .seeMoreLink(

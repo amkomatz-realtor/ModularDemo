@@ -3,7 +3,7 @@ import RDCCore
 
 enum SDUIListingDetail: IHashIdentifiable {
     case sdui(variant: ListingDetail.ForRent)
-    case listingDetail(LazyViewModel<ListingDetail>)
+    case listingDetail(LiveDataView<ListingDetail>)
 }
 
 extension SDUIListingDetail: View {
@@ -18,7 +18,7 @@ extension SDUIListingDetail: View {
             }
             .edgesIgnoringSafeArea(.top)
         case let .listingDetail(listingDetail):
-            listingDetail.observedDataView()
+            listingDetail
         }
     }
 }

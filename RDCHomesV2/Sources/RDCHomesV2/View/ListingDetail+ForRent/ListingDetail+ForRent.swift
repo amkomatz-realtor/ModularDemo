@@ -3,7 +3,7 @@ import RDCCore
 
 public extension ListingDetail {
     struct ForRent: IHashIdentifiable {
-        let sections: [BaseViewModel<ListingSection>]
+        let sections: [LiveDataView<ListingSection>]
     }
 }
 
@@ -12,7 +12,7 @@ extension ListingDetail.ForRent: View {
         VStack(alignment: .leading) {
             VStack(alignment: .leading, spacing: 12) {
                 ForEach(sections) { section in
-                    section.observedDataView()
+                    section
                     Spacer()
                         .frame(height: 2)
                 }

@@ -6,7 +6,7 @@ extension ListingDetail {
         case listingHero(ListingHero)
         case listingStatus(ListingStatus)
         case listingSize(ListingSize)
-        case neighborhood(LazyViewModel<Neighborhood>)
+        case neighborhood(LiveDataView<Neighborhood>)
         case seeMoreLink(ListingLink)
     }
 }
@@ -26,7 +26,7 @@ extension ListingDetail.ListingSection: View {
             .padding([.leading, .trailing])
             
         case .neighborhood(let neighborhood):
-            neighborhood.observedDataView()
+            neighborhood
             .padding([.leading, .trailing])
             
         case .seeMoreLink(let link):
@@ -74,7 +74,7 @@ extension ListingDetail.ListingSection {
     }
     
     static func previewSeeMoreLink() -> Self {
-        .seeMoreLink(.init(displayText: "See more details", onTap: .noSideEffect()))
+        .seeMoreLink(.init(displayText: "See more details", onTap: .noEffect()))
     }
 }
 #endif

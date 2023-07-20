@@ -2,10 +2,12 @@ import Foundation
 import RDCCore
 import RDCBusiness
 
-final class ListingCacheViewModel: BaseViewModel<ListingCache> {
+final class ListingCacheViewModel: SingleViewModel<ListingCache> {
 
     public init(with model: any IListingModel) {
-        super.init(ListingCache(with: model))
+        super.init {
+            ListingCache(with: model)
+        }
     }
 }
 

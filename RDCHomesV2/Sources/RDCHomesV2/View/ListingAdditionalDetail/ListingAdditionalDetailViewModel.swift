@@ -3,9 +3,11 @@ import Foundation
 import RDCCore
 import RDCBusiness
 
-final class ListingAdditionalDetailViewModel: BaseViewModel<ListingAdditionalDetail> {
+final class ListingAdditionalDetailViewModel: SingleViewModel<ListingAdditionalDetail> {
     
     init(forListingId id: UUID) {
-        super.init(ListingAdditionalDetail(text: "More listing detail for listing: \(id)"))
+        super.init {
+            ListingAdditionalDetail(text: "More listing detail for listing: \(id)")
+        }
     }
 }

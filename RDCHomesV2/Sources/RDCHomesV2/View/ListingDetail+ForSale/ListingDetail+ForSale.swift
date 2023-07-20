@@ -7,7 +7,7 @@ public extension ListingDetail {
         let price: Double
         let listingAddress: ListingAddress
         let listingSize: ListingSize
-        let neighborhood: LazyViewModel<Neighborhood>
+        let neighborhood: LiveDataView<Neighborhood>
         let seeMoreLink: ListingLink
         let seeSimilarHomesLink: ListingLink
     }
@@ -35,7 +35,7 @@ extension ListingDetail.ForSale: View {
                 Spacer()
                     .frame(height: 2)
                 
-                neighborhood.observedDataView()
+                neighborhood
                 Spacer()
                     .frame(height: 2)
                 

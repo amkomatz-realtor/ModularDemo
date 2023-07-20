@@ -2,9 +2,11 @@ import Foundation
 import RDCCore
 import RDCBusiness
 
-final class ListingHeroViewModel: BaseViewModel<ListingHero> {
+final class ListingHeroViewModel: SingleViewModel<ListingHero> {
     
     public init(listingModel: DetailListingModel) {
-        super.init(ListingHero(thumbnail: listingModel.thumbnail))
+        super.init {
+            ListingHero(thumbnail: listingModel.thumbnail)
+        }
     }
 }

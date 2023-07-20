@@ -3,7 +3,7 @@ import RDCCore
 
 public enum ListingDetail: IHashIdentifiable {
     /// SDUI Lv2
-    case forRent(LazyViewModel<ForRent>)
+    case forRent(LiveDataView<ForRent>)
     
     /// Static For-sale LDP
     case forSale(ForSale)
@@ -18,7 +18,7 @@ extension ListingDetail: View {
             ZStack {
                 switch self {
                 case let .forRent(forRentLDP):
-                    forRentLDP.observedDataView()
+                    forRentLDP
                     
                 case .forSale(let forSaleLDP):
                     forSaleLDP

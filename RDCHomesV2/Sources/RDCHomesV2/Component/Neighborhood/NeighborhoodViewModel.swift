@@ -3,7 +3,7 @@ import Foundation
 import RDCCore
 import RDCBusiness
 
-public final class NeighborhoodViewModel: LazyViewModel<Neighborhood> {
+public final class NeighborhoodViewModel: StreamViewModel<Neighborhood> {
     
     public convenience init(forListingId id: UUID, resolver: IHomesV2Resolver) {
         let homesRepository = HomesRepository(resolver: resolver)
@@ -12,26 +12,26 @@ public final class NeighborhoodViewModel: LazyViewModel<Neighborhood> {
     
     init(_ publisher: AnyPublisher<NeighborhoodDataState, Never>) {
         
-        super.init(publisher: publisher
+        super.init(statePublisher: publisher
             .map { dataState in
-                dataState.mapToDataViewState()
+                DataViewState(dataState: dataState)
             }
             .eraseToAnyPublisher()
         )
     }
 }
 
-private extension NeighborhoodDataState {
-    func mapToDataViewState() -> LazyDataView<Neighborhood> {
-        switch self {
+private extension DataViewState<Neighborhood> {
+    init(dataState: NeighborhoodDataState) {
+        switch dataState {
         case .pending:
-            return .loading(Neighborhood(name: "Placeholder", rating: 10))
+            self = .loading(Neighborhood(name: "Placeholder", rating: 10))
                             
         case .success(let neigborhoodModel):
-            return .loaded(Neighborhood(name: neigborhoodModel.name, rating: neigborhoodModel.rating))
+            self = .loaded(Neighborhood(name: neigborhoodModel.name, rating: neigborhoodModel.rating))
                             
         case .failure:
-            return .hidden
+            self = .hidden
         }
     }
 }

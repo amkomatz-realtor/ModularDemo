@@ -2,13 +2,13 @@ import Foundation
 import RDCCore
 import RDCBusiness
 
-final class ListingSizeViewModel: BaseViewModel<ListingSize> {
+final class ListingSizeViewModel: SingleViewModel<ListingSize> {
     
     public init(listingModel: DetailListingModel) {
-        super.init(
+        super.init {
             ListingSize(beds: listingModel.beds,
                         baths: listingModel.baths,
                         sqft: listingModel.sqft)
-        )
+        }
     }
 }
