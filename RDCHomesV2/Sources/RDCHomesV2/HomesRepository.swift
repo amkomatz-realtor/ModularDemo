@@ -3,7 +3,7 @@ import RDCCore
 import RDCBusiness
 import Combine
 
-enum DetailDataState {
+public enum DetailDataState {
     case pending
     case listingSummary(any IListingModel)
     case listingDetail(DetailListingModel)

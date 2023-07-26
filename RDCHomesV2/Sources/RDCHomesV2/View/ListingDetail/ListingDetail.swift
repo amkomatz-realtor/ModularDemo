@@ -15,19 +15,16 @@ public enum ListingDetail: IHashIdentifiable {
 extension ListingDetail: View {
     public var body: some View {
         ScrollView {
-            ZStack {
-                switch self {
-                case let .forRent(forRentLDP):
-                    forRentLDP.observedDataView()
-                    
-                case .forSale(let forSaleLDP):
-                    forSaleLDP
-                    
-                case .failure:
-                    Text("Unable to load listing detail")
-                }
+            switch self {
+            case let .forRent(forRentLDP):
+                forRentLDP.observedDataView()
+                
+            case .forSale(let forSaleLDP):
+                forSaleLDP
+                
+            case .failure:
+                Text("Unable to load listing detail")
             }
-            .frame(maxWidth: .infinity)
         }
         .edgesIgnoringSafeArea(.top)
     }

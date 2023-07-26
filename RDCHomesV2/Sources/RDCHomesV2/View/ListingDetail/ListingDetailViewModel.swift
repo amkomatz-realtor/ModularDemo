@@ -3,7 +3,7 @@ import RDCCore
 import RDCBusiness
 import Combine
 
-final class ListingDetailViewModel: LazyViewModel<ListingDetail> {
+public final class ListingDetailViewModel: LazyViewModel<ListingDetail> {
 
     public convenience init(forListingId id: UUID, resolver: IHomesV2Resolver) {
         let homesRepository = HomesRepository(resolver: resolver)

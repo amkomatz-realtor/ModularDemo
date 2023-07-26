@@ -8,8 +8,27 @@ struct ListingLink: IHashIdentifiable {
 
 extension ListingLink: View {
     var body: some View {
-        Button(displayText) {
-            onTap.occurs()
+        VStack {
+            Button(displayText) {
+                onTap.occurs()
+            }
+            
+            if #available(iOS 16.0, *) {
+                MultiWindowLink()
+            } else {
+                // Fallback on earlier versions
+            }
+        }
+    }
+}
+
+@available(iOS 16.0, *)
+struct MultiWindowLink: View {
+    @Environment(\.openWindow) private var openWindow
+    
+    var body: some View {
+        Button("View in multi-window") {
+            openWindow(id: "ldp-replica")
         }
     }
 }
