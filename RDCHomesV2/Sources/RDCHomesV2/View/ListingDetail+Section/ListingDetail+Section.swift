@@ -6,7 +6,7 @@ extension ListingDetail {
         case listingHero(ListingHero)
         case listingStatus(ListingStatus)
         case listingSize(ListingSize)
-        case neighborhood(LiveDataView<Neighborhood>)
+        case neighborhood(ObservedDataView<Neighborhood>)
         case seeMoreLink(ListingLink)
     }
 }

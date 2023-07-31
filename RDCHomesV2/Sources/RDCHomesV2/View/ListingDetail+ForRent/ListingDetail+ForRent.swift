@@ -3,7 +3,7 @@ import RDCCore
 
 public extension ListingDetail {
     struct ForRent: IHashIdentifiable {
-        let sections: [LiveDataView<ListingSection>]
+        let sections: [ObservedDataView<ListingSection>]
     }
 }
 

@@ -3,7 +3,7 @@ import RDCCore
 
 enum SDUIListingDetail: IHashIdentifiable {
     case sdui(variant: ListingDetail.ForRent)
-    case listingDetail(LiveDataView<ListingDetail>)
+    case listingDetail(ObservedDataView<ListingDetail>)
 }
 
 extension SDUIListingDetail: View {
